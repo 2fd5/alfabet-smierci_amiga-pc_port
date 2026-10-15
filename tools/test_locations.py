@@ -83,7 +83,7 @@ def run(loc, item_list, frames=4000, seed=1):
     if exit_code not in (None, 0):
         problems.append(f"process exit {exit_code}")
     locs = re.findall(r"loc \$([0-9A-F]{2})", log)
-    expected = loc.removeprefix("loc_").upper()
+    expected = loc.split("_")[1].upper()
     if expected not in locs:
         problems.append(f"target location {loc} never reported")
     return timeout, problems, sorted(set(locs))
