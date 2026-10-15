@@ -8,6 +8,17 @@ Cel: zbudować i sprawdzić Alfabet Śmierci na Macu, a następnie przygotować 
 
 Gałąź musi być dostępna na tym Macu. Jeśli nie ma jej na `origin`, lokalne commity z Linuksa trzeba najpierw przenieść na fork lub dostarczyć jako git bundle. Nie zastępuj jej starszym `main` z upstreamu.
 
+Do lokalnego przekazania bez pusha można użyć dołączonego `alfabet-smierci-linux-macos.bundle`. Na Macu, w nowym katalogu:
+
+```sh
+git clone -b feat/linux-macos-build /ścieżka/alfabet-smierci-linux-macos.bundle alfabet-smierci
+cd alfabet-smierci
+git remote set-url origin https://github.com/2fd5/alfabet-smierci_amiga-pc_port.git
+git remote add upstream https://github.com/pete-roman/alfabet-smierci_amiga-pc_port.git
+```
+
+Bundle zawiera repozytorium i lokalną gałąź, więc nie wymaga wcześniejszego opublikowania zmian na GitHubie.
+
 ## Co już istnieje
 
 - `CMakeLists.txt` buduje na macOS `build/native/AlfabetSmierci.app`.

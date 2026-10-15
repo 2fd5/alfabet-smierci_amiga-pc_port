@@ -136,6 +136,7 @@ LAUNCHER
 cat > "$STAGE/BUILD-INFO.txt" <<INFO
 Alfabet Smierci Linux package
 Release: $VERSION
+Source commit: $(git -C "$ROOT" rev-parse HEAD)
 Architecture: x86_64
 Build baseline: Ubuntu 22.04, glibc 2.35
 SDL3: 3.4.18 (static)
