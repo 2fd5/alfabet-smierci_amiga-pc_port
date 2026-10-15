@@ -1,0 +1,406 @@
+routine loc_19 @ $09E40
+::L09E40::
+  loc_id = $19
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $1A552E
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C139] == 0 then
+    call sub_1A634
+  end
+  if b[$7C0CE] ~= 2 then
+    call sub_1BB62
+    call cursor_hand
+  ::L09EAE::
+    hotspot_table = $1D26C
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+    call clear_text
+    call draw_verb_bar
+    call reset_verbs
+  ::L09EE2::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+      if verb_talk == 1 then
+        b[$7C0F1] += 1
+        if b[$7C0F1] ~= 1 then
+          if b[$7C0F1] ~= 3 then
+            b[$7C0F1] -= 1
+            call sub_16CBA
+            goto L09EE2
+          end
+          hotspot_table = $1D790
+          mouse_min_y = $192
+          mouse_max_y = $1EF
+          mouse_max_x = $27A
+          a2 = $8BBB0  -- "²= Jak leci? / = Co słychać? / = Siemanko! Jak umrzyki? / = Hej sta..."
+          call show
+        ::L0A552::
+          wait_raster $FF
+          if not lmb then
+            if lmb then
+            else
+              goto L0A552
+            end
+          end
+          call hit_test
+          if d2 ~= -1 then
+          else
+            goto L0A552
+          end
+          if d2 u<= 4 then
+          else
+            goto L0A552
+          end
+          a2 = $8BC0B  -- "¹- Wszystko w śmiertelnym porządku! Hyhyhyhyhy. Dobrze jest!"
+          call say
+          goto L09EAE
+        end
+        hotspot_table = $1D790
+        mouse_min_y = $192
+        mouse_max_y = $1EF
+        mouse_max_x = $27A
+        a2 = $8B566  -- "²= Szanowanko panu. Co słychać? Podobno tu ostatnio duży ruch! / = ..."
+        call show
+      ::L0A3FA::
+        wait_raster $FF
+        if not lmb then
+          if lmb then
+          else
+            goto L0A3FA
+          end
+        end
+        call hit_test
+        if d2 ~= -1 then
+        else
+          goto L0A3FA
+        end
+        if d2 u<= 2 then
+          a2 = $8B63A  -- "¹- Hyhyhyhyhy... Wsio w pariadkie, jak mawiały stare Ruski hehehehe..."
+          call say
+          a2 = $8B6FF  -- "²= Pan to sobie lubi popić co?? Hehehehe! Od razu zauważyłem! Czuć ..."
+          call show
+          goto L0A48E
+        elseif d2 == 3 then
+          a2 = $8B8C7  -- "¹- Śmiertelnie nie cierpię tej baby! Nie wierz w ani jedno jej słow..."
+          call say
+          a2 = $8B96C  -- "²- Jakich umrzyków?"
+          call say
+        elseif d2 == 4 then
+          a2 = $8B980  -- "¹- TFU! Niech go śmiertelna martwica, cholera jasna! Przyjemniaczek..."
+          call say
+          a2 = $8BA88  -- "²- Trupami??? Jakimi trupami?"
+          call say
+        else
+          goto L0A3FA
+        end
+      ::L0A4FC::
+        a2 = $8BAA6  -- "¹- Parę dni temu polało! Lało jak na koniec świata! Deszcz rozpłuka..."
+        call say
+        a2 = $8BB29  -- "²- Oooo! z pewnością!"
+        call say
+        a2 = $8BB3F  -- "¹- To były potwory, uważasz stary, potwory! Szpony, kły i coś na cz..."
+        call say
+        goto L09EAE
+      end
+      call cursor_hand
+      hover_mode = 1
+      if label_shown == 1 then
+        call clear_text
+        goto L09EE2
+      end
+      goto L09EE2
+    end
+    if d2 == 1 then
+    else
+      if d2 == 2 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_look == 1 then
+              a2 = $81E04  -- "Taka brama to musi bardzo skrzypieć przy otwieraniu"
+            else
+              a2 = $81DFE  -- "Brama"
+              call quip_if_verb
+            end
+            call clear_text
+            call print
+            call reset_verbs
+            goto L09EE2
+          end
+          goto L09EE2
+        end
+        goto L09EE2
+      end
+      if d2 == 3 then
+        if b[$7C139] == 1 then
+          if lmb then
+            call cursor_busy
+            quip_person = 0
+            if hover_mode == 1 then
+              if verb_take == 1 then
+                call sub_1A634
+                l[$1932A] = $7B42A  -- "stary klucz "
+                call inventory_add
+                l[$1932E] = $7DF20
+                call inventory_remove
+                b[$7C139] = 0
+                call reset_verbs
+                goto L09EE2
+              end
+              if verb_look == 1 then
+                a2 = $81E40  -- "Kluczyk do bramy cmentarnej"
+              else
+                a2 = $81E38  -- "Kluczyk"
+                call quip_if_verb_b
+              end
+              call reset_verbs
+              call clear_text
+              call print
+              goto L09EE2
+            end
+            goto L09EE2
+          end
+          goto L09EE2
+        end
+        goto L09EE2
+      end
+      if d2 u<= 5 then
+        if lmb then
+          call cursor_busy
+          quip_person = 1
+          if hover_mode == 1 then
+            if verb_look == 1 then
+              a2 = $81E64  -- "Śmierdzi od niego wódką!"
+            else
+              a2 = $81E5C  -- "Grabarz"
+              call quip_if_verb
+            end
+            call clear_text
+            call print
+            call reset_verbs
+            goto L09EE2
+          end
+          goto L09EE2
+        end
+        goto L09EE2
+      end
+      goto L09EE2
+    end
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $81DE2  -- "Wyjście do miasta"
+      call print
+      call label_mode
+    end
+    call cursor_exit_b
+    if lmb then
+    else
+      goto L09EE2
+    end
+    if b[$7C0F1] ~= 0 then
+      if b[$7C0F1] == 3 then
+        b[$7C0F1] -= 1
+      else
+        b[$7C0F1] += 1
+      end
+    end
+    call sub_1BB72
+    goto L0390A
+  end
+  if b[$7C16D] == 0 then
+    if b[$7C14B] == 0 then
+      if b[$7C118] == 1 then
+        call sub_1BB86
+        call cursor_hand
+        if b[$7C131] ~= 1 then
+          call sub_0A612
+        end
+      ::L0A1AE::
+        if b[$7C102] ~= 0 then
+        else
+          a2 = $81EC0  -- "Popełniłeś błąd wchodząc tutaj, koleś! Spływaj i nie kręć się tu! D..."
+          call say
+          call clear_text
+        end
+        hotspot_table = $1D296
+        mouse_min_y = $20
+        mouse_max_y = $253
+        mouse_max_x = $27A
+      ::L0A1DC::
+        wait_raster $FF
+        call ui_panel
+        call ui_combine
+        call hit_test
+        if d2 == -1 then
+          call cursor_hand
+          hover_mode = 1
+          if label_shown == 1 then
+            call clear_text
+            goto L0A1DC
+          end
+          goto L0A1DC
+        end
+        if d2 == 1 then
+          if hover_mode == 1 then
+            call clear_text
+            a2 = $81DF4  -- "Do miasta"
+            call print
+            call label_mode
+          end
+          call cursor_exit_b
+          if lmb then
+            if b[$7C131] == 1 then
+              call sub_1BB96
+              goto L0390A
+            end
+            call sub_1BB72
+            goto L0390A
+          end
+          goto L0A1DC
+        end
+        if d2 u<= 3 then
+          if lmb then
+            call cursor_busy
+            quip_person = 1
+            if hover_mode == 1 then
+              if verb_use == 1 then
+                if w[$7C220] == 1 then
+                  if b[$7C130] ~= 1 then
+                    if b[$7C12F] == 0 then
+                      a2 = $82078  -- "Chyba nie myślisz, że mnie pokonasz tym kawałkiem szkiełka. Popatrz..."
+                      call print
+                      b[$7C12F] = 1
+                      w[$7C220] = 0
+                      call draw_verb_bar
+                      call reset_verbs
+                      goto L0A1DC
+                    end
+                    goto L0A1DC
+                  end
+                  a2 = $821F3  -- "Aaaarrrrrrghhh! Nie pokazuj mi tego idioto! Zastanów się co robisz?..."
+                  call say
+                  call draw_verb_bar
+                  call reset_verbs
+                  jump loc_12_2
+                end
+                if w[$7C260] == 1 then
+                  if b[$7C130] ~= 1 then
+                    if b[$7C12F] ~= 0 then
+                      if b[$7C116] ~= 0 then
+                        a2 = $82102  -- "Tylko mnie na chwilę sparaliżowałeś gnojku! Za kilka sekund odzyska..."
+                        call print
+                        b[$7C130] = 1
+                        w[$7C260] = 0
+                        call draw_verb_bar
+                        call reset_verbs
+                        goto L0A1DC
+                      end
+                    ::L0A640::
+                      a2 = $82172  -- "Haaaa! Nędzniku! Czy myślałeś, że możesz mierzyć się ze mną? Żegnaj..."
+                      call say
+                      call music_stop
+                      d1 = $4A
+                      music_order = d1
+                      call music_start
+                      call clear_text
+                      call sub_1BB96
+                      jump game_over
+                    end
+                    goto L0A640
+                  end
+                  goto L0A1DC
+                end
+                goto L0A1DC
+              end
+              if verb_look == 1 then
+                if b[$7C131] ~= 1 then
+                  a2 = $81E7D  -- "Nieprzyjemny jest ten facet."
+                else
+                  a2 = $81E9A  -- "Bercer! Teraz się wreszcie zmierzymy!"
+                end
+              else
+                a2 = $81E5C  -- "Grabarz"
+                call quip_if_verb
+              end
+              call clear_text
+              call print
+              call reset_verbs
+              goto L0A1DC
+            end
+            goto L0A1DC
+          end
+          goto L0A1DC
+        end
+        goto L0A1DC
+      end
+    ::L0A18A::
+      call sub_1BB62
+      call cursor_hand
+      if b[$7C102] ~= 1 then
+        if b[$7C12D] == 1 then
+          a2 = $81F3C  -- "Idioto! Myślałeś, że cię nie rozpoznam? GIŃ!!!!"
+          call say
+          call music_stop
+          d1 = $4A
+          music_order = d1
+          call music_start
+          call clear_text
+          call sub_1BB72
+          jump game_over
+        end
+        goto L0A1AE
+      end
+      a2 = $81F13  -- "Morderco! Zapłacisz teraz za swoje! GIŃ!"
+      call say
+      call music_stop
+      d1 = $4A
+      music_order = d1
+      call music_start
+      call clear_text
+      call sub_1BB72
+      jump game_over
+    end
+    goto L0A18A
+  end
+  goto L0A18A
+::L0A48E::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0A48E
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0A48E
+  end
+  if d2 u<= 2 then
+    a2 = $8B7B6  -- "¹- Nie szkodzi! Wiesz stary, kiedy się widziało to co ja, to trzeba..."
+    call say
+    a2 = $8B81E  -- "²- A co pan widział?"
+    call say
+    goto L0A4FC
+  end
+  if d2 u<= 3 then
+    a2 = $8B833  -- "-¹ Łatwo ci gadać koleś! Gdybyś widział to co ja widziałem to też b..."
+    call say
+    a2 = $8B8A8  -- "²- A co pan takiego widział???"
+    call say
+    goto L0A4FC
+  end
+  goto L0A48E
+end

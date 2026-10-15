@@ -1,0 +1,149 @@
+routine loc_39 @ $13392
+::L13392::
+  loc_id = $39
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $1444DE
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1AA24
+  call sub_1B96A
+  call cursor_hand
+::L133DE::
+  hotspot_table = $1D6BE
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L1340C::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L1340C
+    end
+    goto L1340C
+  end
+  if d2 == 1 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_talk == 1 then
+          b[$7C0F9] += 1
+          if b[$7C0F9] ~= 1 then
+            call sub_16CBA
+            goto L1340C
+          end
+          hotspot_table = $1D790
+          mouse_min_y = $192
+          mouse_max_y = $1EF
+          mouse_max_x = $27A
+          a2 = $95C16  -- "²= Kicikicikicikici.... / = Taś, taś, taś, taś / = Cip, cip, cip..."
+          call show
+        ::L135FE::
+          wait_raster $FF
+          if not lmb then
+            if lmb then
+            else
+              goto L135FE
+            end
+          end
+          call hit_test
+          if d2 ~= -1 then
+          else
+            goto L135FE
+          end
+          if d2 u<= 3 then
+          else
+            goto L135FE
+          end
+          a2 = $95C56  -- "¹- Przepraszam bardzo, ale czy mógłbyś wyrażać się bardziej precycy..."
+          call say
+          a2 = $95C9F  -- "²- A kuku! Jestem Gracz! Gram sobie właśnie w Alfabet Śmierci!"
+          call say
+          a2 = $95CDE  -- "¹- Bardzo mi miło. Jestem Jumadi! Z tego co wiem to jeszcze jej nie..."
+          call say
+          a2 = $95D32  -- "²- No wiesz.... ten, tego... ale jestem już blisko...."
+          call say
+          a2 = $95D69  -- "¹- No to życzę powodzenia... Pamietaj!!! Wielki Brat Patrzy!"
+          call say
+          goto L133DE
+        end
+        if verb_look == 1 then
+          a2 = $84197  -- "Jakieś zwierzątko!"
+        else
+          a2 = $84186  -- "Oczy w drzwiach."
+          call quip_if_verb_b
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L1340C
+      end
+      goto L1340C
+    end
+    goto L1340C
+  end
+  if d2 == 2 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $841B2  -- "Typowy schowek na zużyte szelki..."
+        else
+          a2 = $841AA  -- "Schowek"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L1340C
+      end
+      goto L1340C
+    end
+    goto L1340C
+  end
+  if d2 == 3 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $841D5  -- "Do środka"
+      call print
+      call label_mode
+    end
+    call cursor_exit_a
+    if lmb then
+      call sub_1B97A
+      goto L1366C
+    end
+    goto L1340C
+  end
+  if d2 == 4 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $841DF  -- "Na targ"
+      call print
+      call label_mode
+    end
+    call cursor_exit_a
+    if lmb then
+      call sub_1B97A
+      goto L0DA7A
+    end
+    goto L1340C
+  end
+  goto L1340C
+end

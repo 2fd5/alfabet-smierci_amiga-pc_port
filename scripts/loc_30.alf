@@ -1,0 +1,139 @@
+routine loc_30 @ $10880
+::L10880::
+  loc_id = $30
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $126948
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C13F] == 0 then
+    call sub_1A79C
+  end
+  call sub_1BE32
+  call cursor_hand
+  hotspot_table = $1D58C
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L10916::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L10916
+    end
+    goto L10916
+  end
+  if d2 == 1 then
+    if b[$7C13F] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 1
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            call sub_1A79C
+            l[$1932A] = $7B492
+            call inventory_add
+            l[$1932E] = $7DF38
+            call inventory_remove
+            b[$7C13F] = 0
+            call reset_verbs
+            goto L10916
+          end
+          if verb_look == 1 then
+            a2 = $839FF  -- "Sznurek. Coś mi to przypomina."
+          else
+            a2 = $839EE  -- "Sznur na strachu"
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L10916
+        end
+        goto L10916
+      end
+      goto L10916
+    end
+    goto L10916
+  end
+  if d2 u<= 2 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $83A2F  -- "Że też mu się chce tak stać..."
+        else
+          a2 = $83A1E  -- "Strach na wróble"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L10916
+      end
+      goto L10916
+    end
+    goto L10916
+  end
+  if d2 == 3 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $83A4E  -- "Do leśnej drogi"
+      call print
+      call label_mode
+    end
+    call cursor_anim_cd88
+    if lmb then
+      call sub_1BE42
+      goto L0FC78
+    end
+    goto L10916
+  end
+  if d2 == 4 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $83A5E  -- "Do piwniczki"
+      call print
+      call label_mode
+    end
+    call cursor_anim_cd2c
+    if lmb then
+      if b[$7C151] ~= 0 then
+        a2 = $83A6B  -- "Nie mogę iść dalej. Ogarnia mnie dziwny strach i czuję się jakbym s..."
+        call clear_text
+        call print
+        call reset_verbs
+        call delay_200
+        call delay_200
+        call delay_200
+        goto L10916
+      end
+      a2 = $83ACA  -- "Dziwne. Czuję się wspaniale i mogę iść dalej."
+      call clear_text
+      call print
+      call reset_verbs
+      call delay_200
+      call delay_200
+      call delay_200
+      call sub_1BE42
+      goto L1158C
+    end
+    goto L10916
+  end
+  goto L10916
+end

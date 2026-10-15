@@ -1,0 +1,464 @@
+routine loc_2F @ $0FE8C
+::L0FE8C::
+  loc_id = $2F
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $11D3C0
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C13E] == 0 then
+    call sub_1A754
+  end
+  call sub_1BE0E
+  call cursor_hand
+  if b[$7C122] ~= 1 then
+    b[$7C122] = 1
+    hotspot_table = $1D790
+    mouse_min_y = $192
+    mouse_max_y = $1EF
+    mouse_max_x = $27A
+    a2 = $91154  -- "¹- Bądź pozdrowiony, młody człowieku."
+    call say
+    a2 = $9117A  -- "²= Ahemmm....tego... / = Dzień dobry! Pani jest wróżką? / = Witam. ..."
+    call show
+  ::L10398::
+    wait_raster $FF
+    if not lmb then
+      if lmb then
+      else
+        goto L10398
+      end
+    end
+    call hit_test
+    if d2 ~= -1 then
+    else
+      goto L10398
+    end
+    if d2 u<= 4 then
+    else
+      goto L10398
+    end
+    a2 = $91208  -- "¹- Nie jestem ani wróżką ani Babą Jagą. A co się tyczy zezwolnienia..."
+    call say
+    a2 = $91276  -- "²- Zaraz! Jak to możliwe, że pani czyta w moich myślach? To przecie..."
+    call say
+    a2 = $912C2  -- "¹- Czytanie w myślach to nic nadzwyczajnego. Aktualnie mam gorszy p..."
+    call say
+    a2 = $9130D  -- "²- Tak?"
+    call say
+    a2 = $91315  -- "¹- To zabrzmi śmiesznie, ale zepsuł mi się młynek do kawy."
+    call say
+    a2 = $91350  -- "²= I nie można go magicznie naprawić? / = I nie można magicznie zmi..."
+    call show
+    goto L10412
+  end
+::L0FF04::
+  hotspot_table = $1D56A
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+  call cursor_hand
+::L0FF3E::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    if verb_talk == 1 then
+      if b[$7C123] ~= 0 then
+        if b[$7C124] ~= 0 then
+          if b[$7C125] ~= 0 then
+            if b[$7C126] ~= 0 then
+              if b[$7C101] == 1 then
+                if b[$7C10E] ~= 0 then
+                  if b[$7C10E] ~= 1 then
+                    if b[$7C144] ~= 1 then
+                      if b[$7C160] ~= 0 then
+                        a2 = $92B4C  -- "¹- Spisałeś się na medal! Czy wiesz, że dzięki otwartej, przez cieb..."
+                        call say
+                        a2 = $92C26  -- "²- Naprawdę?"
+                        call say
+                        a2 = $92C33  -- "¹- Tak. Przechodzili tędy, spiesząc do Jasnego Domu..."
+                        call say
+                        a2 = $92C6A  -- "²- Przecież tam ich czeka więzienie."
+                        call say
+                        a2 = $92C8F  -- "¹- Ale przetrwają! Będą czekać aż ich uwolnisz! Tymczasem posłuchaj!"
+                        call say
+                        a2 = $92CD4  -- "²- Zamieniam się w słuch!"
+                        call say
+                        a2 = $92CEE  -- "¹- Na początek podreperuję trochę twą wiedzę o światach światła i c..."
+                        call say
+                        a2 = $92E6B  -- "  ca, bo dla umierających zawsze zachodzi słońce. To symbol końca c..."
+                        call say
+                        a2 = $92FD8  -- "  ważnego i wspomagają dobro.  Pozostali mieszkańcy to ta diabelska..."
+                        call say
+                        a2 = $93149  -- "  Jasnego Domu, rodzice Valence powiedzieli mi, że Bercer się wście..."
+                        call say
+                        a2 = $9321C  -- "²- Uffff! Zaczynam się w tym gubić!"
+                        call say
+                        a2 = $93240  -- "¹- Przekazali coś jeszcze!"
+                        call say
+                        a2 = $9325B  -- "²- Tak?"
+                        call say
+                        a2 = $93263  -- "¹- Otrzymałam od nich pewne, jak wy to nazywacie, zaklęcia, dzięki ..."
+                        call say
+                        a2 = $932CC  -- "²- Jakie?"
+                        call say
+                        a2 = $932D6  -- "¹- Po pierwsze, obszar domku Gerwazego i lasu jest chroniony jakimś..."
+                        call say
+                        a2 = $93395  -- "²- I to na tyle? Też mi sekret!"
+                        call say
+                        a2 = $933B5  -- "¹- Posłuchaj tego. Swój dom, którego bezskutecznie szukałeś, znajdu..."
+                        call say
+                        a2 = $934FC  -- "²- To mi się podoba!"
+                        call say
+                        a2 = $93511  -- "¹- Jest jednak jedna mniej wesoła wiadomość. Podobno w parafii, po ..."
+                        call say
+                        a2 = $93639  -- "²- Niestety tak."
+                        call say
+                        l[$1932A] = $7B9A0  -- "czar zamiany"
+                        call inventory_add
+                        l[$1932E] = $7DFBC
+                        call inventory_remove
+                        b[$7C160] = 0
+                        a2 = $9364A  -- "¹- Nadszedł czas działania! Powodzenia."
+                        call say_restore_cursor
+                        goto L0FF04
+                      end
+                      a2 = $93672  -- "¹- Witaj ale... Nie powinieneś tu już przychodzić. Moja rola się sk..."
+                      call say_restore_cursor
+                      goto L0FF04
+                    end
+                    a2 = $92B07  -- "¹- Nawet nie mów Dzień Dobry. Czekają na ciebie obowiązki. Na razie!"
+                    call say_restore_cursor
+                    goto L0FF04
+                  end
+                  a2 = $92981  -- "¹- Witam mojego rozrabiakę. A więc odkryłeś moc?"
+                  call say
+                  a2 = $929B2  -- "²- Tak. Zastanawiam się tylko, co to za klocki?"
+                  call say
+                  a2 = $929E2  -- "¹- Te klocki, a jest ich sześć, ułożone w jedną całość i zawieszone..."
+                  call say
+                  a2 = $92ACB  -- "²- Tak właśnie przypuszczałem."
+                  call say
+                  a2 = $92AEA  -- "¹- Nie kłam! Czas na ciebie!"
+                  call say_restore_cursor
+                  goto L0FF04
+                end
+                a2 = $92856  -- "²- Cześć! Przyszedłem zapytać, co mam dalej robić?"
+                call say
+                a2 = $92889  -- "¹- Czy myślisz, że zaprowadzę cię za rączkę przed samego Bercera? W..."
+                call say
+                a2 = $928D7  -- "²- Ale co!?"
+                call say
+                a2 = $928E3  -- "¹- Dam ci jedną radę! Nie idź do wioski. Przy wejściu na targ,czai ..."
+                call say
+                a2 = $9295F  -- "²- Hm! Zapamiętam!"
+                call say
+                a2 = $92972  -- "¹- No idź już!"
+                call say_restore_cursor
+                goto L0FF04
+              end
+              call sub_16CBA
+              goto L0FF3E
+            end
+            a2 = $9282D  -- "¹- A ty na co czekasz!? Idź się wykąpać!"
+            call say_restore_cursor
+            goto L0FF04
+          end
+          a2 = $9279C  -- "²- Hello! Jak pani ocenia moje postępy w poszukiwaniach?"
+          call say
+          a2 = $927D5  -- "¹- A znalazłeś skafander?"
+          call say
+          a2 = $927EF  -- "²- Nie ale..."
+          call say
+          a2 = $927FD  -- "¹- Przyjdź ze skafandrem to pogadamy. Na razie!"
+          call say_restore_cursor
+          goto L0FF04
+        end
+        a2 = $9270A  -- "²- Jak leci szanownej wróżce?"
+        call say
+        a2 = $92728  -- "¹- Nie jest źle. Ty jednak, zamiast tu się teraz włóczyć, powiniene..."
+        call say_restore_cursor
+        goto L0FF04
+      end
+      a2 = $9153C  -- "¹- Dalej nie mogę sobie zrobić kawy."
+      call say
+      a2 = $91561  -- "²- Uhm...To ja już pójdę."
+      call say
+      a2 = $9157B  -- "¹- Masz rację."
+      call say
+      goto L0FF04
+    end
+    if verb_give == 1 then
+      if w[$7C1C4] == 1 then
+        l[$1932A] = $7B8BA  -- "stary młynek"
+        call inventory_scroll_up
+        l[$1932E] = $7DFAC
+        call inventory_scroll_down
+        a2 = $7B8C7  -- "Chcesz mnie otruć? Czyżbyś był wysłannikiem Bercera? Dla takich jak..."
+        call clear_text
+        call print
+        call music_stop
+        d1 = $4A
+        music_order = d1
+        call music_start
+        call delay_c9c6
+        call sub_1BE1E
+        w[$7C1C4] = 0
+        call reset_verbs
+        jump sub_1425A
+      end
+      if w[$7C1B0] == 1 then
+        l[$1932A] = $7B5FA  -- "nowy młynek "
+        call inventory_scroll_up
+        l[$1932E] = $7DF84
+        call inventory_scroll_down
+        call cursor_off
+        a2 = $7B607  -- "Ach! Dziękuję! Będę sobie mogła zrobić dobrą kawkę..."
+        call clear_text
+        call print
+        call reset_verbs
+        call delay_c9c6
+        b[$7C123] = 1
+        w[$7C1B0] = 0
+        hotspot_table = $1D790
+        mouse_min_y = $192
+        mouse_max_y = $1EF
+        mouse_max_x = $27A
+        b[$7C0F7] = 1
+        a2 = $9158A  -- "²- Oooo z pewnością."
+        call say
+        a2 = $9159F  -- "¹- W zamian powróżę ci z ręki. Chcesz?"
+        call say
+        a2 = $915C6  -- "²= Powróżyć? Co to to nie! / = Bardzo chętnie! Oto moja dłoń. / = N..."
+        call show
+      ::L104DE::
+        wait_raster $FF
+        if not lmb then
+          if lmb then
+          else
+            goto L104DE
+          end
+        end
+        call hit_test
+        if d2 ~= -1 then
+        else
+          goto L104DE
+        end
+        if d2 == 1 then
+          a2 = $9165B  -- "¹- Ha! Wiem, że powiedziałeś to wbrew sobie! No daj rękę!"
+          call say
+        else
+        ::L1051A::
+          if d2 == 2 then
+            a2 = $91695  -- "¹- Lubię kiedy ktoś wie czego chce... Posłuchaj!"
+            call say
+          elseif d2 == 3 then
+            a2 = $916C6  -- "¹- Ale umierasz z ciekawości! Daj łapę!"
+            call say
+          elseif d2 == 4 then
+            a2 = $916EE  -- "¹- Powinieneś mu podziękować! Daj dłoń i ucisz się na chwilę."
+            call say
+          else
+            goto L104DE
+          end
+        end
+        a2 = $9172C  -- "¹- Nazywasz się Tomek Antkowiak. Przyjechałeś do Dębów, po jasnej s..."
+        call say
+        a2 = $918AF  -- " i młodość spędzoną tutaj. Pamiętasz Marlenę, którą kochasz do dnia..."
+        call say
+        a2 = $91A21  -- " Nie zastanowiło cię to? Doszedłeś aż dotąd,przekraczając bramy dwó..."
+        call say
+        a2 = $91AF4  -- " Bercer i Masarz byli zbrodniarzami za życia. Masarz popełnił szere..."
+        call say
+        a2 = $91C72  -- " fizycznym świata. Mało kto wspomina o drugiej stronie. Yin dla teg..."
+        call say
+        a2 = $91DE7  -- " resocjalizacji został policjantem w świecie jasnym. Niestety mało ..."
+        call say
+        a2 = $91F64  -- " wysyłano ich przedwcześnie na stronę jasną,także w kolejności alfa..."
+        call say
+        a2 = $920E9  -- " nionym przez dobro. Zostałeś wykradziony złym mocom. Wypadek,który..."
+        call say
+        a2 = $92268  -- " słabości i czułe punkty. Musisz się DOBRZE przygotować!  Pokonałeś..."
+        call say
+        a2 = $923ED  -- " nieskończonego dobra i zła. Kluczem do prawdziwej siły jest odnale..."
+        call say
+        a2 = $92450  -- "²= I co ja mam teraz zrobić? / = O rety! Ale mi pani namieszała we ..."
+        call show
+      ::L105EA::
+        wait_raster $FF
+        if not lmb then
+          if lmb then
+          else
+            goto L105EA
+          end
+        end
+        call hit_test
+        if d2 ~= -1 then
+        else
+          goto L105EA
+        end
+        if d2 u<= 4 then
+        else
+          goto L1051A
+        end
+        a2 = $92500  -- "¹- Powiem ci coś co ci się przyda. Słuchaj i nie biadol! Aby być go..."
+        call say
+        a2 = $92620  -- "²- A gdzie mam go szukać?"
+        call say
+        a2 = $9263A  -- "¹- Tego nie wiem! Jest poza zasięgiem mojej magii, jak ty to lubisz..."
+        call say
+        goto L0FF04
+      end
+      if w[$7C1B2] == 1 then
+        b[$19328] = 1
+        l[$1932A] = $7B63E  -- "szklana kula"
+        call inventory_scroll_up
+        l[$1932E] = $7DF88
+        call inventory_scroll_down
+        l[$1932A] = $7B992
+        call inventory_add
+        l[$1932E] = $7DFB8
+        call inventory_remove
+        b[$7C15F] = 0
+        b[$19328] = 0
+        call draw_inventory
+        a2 = $7B64B  -- "Prosto od ducha rzeki. Koncentrat odporności! Zrobię z niego magicz..."
+        call clear_text
+        call print
+        call reset_verbs
+        call delay_c9c6
+        b[$7C124] = 1
+        w[$7C1B2] = 0
+        goto L0FF3E
+      end
+      if w[$7C1D8] == 1 then
+        if b[$7C121] ~= 0 then
+          call reset_verbs
+          goto L0FF3E
+        end
+        b[$7C121] = 1
+        a2 = $7BA01  -- "A jednak ci się udało. Zaraz go czarodziejsko uszczelnię! Strój Bat..."
+        call clear_text
+        call print
+        call reset_verbs
+        call delay_c9c6
+        b[$7C125] = 1
+        w[$7C1D8] = 0
+        goto L0FF3E
+      end
+    ::L101C0::
+      call cursor_hand
+      hover_mode = 1
+      if label_shown == 1 then
+        call clear_text
+        goto L0FF3E
+      end
+      goto L0FF3E
+    end
+    goto L101C0
+  end
+  if d2 == 1 then
+    if b[$7C13E] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            call sub_1A754
+            l[$1932A] = $7B484
+            call inventory_add
+            l[$1932E] = $7DF34
+            call inventory_remove
+            b[$7C13E] = 0
+            a2 = $83978  -- "Wezmę go. Jak będę za Żelazną Bramą to mu go odddam."
+            call clear_text
+            call print
+            call reset_verbs
+            goto L0FF3E
+          end
+          if verb_look == 1 then
+            a2 = $8393F  -- "Nie jestem pewien, ale to chyba alchemiczny kubek Witka."
+          else
+            a2 = $83938  -- "Kubek."
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0FF3E
+        end
+        goto L0FF3E
+      end
+      goto L0FF3E
+    end
+    goto L0FF3E
+  end
+  if d2 == 2 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $839AD  -- "Wyjście"
+      call print
+      call label_mode
+    end
+    verb_take = 0
+    verb_give = 0
+    call cursor_anim_cd88
+    if lmb then
+      call sub_1BE1E
+      goto L0FC78
+    end
+    goto L0FF3E
+  end
+  if lmb then
+    call cursor_busy
+    quip_person = 1
+    if hover_mode == 1 then
+      if verb_look == 1 then
+        a2 = $839C3  -- "Za tymi oczyma, kryje się mądrość pokoleń."
+      else
+        a2 = $839B5  -- "Quefrete Xang"
+        call quip_if_verb
+      end
+      call clear_text
+      call print
+      call reset_verbs
+      goto L0FF3E
+    end
+    goto L0FF3E
+  end
+  goto L0FF3E
+::L10412::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L10412
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L10412
+  end
+  if d2 u<= 4 then
+  else
+    goto L10412
+  end
+  a2 = $913FC  -- "¹- Po pierwsze to brakuje mi kawałka odpowiedniego metalu, a poza t..."
+  call say
+  a2 = $91506  -- "²- Ciągle nie mogę się otrząsnąć..."
+  call say
+  a2 = $9152A  -- "¹- To się zdarza."
+  call say
+  goto L0FF04
+end

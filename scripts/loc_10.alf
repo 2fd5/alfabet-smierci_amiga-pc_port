@@ -1,0 +1,147 @@
+routine loc_10 @ $075AC
+::L075AC::
+  loc_id = $10
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $10181A
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BA42
+  call cursor_hand
+  if b[$7C0E9] ~= 1 then
+  else
+    a2 = $89C28  -- "¹- O cholera! To właśnie ta pielęgniarka! Ta pielęgniarka!"
+    call say
+    a2 = $89C63  -- "²- Czy ona..."
+    call say
+    a2 = $89C71  -- "¹- Jest martwa! Ładnie ją załatwiłeś! Trzeba działać! Tu kręci się ..."
+    call say
+    a2 = $89D06  -- "²- Co robić???"
+    call say
+    a2 = $89D15  -- "¹- Ty uciekaj! Ja to jakoś załatwię,nie wiem jeszcze jak,ale coś wy..."
+    call say
+    a2 = $89D63
+    call say
+    l[$1932A] = $7B5C2
+    call inventory_add
+    l[$1932E] = $7DF74
+    call inventory_remove
+    b[$7C14E] = 0
+    a2 = $89D6A  -- "¹- Nie pytaj! Pewnie kiedyś jeszcze o tym porozmawiamy. Jedź do Mar..."
+    call say
+    a2 = $89E33
+    call say
+    a2 = $89E3D  -- "¹- Nie ma czasu. Bywaj!"
+    call say
+    verb_talk = 0
+    call clear_text
+  end
+  hotspot_table = $1D12C
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+::L0762A::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    if verb_talk == 1 then
+      b[$7C0E5] += 1
+      if b[$7C0E9] ~= 1 then
+        call sub_07816
+      end
+      call sub_16CBA
+      goto L0762A
+    end
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0762A
+    end
+    goto L0762A
+  end
+  if d2 == 1 then
+  else
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $80AA2  -- "Na pewno nie jest to maska przeciwgazowa..."
+          else
+            a2 = $80A9C  -- "Maska"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0762A
+        end
+        goto L0762A
+      end
+      goto L0762A
+    end
+    if d2 == 3 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $80AD5  -- "Czapka Nadszyszkownika Kilkujadka!"
+          else
+            a2 = $80ACE  -- "Czapka"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0762A
+        end
+        goto L0762A
+      end
+      goto L0762A
+    end
+    if d2 == 4 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $80B08  -- "Szpitalne szafki. Wszystko czyste, zimne i poukładane."
+          else
+            a2 = $80AF8  -- "Szafka z lekami"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0762A
+        end
+        goto L0762A
+      end
+      goto L0762A
+    end
+    goto L0762A
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $80A94  -- "Wyjście"
+    call print
+    call label_mode
+  end
+  call cursor_anim_cd2c
+  if lmb then
+  else
+    goto L0762A
+  end
+  call sub_1BA52
+  goto L07D32
+end

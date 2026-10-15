@@ -1,0 +1,146 @@
+routine loc_3A @ $1366C
+::L1366C::
+  loc_id = $3A
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $1C2BE2
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C161] == 0 then
+    call sub_1B0E4
+  end
+  if b[$7C162] == 0 then
+    call sub_1B12C
+  end
+  call sub_1BF52
+  call cursor_hand
+  hotspot_table = $1D6E0
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L1370A::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L1370A
+    end
+    goto L1370A
+  end
+  if d2 == 1 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $841EE  -- "Moja szafka na narzędzia. Ech...łza się w oku kręci..."
+        else
+          a2 = $841E7  -- "Szafka"
+          call quip_if_verb_b
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L1370A
+      end
+      goto L1370A
+    end
+    goto L1370A
+  end
+  if d2 == 2 then
+    if b[$7C161] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            call sub_1B0E4
+            l[$1932A] = $7B9AE
+            call inventory_add
+            l[$1932E] = $7DFC0
+            call inventory_remove
+            b[$7C161] = 0
+            call reset_verbs
+            goto L1370A
+          end
+          if verb_look == 1 then
+            a2 = $8422B  -- "Moja stara wędka! Moja kochana wędka!"
+          else
+            a2 = $84225  -- "Wędka"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L1370A
+        end
+        goto L1370A
+      end
+      goto L1370A
+    end
+    goto L1370A
+  end
+  if d2 == 3 then
+  else
+    if d2 == 4 then
+      if b[$7C162] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1B12C
+              l[$1932A] = $7B9BC  -- "puszka farby"
+              call inventory_add
+              l[$1932E] = $7DFC4
+              call inventory_remove
+              b[$7C162] = 0
+              call reset_verbs
+              goto L1370A
+            end
+            if verb_look == 1 then
+              a2 = $84276  -- "Puszka farby olejnej. Kiedyś chciałem malować rower..."
+            else
+              a2 = $8425D  -- "Puszka w otwartej szafce"
+              call quip_if_verb
+            end
+            call clear_text
+            call print
+            call reset_verbs
+            goto L1370A
+          end
+          goto L1370A
+        end
+        goto L1370A
+      end
+      goto L1370A
+    end
+    goto L1370A
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $84251  -- "Na zewnątrz"
+    call print
+    call label_mode
+  end
+  call cursor_exit_b
+  if lmb then
+  else
+    goto L1370A
+  end
+  call sub_1BF62
+  goto L13392
+end

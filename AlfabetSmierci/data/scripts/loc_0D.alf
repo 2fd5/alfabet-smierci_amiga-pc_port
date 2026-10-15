@@ -1,0 +1,487 @@
+routine loc_0D @ $067A8
+::L067A8::
+  loc_id = $D
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $161AE0
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C138] == 0 then
+    call sub_1A320
+  end
+  if b[$7C0F2] ~= 0 then
+    call sub_1A368
+  end
+  call sub_1B9D6
+  call cursor_hand
+  if b[$7C0CE] ~= 2 then
+    hotspot_table = $1D09E
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+  ::L06848::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+      call cursor_hand
+      hover_mode = 1
+      if label_shown == 1 then
+        call clear_text
+        goto L06848
+      end
+      goto L06848
+    end
+    if d2 == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $8066E  -- "Do centrum"
+        call print
+        call label_mode
+      end
+      call cursor_anim_cd88
+      if lmb then
+        call sub_1B9E6
+        goto L0390A
+      end
+      goto L06848
+    end
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $80689  -- "Jadą, jadą chłopcyyy, nikt ich nie zaczepiaaaa.... "
+          else
+            a2 = $80681  -- "Głośnik"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L06848
+        end
+        goto L06848
+      end
+      goto L06848
+    end
+    if d2 == 3 then
+      if b[$7C138] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1A320
+              l[$1932A] = $7B41C  -- "  lusterko  "
+              call inventory_add
+              l[$1932E] = $7DF1C
+              call inventory_remove
+              b[$7C138] = 0
+              call reset_verbs
+              goto L06848
+            end
+            if verb_look == 1 then
+              a2 = $806C6  -- "Faaajneee! Nawet lekko obluzowane! Popatrz w prawo, popatrz w lewo..."
+            else
+              a2 = $806BD  -- "Lusterko"
+              call quip_if_verb_b
+            end
+            call reset_verbs
+            call clear_text
+            call print
+            goto L06848
+          end
+          goto L06848
+        end
+        goto L06848
+      end
+      goto L06848
+    end
+    if d2 == 4 then
+      if b[$7C0F2] == 1 then
+        call cursor_exit_a
+      end
+      if lmb then
+        if b[$7C0F2] == 1 then
+          call sub_1B9E6
+          jump loc_31
+        end
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_use == 1 then
+            if b[$7C0F2] ~= 1 then
+              if w[$7C1FE] == 1 then
+                if b[$7C0F0] ~= 1 then
+                  a2 = $80784  -- "Nie sądzę żebym miał tu jakiś interes. Lepiej nie kombinować."
+                  call clear_text
+                  call print
+                  call reset_verbs
+                  b[$7C1FE] = 0
+                  goto L06848
+                end
+                call sub_1A368
+                l[$1932A] = $7B450
+                call inventory_scroll_up
+                l[$1932E] = $7DF24
+                call inventory_scroll_down
+                b[$7C0F2] = 1
+                a2 = $8075B  -- "O! Można wejść! Wchodzę!!!"
+                call clear_text
+                call print
+                call reset_verbs
+                call delay_200
+                call delay_200
+                call delay_200
+                call sub_1B9E6
+                jump loc_31
+              end
+            ::L06AFA::
+              if verb_look == 1 then
+                a2 = $80711  -- "Okno... Chyba jest nawet uchylone."
+              else
+                a2 = $8070C  -- "Okno"
+                call quip_if_verb
+              end
+              call clear_text
+              call print
+              call reset_verbs
+              goto L06848
+            end
+            goto L06848
+          end
+          goto L06AFA
+        end
+        goto L06848
+      end
+      goto L06848
+    end
+    if d2 == 5 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $80830  -- "Nie wiem po co się interesować piwnicami komisariatu. Lepiej stąd w..."
+          else
+            a2 = $8081D  -- "Okno w podmurówce."
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L06848
+        end
+        goto L06848
+      end
+      goto L06848
+    end
+    if d2 == 6 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $80945  -- "Policyjny samochód operacyjny. Po prostu suka."
+          else
+            a2 = $8093C  -- "Samochód"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L06848
+        end
+        goto L06848
+      end
+      goto L06848
+    end
+    goto L06848
+  end
+  hotspot_table = $1D0D0
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+::L06C1E::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    w[$7A92C] = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L06C1E
+    end
+    goto L06C1E
+  end
+  if d2 == 1 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $80679  -- "Na targ"
+      call print
+      call label_mode
+    end
+    call cursor_anim_cd88
+    if lmb then
+      call sub_1B9E6
+      goto L0DA7A
+    end
+    goto L06C1E
+  end
+  if d2 == 2 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $80689  -- "Jadą, jadą chłopcyyy, nikt ich nie zaczepiaaaa.... "
+        else
+          a2 = $80681  -- "Głośnik"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L06C1E
+      end
+      goto L06C1E
+    end
+    goto L06C1E
+  end
+  if d2 == 3 then
+    if b[$7C138] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            call sub_1A320
+            l[$1932A] = $7B41C  -- "  lusterko  "
+            call inventory_add
+            l[$1932E] = $7DF1C
+            call inventory_remove
+            b[$7C138] = 0
+            call reset_verbs
+            goto L06C1E
+          end
+          if verb_look == 1 then
+            a2 = $806C6  -- "Faaajneee! Nawet lekko obluzowane! Popatrz w prawo, popatrz w lewo..."
+          else
+            a2 = $806BD  -- "Lusterko"
+            call quip_if_verb_b
+          end
+          call reset_verbs
+          call clear_text
+          call print
+          goto L06C1E
+        end
+        goto L06C1E
+      end
+      goto L06C1E
+    end
+    goto L06C1E
+  end
+  if d2 == 4 then
+    if b[$7C0F2] == 1 then
+      call cursor_exit_a
+    end
+    if lmb then
+      if b[$7C147] ~= 1 then
+        if b[$7C146] ~= 1 then
+          if hover_mode == 1 then
+            a2 = $807EA  -- "Nie sądzę, że można tu jeszcze cokolwiek zdziałać."
+            call clear_text
+            call print
+            call reset_verbs
+            goto L06C1E
+          end
+          goto L06C1E
+        end
+      ::L06E2E::
+        if b[$7C0F2] == 1 then
+          call sub_1B9E6
+          jump loc_31
+        end
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_use == 1 then
+            if b[$7C0F2] ~= 1 then
+              if w[$7C208] == 1 then
+                if b[$7C0F7] ~= 1 then
+                  a2 = $807C2  -- "- Nie sądzę, że powinienem tu wchodzić."
+                  call clear_text
+                  call print
+                  call reset_verbs
+                  b[$7C208] = 0
+                  goto L06C1E
+                end
+                call sub_1A368
+                l[$1932A] = $7B492
+                call inventory_scroll_up
+                l[$1932E] = $7DF38
+                call inventory_scroll_down
+                b[$7C0F2] = 1
+                a2 = $80776  -- "No to siup..."
+                call clear_text
+                call print
+                call reset_verbs
+                call delay_200
+                call delay_200
+                call delay_200
+                call sub_1B9E6
+                jump loc_31
+              end
+            ::L06F14::
+              if verb_look == 1 then
+                a2 = $80734  -- "Uchylone także w tej rzeczywistości..."
+              else
+                a2 = $8070C  -- "Okno"
+                call quip_if_verb
+              end
+              call clear_text
+              call print
+              call reset_verbs
+              goto L06C1E
+            end
+            goto L06C1E
+          end
+          goto L06F14
+        end
+        goto L06C1E
+      end
+      goto L06E2E
+    end
+    goto L06C1E
+  end
+  if d2 == 5 then
+    if b[$7C133] == 1 then
+      call cursor_exit_a
+    end
+    if lmb then
+      if b[$7C133] == 1 then
+        if b[$7C12D] ~= 1 then
+          if b[$7C13C] ~= 0 then
+            call sub_1B9E6
+            jump loc_2C
+          end
+          if w[$7A92C] == 1 then
+            a2 = $808E8  -- "Nie sądzę, żebym miał tu czego szukać"
+            call clear_text
+            call print
+            call reset_verbs
+            w[$7A92C] = 0
+            goto L06C1E
+          end
+          goto L06C1E
+        end
+        if w[$7A92C] == 1 then
+          a2 = $8090E  -- "Nie mam zamiaru głupio wpaść w łapy Bercera! "
+          call clear_text
+          call print
+          call reset_verbs
+          w[$7A92C] = 0
+          goto L06C1E
+        end
+        goto L06C1E
+      end
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_open == 1 then
+          if b[$7C133] ~= 1 then
+            a2 = $808C3  -- "Zamknięte, trzeba chyba użyć klucza."
+          else
+          ::L0706A::
+            call quip_if_verb
+          end
+        ::L07070::
+          call clear_text
+          call print
+          call reset_verbs
+          goto L06C1E
+        end
+        if verb_use == 1 then
+          if w[$7C244] == 1 then
+            a2 = $7B955  -- "Otwarte! Można się wśliznąć."
+            call clear_text
+            call print
+            call reset_verbs
+            l[$1932A] = $7B948  -- " mały klucz "
+            call inventory_scroll_up
+            l[$1932E] = $7DFB0
+            call inventory_scroll_down
+            b[$7C15D] = 0
+            b[$7C133] = 1
+            call reset_verbs
+            call draw_verb_bar
+            w[$7C244] = 0
+            goto L06C1E
+          end
+        ::L07050::
+          if verb_look == 1 then
+            a2 = $80878  -- "Okno. Można przez nie wejść do piwniczki. Jest jednak zamykane na k..."
+            goto L07070
+          end
+          a2 = $8081D  -- "Okno w podmurówce."
+          goto L0706A
+        end
+        goto L07050
+      end
+      goto L06C1E
+    end
+    goto L06C1E
+  end
+  if d2 == 6 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $80945  -- "Policyjny samochód operacyjny. Po prostu suka."
+        else
+          a2 = $8093C  -- "Samochód"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L06C1E
+      end
+      goto L06C1E
+    end
+    goto L06C1E
+  end
+  if d2 == 7 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $8097C  -- "No proszę! Można się śmiać z teorii światów równoległych. Rzeźnik n..."
+        else
+          a2 = $80974  -- "Policja"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L06C1E
+      end
+      goto L06C1E
+    end
+    goto L06C1E
+  end
+  goto L06C1E
+end

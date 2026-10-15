@@ -1,0 +1,197 @@
+routine loc_2C @ $0F51C
+  loc_id = $2C
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $108AC2
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C13C] == 0 then
+    call sub_1A67C
+  end
+  call sub_1BDA2
+  call cursor_hand
+  hotspot_table = $1D4F4
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L0F5B2::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0F5B2
+    end
+    goto L0F5B2
+  end
+  if d2 == 1 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_take == 1 then
+          a2 = $835D9  -- "Nie wiem co mógłbym zrobić z takim koszmarkiem?"
+          call say
+          call clear_text
+          call reset_verbs
+          goto L0F5B2
+        end
+        if verb_look == 1 then
+          a2 = $835A3  -- "Jakiś nieciekawy kiczyk. Pewnie wycięty z kalendarza."
+        else
+          a2 = $8359B  -- "Obrazek"
+          call quip_if_verb_b
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0F5B2
+      end
+      goto L0F5B2
+    end
+    goto L0F5B2
+  end
+  if d2 == 2 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_take == 1 then
+          a2 = $83651  -- "Nie gustuję w abstrakcjoniźmie. Wolę francuskich impresjonistów."
+          call say
+          call clear_text
+          call reset_verbs
+          goto L0F5B2
+        end
+        if verb_look == 1 then
+          a2 = $83611  -- "Jakaś abstrakcja. Nie wiem co to ma przedstawiać. Jakiś klocek?"
+        else
+          a2 = $83609  -- "Obrazek"
+          call quip_if_verb_b
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0F5B2
+      end
+      goto L0F5B2
+    end
+    goto L0F5B2
+  end
+  if d2 == 3 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_take == 1 then
+          a2 = $836E4  -- "A po co mi to? Jestem pewien, że do niczego mi się nie przyda."
+          call say
+          call clear_text
+          call reset_verbs
+          goto L0F5B2
+        end
+        if verb_look == 1 then
+          a2 = $8369A  -- "Obrazek z klockiem. Dwie wypustki z góry, jedna z lewej i wcięcie z..."
+        else
+          a2 = $83692  -- "Obrazek"
+          call quip_if_verb_b
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0F5B2
+      end
+      goto L0F5B2
+    end
+    goto L0F5B2
+  end
+  if d2 == 4 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_take == 1 then
+          a2 = $8375D  -- "Żeby sobie powiesić coś takiego... To dla zboczeńców!"
+          call say
+          call clear_text
+          call reset_verbs
+          goto L0F5B2
+        end
+        if verb_look == 1 then
+          a2 = $8372B  -- "Zdjęcie jakichś wnętrzności wśród klocków. Ohyda!"
+        else
+          a2 = $83723  -- "Obrazek"
+          call quip_if_verb_b
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0F5B2
+      end
+      goto L0F5B2
+    end
+    goto L0F5B2
+  end
+  if d2 == 5 then
+    if b[$7C13C] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            call sub_1A67C
+            l[$1932A] = $7B46A
+            call inventory_add
+            l[$1932E] = $7DF2C
+            call inventory_remove
+            b[$7C13C] = 0
+            call reset_verbs
+            goto L0F5B2
+          end
+          if verb_look == 1 then
+            a2 = $837A7  -- "Nabój do pistoletu rzeźniczego."
+          else
+            a2 = $83793  -- "Nabój do pistoletu!"
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0F5B2
+        end
+        goto L0F5B2
+      end
+      goto L0F5B2
+    end
+    goto L0F5B2
+  end
+  if d2 == 6 then
+  else
+    goto L0F5B2
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $837C7  -- "Wyjście"
+    call print
+    call label_mode
+  end
+  call cursor_exit_b
+  if lmb then
+  else
+    goto L0F5B2
+  end
+  call sub_1BDB2
+  jump loc_0D
+end

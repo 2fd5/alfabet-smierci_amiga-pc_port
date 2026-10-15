@@ -1,0 +1,136 @@
+routine loc_37 @ $12E9E
+::L12E9E::
+  loc_id = $37
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $14EC58
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BF0A
+  call cursor_hand
+  hotspot_table = $1D68A
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L12F22::
+  wait_raster $FF
+  call ui_panel
+  if b[$7C101] == 1 then
+    if b[$7C0FD] ~= 1 then
+      d6 = 0
+      d6.b = ciaa_pra
+      if bit(d6.b, 7) == 0 then
+        call sub_1A994
+        w[$59AD8] = $FFF
+        a2 = $7E13B  -- "Wyzwoliłeś moc!!!"
+        call clear_text
+        call print
+        call delay_200
+        w[$59AD8] = 0
+        b[$7C0FD] = 1
+      end
+    end
+  end
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L12F22
+    end
+    goto L12F22
+  end
+  if d2 == 1 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_use == 1 then
+          call cursor_off
+          call clear_text
+          b[$1C67C] = 1
+          a2 = $7E06D  -- ". Virtual Operating System 2000       / . Copyright 1995 by Maniak,..."
+          call print
+          b[$1C67C] = 0
+          inv_click_armed = 0
+          call clear_text
+          call reset_verbs
+          call cursor_hand
+          goto L12F22
+        end
+        if verb_look == 1 then
+          a2 = $8402B  -- "Co to w ogóle jest? Monitor na lodówce? To musi do czegoś służyć."
+        else
+          a2 = $84009  -- "Monitor - czy to panel sterujący?"
+          call quip_if_verb_b
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L12F22
+      end
+      goto L12F22
+    end
+    goto L12F22
+  end
+  if d2 == 2 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_use == 1 then
+          if b[$7C0FD] ~= 1 then
+            call quip_if_verb
+            call clear_text
+            call print
+            call reset_verbs
+            goto L12F22
+          end
+          call sub_1BF1A
+          goto L1316A
+        end
+        if verb_look == 1 then
+          if b[$7C0FD] == 1 then
+            a2 = $840AD  -- "Coś tu jest...Czuję jakiś dziwny magnetyzm. "
+          else
+            a2 = $84075  -- "Wypisz, wymaluj lodówka marki MINSK16! Ale ten monitor."
+          end
+        else
+          a2 = $8406D  -- "Lodówka"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L12F22
+      end
+      goto L12F22
+    end
+    goto L12F22
+  end
+  if d2 == 3 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $840DA  -- "Na zewnątrz"
+      call print
+      call label_mode
+    end
+    call cursor_exit_b
+    if lmb then
+      call sub_1BF1A
+      goto L1158C
+    end
+    goto L12F22
+  end
+  goto L12F22
+end

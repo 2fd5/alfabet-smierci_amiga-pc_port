@@ -1,0 +1,422 @@
+routine loc_07 @ $044FA
+::L044FA::
+  loc_id = 7
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $1215D6
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1B8FE
+  call cursor_hand
+::L0454A::
+  hotspot_table = $1CFC8
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L0457E::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    if verb_talk == 1 then
+      b[$7C0D0] += 1
+      if train_rides ~= 1 then
+        if b[$7C0D0] ~= 1 then
+          call sub_16CBA
+          goto L0457E
+        end
+        hotspot_table = $1D790
+        mouse_min_y = $192
+        mouse_max_y = $1EF
+        mouse_max_x = $27A
+        b[$7C0D0] -= 1
+        a2 = $859C2  -- "²= Jak to dobrze wrócić na stare śmieci...  Przyjechałem w dość prz..."
+        call show
+      ::L04C82::
+        wait_raster $FF
+        if not lmb then
+          if lmb then
+          else
+            goto L04C82
+          end
+        end
+        call hit_test
+        if d2 ~= -1 then
+        else
+          goto L04C82
+        end
+        if d2 u<= 2 then
+          a2 = $854EC  -- "¹- Ach oczywiście, że go znałam! Wspaniały człowiek. Wielka szkoda...."
+          call say
+          a2 = $85615  -- "²= A od dawna pracuje pani w tym sklepie? / = Tak! Nazywam sie Toma..."
+          call show
+          goto L04B36
+        end
+        if d2 == 3 then
+          a2 = $85814  -- "¹- Hmmmmm.... Będzie ze 20 lat. Ze 20 lat jak nic... Musiało się pa..."
+          call say
+          goto L0454A
+        end
+        goto L04C82
+      end
+      if b[$7C0D1] ~= 1 then
+        if b[$7C0D0] ~= 1 then
+          hotspot_table = $1D790
+          mouse_min_y = $192
+          mouse_max_y = $1EF
+          mouse_max_x = $27A
+          a2 = $858B9  -- "²= Czy mógłbym się dowiedzieć gdzie mieszka Janina Stachura?.. Mam ..."
+          call show
+        ::L04BD2::
+          wait_raster $FF
+          if not lmb then
+            if lmb then
+            else
+              goto L04BD2
+            end
+          end
+          call hit_test
+          if d2 ~= -1 then
+          else
+            goto L04BD2
+          end
+          if d2 u<= 2 then
+            b[$7C0D1] = 1
+            a2 = $8530E  -- "¹- Obok skrzyżowania, na zewnątrz jest plan. Zaznaczono tam wszystk..."
+            call say
+            a2 = $8538D  -- "²= To ona nie żyje? Co się stało? / = Jaki pogrzeb?"
+            call show
+            goto L04AE0
+          end
+          if d2 == 3 then
+            a2 = $8595A  -- "¹- Nie mam zielonego pojęcia. Ja tu tylko sprzedaję."
+            call say
+            goto L0454A
+          end
+          goto L04BD2
+        end
+        hotspot_table = $1D790
+        mouse_min_y = $192
+        mouse_max_y = $1EF
+        mouse_max_x = $27A
+        a2 = $851AD  -- "²= Przyjechałem z daleka, czy mógłbym się dowiedzieć, gdzie mieszka..."
+        call show
+      ::L04A04::
+        wait_raster $FF
+        if not lmb then
+          if lmb then
+          else
+            goto L04A04
+          end
+        end
+        call hit_test
+        if d2 ~= -1 then
+        else
+          goto L04A04
+        end
+        if d2 == 1 then
+          b[$7C0D1] = 1
+          a2 = $8530E  -- "¹- Obok skrzyżowania, na zewnątrz jest plan. Zaznaczono tam wszystk..."
+          call say
+          a2 = $8538D  -- "²= To ona nie żyje? Co się stało? / = Jaki pogrzeb?"
+          call show
+          goto L04AE0
+        end
+        if d2 == 2 then
+          a2 = $8530E  -- "¹- Obok skrzyżowania, na zewnątrz jest plan. Zaznaczono tam wszystk..."
+          call say
+          a2 = $8538D  -- "²= To ona nie żyje? Co się stało? / = Jaki pogrzeb?"
+          call show
+          goto L04AE0
+        end
+        if d2 == 3 then
+          a2 = $854EC  -- "¹- Ach oczywiście, że go znałam! Wspaniały człowiek. Wielka szkoda...."
+          call say
+          a2 = $85615  -- "²= A od dawna pracuje pani w tym sklepie? / = Tak! Nazywam sie Toma..."
+          call show
+          goto L04B36
+        end
+        if d2 == 4 then
+          a2 = $854EC  -- "¹- Ach oczywiście, że go znałam! Wspaniały człowiek. Wielka szkoda...."
+          call say
+          a2 = $85615  -- "²= A od dawna pracuje pani w tym sklepie? / = Tak! Nazywam sie Toma..."
+          call show
+          goto L04B36
+        end
+        if d2 == 5 then
+          a2 = $85814  -- "¹- Hmmmmm.... Będzie ze 20 lat. Ze 20 lat jak nic... Musiało się pa..."
+          call say
+          goto L0454A
+        end
+        goto L04A04
+      end
+      a2 = $8598F  -- "¹- Zaraz zamykam proszę pana. Jutro porozmawiamy. "
+      call say
+      goto L0454A
+    end
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0457E
+    end
+    goto L0457E
+  end
+  if d2 == 1 then
+  else
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            a2 = $802BC  -- "Nie sądzę, aby była to najodpowiedniejsza pora na zakupy."
+          elseif verb_look == 1 then
+            a2 = $80103  -- "Wyśmienite Krakowskie Krakersy."
+          else
+            a2 = $800FA  -- "Krakersy"
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0457E
+        end
+        goto L0457E
+      end
+      goto L0457E
+    end
+    if d2 == 3 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            a2 = $802BC  -- "Nie sądzę, aby była to najodpowiedniejsza pora na zakupy."
+          elseif verb_look == 1 then
+            a2 = $8012D  -- "Marmoladka ze świeżych owoców morza: filety śledziowe z odrobiną ro..."
+          else
+            a2 = $80123  -- "Marmolada"
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0457E
+        end
+        goto L0457E
+      end
+      goto L0457E
+    end
+    if d2 == 4 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            a2 = $802BC  -- "Nie sądzę, aby była to najodpowiedniejsza pora na zakupy."
+          elseif verb_look == 1 then
+            a2 = $80190  -- "Wyśmienita na wszelkie bóle jelita cienkiego."
+          else
+            a2 = $8017C  -- "Herbatka ParaCeltów"
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0457E
+        end
+        goto L0457E
+      end
+      goto L0457E
+    end
+    if d2 == 5 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            a2 = $802BC  -- "Nie sądzę, aby była to najodpowiedniejsza pora na zakupy."
+          elseif verb_look == 1 then
+            a2 = $801CD  -- "Mieszanka michałków i słonych paluszków to jedyny i niepowtarzalny ..."
+          else
+            a2 = $801BE  -- "Zestaw biurowy"
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0457E
+        end
+        goto L0457E
+      end
+      goto L0457E
+    end
+    if d2 == 6 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            a2 = $802BC  -- "Nie sądzę, aby była to najodpowiedniejsza pora na zakupy."
+          elseif verb_look == 1 then
+            a2 = $8022E  -- "Okrągłe i czerwone..."
+          else
+            a2 = $80227  -- "Lizaki"
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0457E
+        end
+        goto L0457E
+      end
+      goto L0457E
+    end
+    if d2 == 7 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            a2 = $802BC  -- "Nie sądzę, aby była to najodpowiedniejsza pora na zakupy."
+          elseif verb_look == 1 then
+            a2 = $80249  -- "Pilsener jest tu naprawdę drogi."
+          else
+            a2 = $80244  -- "Piwo"
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0457E
+        end
+        goto L0457E
+      end
+      goto L0457E
+    end
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_give == 1 then
+          if w[$7C176] == 1 then
+            l[$1932A] = $7B3F2  -- " papierosy  "
+            call inventory_scroll_up
+            l[$1932E] = $7DF10
+            call inventory_scroll_down
+            w[$7C176] = 0
+            a2 = $800BC  -- "Och, dziękuję... Mój mąż dużo pali. Na pewno się przydadzą..."
+            call clear_text
+            call print
+            call reset_verbs
+            goto L0457E
+          end
+          goto L0457E
+        end
+        if verb_look == 1 then
+          a2 = $8027C  -- "Pani mruga oczami i uśmiecha się wyczekująco."
+        else
+          a2 = $8026A  -- "Pani ekspedientka"
+          call quip_if_verb_b
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0457E
+      end
+      goto L0457E
+    end
+    goto L0457E
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $802AA  -- "Wyjście do miasta"
+    call print
+    call label_mode
+  end
+  call cursor_exit_b
+  if lmb then
+  else
+    goto L0457E
+  end
+  call sub_1B90E
+  goto L0390A
+::L04AE0::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L04AE0
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L04AE0
+  end
+  if d2 == 1 then
+    a2 = $853BF  -- "¹- Umarła... Chyba ze starości. Wie pan.... 89 lat... Teraz do jej ..."
+    call say
+    goto L0454A
+  end
+  if d2 == 2 then
+    a2 = $8543F  -- "¹- Pogrzeb pani Janki!! Przecież umarła... Będzie już dwa dni. Dzis..."
+    call say
+    goto L0454A
+  end
+  goto L04AE0
+::L04B36::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L04B36
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L04B36
+  end
+  if d2 == 1 then
+    a2 = $8568A  -- "¹- Noooo.... Od czasu kiedy byłam młodą praktykantką mineło już jak..."
+    call say
+    a2 = $856F6  -- "²- To dziwne! Wyjechałem stąd dokładnie 15 lat temu..."
+    call say
+    a2 = $8572D  -- "¹- Hmmmmm.... A może....może... Kogoś mi pan przypomina, ale... nie..."
+    call say
+    goto L0454A
+  end
+  if d2 == 2 then
+    a2 = $85783  -- "¹- Klonowa? Klonowa.... Nie wiem gdzie jest Klonowa... Jest pan pew..."
+    call say
+    goto L0454A
+  end
+  goto L04B36
+end
+
+routine loc_07_2 @ $13FC2
+  loc_id = 7
+  call ensure_disk
+  a0 = $1215D6
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1B8FE
+  a2 = $7E493  -- "Można się było tego domyślić. Twoim podstawowym błędem było nie kup..."
+  call say
+  call clear_text
+  call sub_1B90E
+  return
+end

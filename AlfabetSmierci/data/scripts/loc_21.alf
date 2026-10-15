@@ -1,0 +1,216 @@
+routine loc_21 @ $0B080
+::L0B080::
+  loc_id = $21
+  call select_music
+  call ensure_disk
+  a0 = $145BFA
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C14B] == 0 then
+    call sub_1ACAC
+  end
+  if b[$7C14C] == 0 then
+    call sub_1ACF4
+  end
+  if b[$7C14D] == 0 then
+    call sub_1AD3C
+  end
+  call sub_1BFE2
+  call cursor_hand
+  hotspot_table = $1D2F6
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L0B122::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0B122
+    end
+    goto L0B122
+  end
+  if d2 == 1 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $823BC  -- "Wyjście do studni"
+      call print
+      call label_mode
+    end
+    call cursor_exit_b
+    if lmb then
+      call sub_1BFF2
+      goto L0B558
+    end
+    goto L0B122
+  end
+  if d2 == 2 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $823FF  -- "Co? Ta paść jest także tutaj? Nie widziałem, że ten sen to ma być k..."
+        else
+          a2 = $823CE  -- "Obrazek"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0B122
+      end
+      goto L0B122
+    end
+    goto L0B122
+  end
+  if d2 == 3 then
+    if b[$7C14B] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_use == 1 then
+            if w[$7C25A] == 1 then
+              if b[$7C129] == 1 then
+                b[$7C118] = 1
+                a2 = $8248C  -- "Zamalowałeś lusterko"
+                goto L0B384
+              end
+              goto L0B122
+            end
+            goto L0B122
+          end
+          if verb_take == 1 then
+            if b[$7C118] == 0 then
+              call music_stop
+              d1 = $4A
+              music_order = d1
+              call music_start
+              call sub_1BFF2
+              call sub_14360
+              call clear_text
+              a2 = $824A1
+              call print_alt
+              call sub_1C006
+              call wait_right_click_fast
+              call sub_1C016
+              call game_over_b
+            end
+            call sub_1ACAC
+            l[$1932A] = $7B55E  -- "  lusterko  "
+            call inventory_add
+            l[$1932E] = $7DF68
+            call inventory_remove
+            b[$7C14B] = 0
+            call reset_verbs
+            goto L0B122
+          end
+          if verb_look == 1 then
+            if b[$7C118] == 0 then
+              call sub_1BFF2
+              call sub_14360
+              call clear_text
+              a2 = $824A1
+              call print_alt
+              call sub_1C006
+              call wait_right_click_fast
+              call sub_1C016
+              jump game_over_b
+            end
+            a2 = $82471  -- "Zamalowane lustro. Szmelc!"
+            goto L0B384
+          end
+          a2 = $8244A  -- "Lustro"
+          call quip_if_verb
+        ::L0B384::
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0B122
+        end
+        goto L0B122
+      end
+      goto L0B122
+    end
+    goto L0B122
+  end
+  if d2 == 4 then
+    if b[$7C14C] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            call sub_1ACF4
+            l[$1932A] = $7B56C
+            call inventory_add
+            l[$1932E] = $7DF6C
+            call inventory_remove
+            b[$7C14C] = 0
+            call reset_verbs
+            goto L0B122
+          end
+          if verb_look == 1 then
+            a2 = $8252C  -- "Klej w proszku. Na opakowaniu pisze: "Ciap-Chlup Klej wyborowy""
+          else
+            a2 = $82527  -- "Klej"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0B122
+        end
+        goto L0B122
+      end
+      goto L0B122
+    end
+    goto L0B122
+  end
+::L0B44E::
+  if d2 == 5 then
+  else
+    goto L0B44E
+  end
+  if b[$7C14D] == 1 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_take == 1 then
+          call sub_1AD3C
+          l[$1932A] = $7B57A  -- "  wiaderko  "
+          call inventory_add
+          l[$1932E] = $7DF70
+          call inventory_remove
+          b[$7C14D] = 0
+          call reset_verbs
+          goto L0B122
+        end
+        if verb_look == 1 then
+          a2 = $82575  -- "Poręczne wiadereczko. Może się przydać."
+        else
+          a2 = $8256C  -- "Wiaderko"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0B122
+      end
+      goto L0B122
+    end
+    goto L0B122
+  end
+  goto L0B122
+end

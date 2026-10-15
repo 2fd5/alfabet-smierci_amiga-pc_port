@@ -1,0 +1,550 @@
+routine loc_35 @ $1224C
+::L1224C::
+  loc_id = $35
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $1C800A
+  call sub_19422
+  if b[$7C10B] ~= 1 then
+    call sub_1B1BC
+  elseif b[$7C163] == 0 then
+    call sub_1B1BC
+  end
+  if b[$7C10C] ~= 1 then
+    call sub_1B24C
+  elseif b[$7C164] == 0 then
+    call sub_1B24C
+  end
+  if b[$7C12C] == 1 then
+    call sub_1B294
+  end
+  if b[$7C12D] == 1 then
+    call sub_1B324
+    call sub_1BEE6
+    call sub_1C8F6
+    call sub_1C8F6
+    call sub_1C8F6
+    call sub_1B2DC
+    call sub_1B82E
+    call sub_1B7E2
+    call cursor_hand
+    b[$1C04E] = 0
+    b[$7C12D] = 0
+  else
+    call sub_1BEE6
+    call cursor_hand
+  end
+  if b[$7C12A] ~= 0 then
+    if b[$7C10E] ~= 0 then
+      if b[$7C10E] >= 5 then
+        if b[$7C10E] ~= 5 then
+          if b[$7C16D] ~= 0 then
+            if b[$7C144] ~= 1 then
+              if b[$7C160] == 1 then
+                a2 = $95B39  -- "¹- Dokonałeś wielkiej rzeczy! Idź do Quefrete, ona ci wszystko wytł..."
+                call say
+              else
+                a2 = $95B84  -- "¹- Jestem ci bardzo wdzięczna! Proś mnie o wszystko.."
+                call say
+              end
+            else
+              a2 = $95AF9  -- "¹- Masz do wypełnienia ważną misję. Na razie nie mogę ci pomóc!"
+              call say
+            end
+          else
+            a2 = $95BBA  -- "²- Idę pokonać Bercera!"
+            call say
+            a2 = $95BD2  -- "¹- Żegnaj, może zobaczymy się kiedyś, po tej samej stronie światła!"
+            call say
+          end
+        else
+          hotspot_table = $1D790
+          mouse_min_y = $192
+          mouse_max_y = $1EF
+          mouse_max_x = $27A
+          a2 = $95351  -- "¹- Widzę, że brakuje ci już tylko jednego klocka! Pamiętam, że ukła..."
+          call say
+          a2 = $953B6
+          call say
+          a2 = $953C3  -- "¹- Wiesz... Wydaje mie się, że wiem gdzie jest brakujący kawałek."
+          call say
+          a2 = $95405  -- "²- Ja chyba też wiem.... U Masarza w komórce!"
+          call say
+          a2 = $95433  -- "¹- Nie możesz teraz iść do miasta. Zginiesz!"
+          call say
+          a2 = $95460  -- "²- Wiem. Może mogłabyś iść za mnie?"
+          call say
+          a2 = $95484  -- "¹- A skąd mam wiedzieć, co mam zabrać?"
+          call say
+          a2 = $954AB  -- "²- Tam wiszą takie cztery obrazki."
+          call say
+          a2 = $954CE  -- "¹- Ale na paru są klocki."
+          call say
+          a2 = $954E8  -- "²- Skąd wiesz?"
+          call say
+          a2 = $954F7  -- "¹- Z tego co pamiętam. Bercer miał gdzieś ukryć najważniejszą część..."
+          call say
+          a2 = $95586  -- "²- No i co teraz? Może pójdziesz za mnie do miasta?"
+          call say
+          a2 = $955BA  -- "¹- W porządku, ale musisz mi wytłumaczyć, o który obrazek chodzi?"
+          call say
+          a2 = $955FC  -- "²= Ma jedną wypustkę z góry i jedną z prawej. / = Ma dwie wypustki ..."
+          call show
+        ::L12B58::
+          wait_raster $FF
+          if not lmb then
+            if lmb then
+            else
+              goto L12B58
+            end
+          end
+          call hit_test
+          if d2 ~= -1 then
+          else
+            goto L12B58
+          end
+          if d2 u<= 2 then
+            a2 = $956C9  -- "¹- Zaraz wracam!"
+            call say
+            call sub_1B324
+            call delay_c9c6
+            call sub_1B2DC
+            a2 = $956DA  -- "¹- Oto kawałek, o który mnie prosiłeś. Mam nadzieję, że się nie pom..."
+            call say
+            call sub_12C4E
+            b[$7C12B] = 0
+          elseif d2 u<= 3 then
+            a2 = $956C9  -- "¹- Zaraz wracam!"
+            call say
+            call sub_1B324
+            call delay_c9c6
+            call sub_1B2DC
+            a2 = $956DA  -- "¹- Oto kawałek, o który mnie prosiłeś. Mam nadzieję, że się nie pom..."
+            call say
+            call sub_12C4E
+            b[$7C12B] = 1
+          elseif d2 == 4 then
+            a2 = $956C9  -- "¹- Zaraz wracam!"
+            call say
+            call sub_1B324
+            call delay_c9c6
+            call sub_1B2DC
+            a2 = $956DA  -- "¹- Oto kawałek, o który mnie prosiłeś. Mam nadzieję, że się nie pom..."
+            call say
+            call sub_12C4E
+            b[$7C12B] = 0
+          else
+            goto L12B58
+          end
+        end
+      else
+        a2 = $952FE  -- "¹- Widzę, że zbierasz klocki. Pamiętaj! Żeby zobaczyć klocek, musis..."
+        call say
+      end
+    else
+      a2 = $952A0  -- "¹- Witaj. Widzę, że wciąż nie potrafisz odnaleźć w sobie mocy.  Pam..."
+      call say
+    end
+  else
+    hotspot_table = $1D790
+    mouse_min_y = $192
+    mouse_max_y = $1EF
+    mouse_max_x = $27A
+    b[$7C12A] += 1
+    a2 = $94970  -- "¹- Witaj Tomku! Cieszę się, że udało ci się uzyskać moc do pokonani..."
+    call say
+    a2 = $949BE  -- "²= To ty mnie znasz? Nie piliśmy brudzia! / = Kim jesteś?"
+    call show
+  ::L1292E::
+    wait_raster $FF
+    if not lmb then
+      if lmb then
+      else
+        goto L1292E
+      end
+    end
+    call hit_test
+    if d2 ~= -1 then
+    else
+      goto L1292E
+    end
+    if d2 u<= 2 then
+    else
+      goto L1292E
+    end
+    a2 = $949F6  -- "¹- Jestem Valence. Znam bardzo dobrze twoich przyjaciół, którzy uto..."
+    call say
+    a2 = $94A3F  -- "²- Ty? Skąd?"
+    call say
+    a2 = $94A4C  -- "¹- Jestem ich córką. Oczywiście tylko po ciemnej stronie."
+    call say
+    a2 = $94A86  -- "²- Teraz rozumiem. Czy nie wiesz co się teraz z nimi dzieje?"
+    call say
+    a2 = $94AC3  -- "¹- Muszę ci najpierw wyjaśnić parę rzeczy, o których nie wiesz."
+    call say
+    a2 = $94B03  -- "²- Słucham.."
+    call say
+    a2 = $94B10  -- "¹- Moi rodzice, czyli twój kolega i jego przyjaciółka próbowali kie..."
+    call say
+    a2 = $94C92  -- "  a ten wyjawił im jeden z sekretów pozwalających chwilowo wyłamać ..."
+    call say
+    a2 = $94DFF  -- "²- A co teraz?"
+    call say
+    a2 = $94E0E  -- "¹- Teraz ciała  topielców znajdują się gdzieś daleko w tajemniczej ..."
+    call say
+    a2 = $94F6F  -- "²- A jak mam ją posiąść?"
+    call say
+    a2 = $94F88  -- "¹- Abyś mógł podróżować przez wymiary, musisz odkryć w sobie moc i ..."
+    call say
+    a2 = $9500E  -- "²= A jak mam odkryć w sobie moc? / = Jaki typ klucza? / = Wytłumacz..."
+    call show
+    goto L129FC
+  end
+::L12392::
+  hotspot_table = $1D658
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L123C6::
+  wait_raster $FF
+  call ui_panel
+  if b[$7C101] == 1 then
+    if b[$7C10A] ~= 1 then
+      d6 = 0
+      d6.b = ciaa_pra
+      if bit(d6.b, 7) == 0 then
+        w[$59AD8] = $FFF
+        call sub_1B174
+        call sub_1B204
+        b[$7C10B] = 1
+        b[$7C10C] = 1
+        a2 = $7E13B  -- "Wyzwoliłeś moc!!!"
+        call clear_text
+        call print
+        call delay_200
+        w[$59AD8] = 0
+        b[$7C10A] = 1
+      end
+    end
+  end
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    if verb_use == 1 then
+      if w[$7C26A] == 1 then
+        if b[$7C12B] == 0 then
+          a2 = $7BB39  -- "Za nic nie mogę z tego sklecić układanki. Te klocki nie pasują do s..."
+          call say
+          a2 = $957B5  -- "¹- O rety! Wzięłam zły kawałek. Już nic się nie da zrobić! Jesteśmy..."
+          call say
+          a2 = $95803  -- "²- Co my teraz zrobimy?"
+          call say
+          a2 = $9581B  -- "¹- Nie możemy już nic zrobić. Tylko czekać na śmierć!"
+          call say
+          a2 = $95851  -- "²- Przecież musi być jakieś wyjście!"
+          call say
+          a2 = $95876  -- "¹- To było nasze jedyne wyjście. To jest wyrok śmierci na nas wszys..."
+          call say
+          a2 = $958C0  -- "²- To niemożliwe!"
+          call say
+          a2 = $958D2  -- "¹- To jest możliwe. To się właśnie dzieje!"
+          call say
+          a2 = $958FD  -- "²- Co się dzieje?"
+          call say
+          a2 = $9590F  -- "¹- Czuję, że oni umierają! Moi rodzice umierają... Właśnie teraz!"
+          call say
+          a2 = $95951  -- "²- Nieeeeeee!"
+          call say
+          a2 = $9595F  -- "¹- Po nich umrzemy my. To działa jak wir."
+          call say
+          a2 = $95989  -- "²- Czuję się dziwnie! Jakby mnie coś zasysało do wewnątrz. Aaaaaach!"
+          call say
+          call text_white
+          call music_stop
+          d1 = $4A
+          music_order = d1
+          call music_start
+          call sub_1BEF6
+          jump sub_1418C
+        end
+        if b[$7C171] ~= 0 then
+          b[$19328] = 1
+          l[$1932A] = $7BB2C  -- " 6 klocków  "
+          call inventory_scroll_up
+          l[$1932E] = $7DFFC
+          call inventory_scroll_down
+          l[$1932A] = $7BBAF  -- " układanka  "
+          call inventory_add
+          l[$1932E] = $7E000
+          call inventory_remove
+          b[$7C171] = 0
+          w[$7C26C] = 0
+          b[$19328] = 0
+          call draw_inventory
+          call reset_verbs
+          call draw_verb_bar
+          goto L123C6
+        end
+      ::L12506::
+        if b[$7C12D] ~= 1 then
+          if w[$7C24A] == 1 then
+            b[$7C12D] = 1
+            call sub_1B324
+            call sub_1B7FA
+            call sub_1B816
+            b[$1C04E] = 0
+            call cursor_hand
+            call draw_verb_bar
+            call reset_verbs
+            w[$7C24A] = 0
+            goto L123C6
+          end
+          goto L123C6
+        end
+        goto L123C6
+      end
+      goto L12506
+    end
+    if verb_talk == 1 then
+      if b[$7C12D] == 1 then
+        call reset_verbs
+        goto L123C6
+      end
+      if b[$7C171] ~= 0 then
+        if b[$7C10E] ~= 6 then
+          goto L125B6
+        end
+        a2 = $959CE  -- "²- Co mam teraz zrobić?"
+        call say
+        a2 = $959E6  -- "¹- Spróbuj się skoncentrować!."
+        call say
+        goto L12392
+      end
+      if b[$7C12C] ~= 0 then
+        b[$7C12E] += 1
+        if b[$7C12E] ~= 1 then
+        ::L125B6::
+          call sub_16CBA
+          goto L123C6
+        end
+        a2 = $95A87  -- "¹- A widzisz! Udało się!"
+        call say
+        a2 = $95AA0  -- "²- Rzeczywiście! Co teraz?"
+        call say
+        a2 = $95ABB  -- "¹- Czy nie wydaje ci się, że pytasz mnie o zbyt wiele rzeczy?"
+        call say
+        goto L12392
+      end
+      a2 = $95A21  -- "²- Mam układankę i nic się nie dzieje."
+      call say
+      a2 = $95A48  -- "¹- Ja naprawdę nie wiem co masz zrobić! Wiem, że to potrafisz!"
+      call say
+      goto L12392
+    end
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L123C6
+    end
+    goto L123C6
+  end
+  if d2 == 1 then
+    if b[$7C10B] == 1 then
+      if b[$7C163] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1B1BC
+              l[$1932A] = $7B9CA  -- "   klocek   "
+              call inventory_add
+              l[$1932E] = $7DFC8
+              call inventory_remove
+              b[$7C163] = 0
+              b[$7C10E] += 1
+              call reset_verbs
+              goto L123C6
+            end
+            if verb_look == 1 then
+              a2 = $83F10  -- "Klocek! Ma wcięcie z prawej i wypustkę u góry."
+            else
+              a2 = $83EFE  -- "Kawałek układanki"
+              call quip_if_verb_b
+            end
+            call clear_text
+            call print
+            call reset_verbs
+            goto L123C6
+          end
+          goto L123C6
+        end
+        goto L123C6
+      end
+      goto L123C6
+    end
+    goto L123C6
+  end
+  if d2 == 2 then
+    if b[$7C10C] == 1 then
+      if b[$7C164] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1B24C
+              l[$1932A] = $7B9D8  -- "   klocek   "
+              call inventory_add
+              l[$1932E] = $7DFCC
+              call inventory_remove
+              b[$7C164] = 0
+              b[$7C10E] += 1
+              call reset_verbs
+              goto L123C6
+            end
+            if verb_look == 1 then
+              a2 = $83F51  -- "Klocuszek do układanki. W kształcie litery L."
+            else
+              a2 = $83F3F  -- "Kawałek układanki"
+              call quip_if_verb
+            end
+            call clear_text
+            call print
+            call reset_verbs
+            goto L123C6
+          end
+          goto L123C6
+        end
+        goto L123C6
+      end
+      goto L123C6
+    end
+    goto L123C6
+  end
+  if d2 == 3 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $83F7F  -- "Do skrzyżowania"
+      call print
+      call label_mode
+    end
+    verb_use = 0
+    call cursor_exit_b
+    if lmb then
+      call sub_1BEF6
+      jump loc_34
+    end
+    goto L123C6
+  end
+  if d2 == 4 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_use == 1 then
+          if w[$7C26C] == 1 then
+            if b[$7C12C] ~= 1 then
+              b[$7C12C] = 1
+              l[$1932A] = $7BBAF  -- " układanka  "
+              call inventory_scroll_up
+              l[$1932E] = $7E000
+              call inventory_scroll_down
+              b[$7C100] = 1
+              call draw_verb_bar
+              call sub_1B294
+              w[$7C26C] = 0
+              call reset_verbs
+              goto L123C6
+            end
+            goto L123C6
+          end
+          goto L123C6
+        end
+        if verb_look == 1 then
+          a2 = $83F96  -- "Wbity w drzewo gwóźdź. Ktoś nie szanuje przyrody!"
+        else
+          a2 = $83F8F  -- "Gwóźdź"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L123C6
+      end
+      goto L123C6
+    end
+    goto L123C6
+  end
+  if b[$7C12D] ~= 1 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $83FD0  -- "Miła dziewczynka. Uśmiecha się jak osoba, która COŚ wie."
+        else
+          a2 = $83FC8  -- "Valence"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L123C6
+      end
+      goto L123C6
+    end
+    goto L123C6
+  end
+  goto L123C6
+::L129FC::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L129FC
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L129FC
+  end
+  if d2 == 1 then
+    a2 = $9506C  -- "¹- Nie potrafię ci tego wytłumaczyć. TY masz moc i sam musisz ją w ..."
+    call say
+    goto L12392
+  end
+  if d2 == 2 then
+    a2 = $950BF  -- "¹- Mogę ci powiedzieć tylko, że rodzice wykradli wtedy Bercerowi kl..."
+    call say
+    goto L12392
+  end
+  if d2 == 3 then
+    a2 = $951B1  -- "¹- Inne wymiary... Hm. To trudno wytłumaczyć. Na przykład kiedy coś..."
+    call say
+    goto L12392
+  end
+  goto L129FC
+end
+
+routine loc_35_2 @ $141DE
+  loc_id = $35
+  call ensure_disk
+  a0 = $1C800A
+  call sub_19422
+  call sub_1BEE6
+  a2 = $7E8F2  -- "Co Ty najlepszego zrobiłeś? Przez Twoją nieuwagę utraciliśmy najwię..."
+  call say
+  call clear_text
+  call sub_1BEF6
+  return
+end

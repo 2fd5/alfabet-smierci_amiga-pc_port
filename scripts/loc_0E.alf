@@ -1,0 +1,19 @@
+routine loc_0E @ $071B2
+::L071B2::
+  loc_id = $E
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $16C342
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1B9FA
+  call sub_1C8F6
+  call sub_1C8F6
+  call sub_1BA0A
+  jump game_over
+end

@@ -1,0 +1,169 @@
+routine loc_25 @ $0D706
+::L0D706::
+  loc_id = $25
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $193C16
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C158] == 0 then
+    call sub_1AF34
+  end
+  if b[$7C159] == 0 then
+    call sub_1AF7C
+  end
+  call sub_1BD12
+  call cursor_hand
+  hotspot_table = $1D444
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L0D7AC::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0D7AC
+    end
+    goto L0D7AC
+  end
+  if d2 == 1 then
+  else
+    if d2 == 2 then
+      if b[$7C16A] == 0 then
+        if b[$7C158] == 1 then
+          if lmb then
+            call cursor_busy
+            quip_person = 0
+            if hover_mode == 1 then
+              if verb_take == 1 then
+                call sub_1AF34
+                l[$1932A] = $7B798  -- "Ultramalina "
+                call inventory_add
+                l[$1932E] = $7DF9C
+                call inventory_remove
+                b[$7C158] = 0
+                call reset_verbs
+                goto L0D7AC
+              end
+              if verb_look == 1 then
+                a2 = $831F7  -- "Dorodne ziele Ultramaliny."
+              else
+                a2 = $831F0  -- "Ziółko"
+                call quip_if_verb_b
+              end
+              call reset_verbs
+              call clear_text
+              call print
+              goto L0D7AC
+            end
+            goto L0D7AC
+          end
+          goto L0D7AC
+        end
+        goto L0D7AC
+      end
+      goto L0D7AC
+    end
+    if d2 == 3 then
+      if b[$7C159] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1AF7C
+              l[$1932A] = $7B7A6  -- "   stolik   "
+              call inventory_add
+              l[$1932E] = $7DFA0
+              call inventory_remove
+              b[$7C159] = 0
+              call reset_verbs
+              goto L0D7AC
+            end
+            if verb_look == 1 then
+              a2 = $83219  -- "Hm... Rozeschnięty stolik, nie utrzyma nawet jajka na miękko"
+            else
+              a2 = $83212  -- "Stolik"
+              call quip_if_verb_b
+            end
+            call reset_verbs
+            call clear_text
+            call print
+            goto L0D7AC
+          end
+          goto L0D7AC
+        end
+        goto L0D7AC
+      end
+      goto L0D7AC
+    end
+    if d2 == 4 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $83266  -- "Dało by się z tego wybudować parę szaletów polowych."
+          else
+            a2 = $83256  -- "Drwa pod ścianą"
+            call quip_if_verb_b
+          end
+          call reset_verbs
+          call clear_text
+          call print
+          goto L0D7AC
+        end
+        goto L0D7AC
+      end
+      goto L0D7AC
+    end
+    if d2 == 5 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $832AE  -- "Kompletnie pusta komórka, nie ma tam po co wchodzić"
+          else
+            a2 = $8329B  -- "Wejście do komórki"
+            call quip_if_verb_b
+          end
+          call reset_verbs
+          call clear_text
+          call print
+          goto L0D7AC
+        end
+        goto L0D7AC
+      end
+      goto L0D7AC
+    end
+    goto L0D7AC
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $831E6  -- "Przed dom"
+    call print
+    call label_mode
+  end
+  call cursor_exit_b
+  if lmb then
+  else
+    goto L0D7AC
+  end
+  call sub_1BD22
+  goto L0D2B2
+end

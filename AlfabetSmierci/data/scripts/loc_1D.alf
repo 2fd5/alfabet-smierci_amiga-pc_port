@@ -1,0 +1,190 @@
+routine loc_1D @ $0A9B4
+::L0A9B4::
+  loc_id = $1D
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $12F70A
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BBF2
+  call cursor_hand
+  b[$7C0E2] = 1
+  hotspot_table = $1D2BA
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L0AA40::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+  else
+    if d2 == 1 then
+      goto L0AA40
+    end
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $82362  -- "Tu był brzydki napis, ale autorzy go wymazali..."
+          else
+            a2 = $8235D  -- "Słup"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0AA40
+        end
+        goto L0AA40
+      end
+      goto L0AA40
+    end
+    if d2 == 3 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $82398  -- "Ma sexy nogi... To oczywiście żart!"
+          else
+            a2 = $82393  -- "Nogi"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0AA40
+        end
+        goto L0AA40
+      end
+      goto L0AA40
+    end
+    goto L0AA40
+  end
+  if verb_talk == 1 then
+  else
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0AA40
+    end
+    goto L0AA40
+  end
+  hotspot_table = $1D790
+  mouse_min_y = $192
+  mouse_max_y = $1EF
+  mouse_max_x = $27A
+  a2 = $8C0E4  -- "²- Cześć!"
+  call say
+  a2 = $8C0EE  -- "¹- Witaj! Wyszłam po ciebie na dworzec bo pomyślałam sobie, że mógł..."
+  call say
+  a2 = $8C15B  -- "²= Myślałaś? To ty myślisz? Nie wyglądasz! / = Z reguły dobrze się ..."
+  call show
+::L0ABAE::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0ABAE
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0ABAE
+  end
+  if d2 == 1 then
+    a2 = $8C22B  -- "¹- Nie mam czasu na głupie żarty! Jeżeli przyszedłeś sobie pożartow..."
+    call say
+    call sub_1BC02
+    goto L035DC
+  end
+  if d2 u<= 3 then
+    a2 = $8C27E  -- "¹- Hm. Zupełnie jak taki jeden grajek czy śpiewak. Jestem Marysia W..."
+    call say
+    call sub_1BC02
+    call clear_text
+    goto L0AC3E
+  end
+  if d2 == 4 then
+    a2 = $8C2E6  -- "¹- Uuuuch jak ja nie cierpię wazeliniarzy. Wyszłam i koniec. Chodźm..."
+    call say
+    call sub_1BC02
+    call clear_text
+    goto L0AC3E
+  end
+::L0A826::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0A826
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0A826
+  end
+  if d2 == 1 then
+    a2 = $8BD69  -- "¹- Gerwazy? Ach co u niego słychać?"
+    call say
+    a2 = $8BD8D  -- "²= Mieszka u córki i ma się dobrze! / = Trochę chorował, ale teraz ..."
+    call show
+    goto L0A8BC
+  end
+  if d2 u<= 3 then
+    a2 = $8BEE4  -- "¹- A więc zdążyłeś Tomku! Jesteś! Oto adres jego córki! To w poblis..."
+    call say
+    call sub_1BBBA
+    call clear_text
+    goto L0A946
+  end
+  if d2 == 4 then
+    a2 = $8BF9A  -- "¹- A więc zdążyłeś Tomku! Jesteś! Oto adres córki Gerwazego! To w /..."
+    call say
+    call sub_1BBBA
+    call clear_text
+    goto L0A946
+  end
+  goto L0A826
+::L0A8BC::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0A8BC
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0A8BC
+  end
+  if d2 u<= 4 then
+  else
+    goto L0A8BC
+  end
+  a2 = $8BDFE  -- "¹- A! To wszystko w porządku! Ech Gerwazy! A jednak pan tutaj dotar..."
+  call say
+  a2 = $8BE72
+  call say
+  a2 = $8BE7D  -- "¹- Tak! Oto jego adres! To w pobliskiej wiosce. A teraz niech pan p..."
+  call say
+  call sub_1BBBA
+  call clear_text
+  goto L0A946
+end

@@ -1,0 +1,122 @@
+routine loc_3C @ $13A84
+::L13A84::
+  loc_id = $3C
+  call ensure_disk
+  a0 = $1619F0
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BF76
+  call cursor_hand
+  hotspot_table = $1D702
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L13AE2::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    if verb_talk == 1 then
+      a2 = $842D0  -- "Mam wrażenie, że gorączka nie pozwala jej mówić."
+      call say
+      call clear_text
+      call reset_verbs
+    end
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L13AE2
+    end
+    goto L13AE2
+  end
+  if d2 == 1 then
+  else
+    goto L13AE2
+  end
+  if lmb then
+  else
+    goto L13AE2
+  end
+  call cursor_busy
+  quip_person = 0
+  if hover_mode == 1 then
+  else
+    goto L13AE2
+  end
+  if verb_use == 1 then
+  else
+    if verb_look == 1 then
+      a2 = $842B5  -- "Wygląda na bardzo chorą..."
+    else
+      a2 = $842AD  -- "Marlena"
+      call quip_if_verb_b
+    end
+    call clear_text
+    call print
+    call reset_verbs
+    goto L13AE2
+  end
+  if w[$7C228] == 1 then
+  else
+    goto L13AE2
+  end
+  call clear_text
+  a2 = $84301  -- "²Zobaczmy... O! Jakaś karteczka! Co tu pisze?"
+  call print
+  call delay_200
+  call delay_200
+  call delay_200
+  call sub_1BF86
+  call sub_1433E
+  call clear_text
+  a2 = $8432F  -- ""Wypijcie to oboje. Jej przyniesie to zdrowie, /  a tobie zapomnien..."
+  call print_alt
+  call sub_1B84A
+  call wait_right_click_fast
+  call sub_1B85A
+  a1 = $610FE
+  a0 = $1619F0
+  call decrunch
+  call show_frame
+  call sub_1BF76
+  call delay_200
+  call delay_200
+  call delay_200
+  call clear_text
+  a2 = $843F9  -- "²Nic nam chyba nie pozostaje...."
+  call print
+  call delay_200
+  call delay_200
+  call delay_200
+  call delay_200
+  call delay_200
+  call delay_200
+  call clear_text
+  a2 = $8441A  -- "¹Glupglupglup...."
+  call print
+  call delay_200
+  call delay_200
+  call delay_200
+  call delay_200
+  call delay_200
+  call delay_200
+  call clear_text
+  a2 = $8442C  -- "²Glagglogglogglug...."
+  call print
+  call delay_200
+  call delay_200
+  call delay_200
+  call delay_200
+  call delay_200
+  call delay_200
+  call clear_text
+  call text_white
+  call sub_1BF86
+  jump loc_3D
+end

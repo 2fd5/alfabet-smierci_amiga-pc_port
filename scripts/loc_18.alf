@@ -1,0 +1,204 @@
+routine loc_18 @ $099D6
+::L099D6::
+  loc_id = $18
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $19C5A8
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BB3E
+  call cursor_hand
+  if b[$7C0CE] ~= 2 then
+    hotspot_table = $1D240
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+  ::L09A54::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+      call cursor_hand
+      hover_mode = 1
+      goto L09A54
+    end
+    if d2 == 1 then
+    else
+      if d2 == 2 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_look == 1 then
+              if b[$7C0DA] == 1 then
+                b[$7C0D7] += 1
+                if b[$7C0D7] < 2 then
+                  call clear_text
+                  call sub_1BB4E
+                  call sub_1433E
+                  a2 = $81A02  -- "12.06.95  M. Nakonieczny lat 68 zmarł na / zawał serca na dworcu ko..."
+                  call print_alt
+                  call sub_1B84A
+                  call wait_right_click_fast
+                  call sub_1B85A
+                  call sub_1433E
+                  call clear_text
+                  a2 = $81BB0  -- "20.06.95  Z. Nacki lat 46 Toromistrz. / Pracuje w Rosawie / 17.07.9..."
+                  call print_alt
+                  call sub_1B84A
+                  call wait_right_click_fast
+                  call sub_1B85A
+                  a1 = $610FE
+                  a0 = $19C5A8
+                  call decrunch
+                  call show_frame
+                  call sub_1BB3E
+                  call sub_1A5A4
+                  b[$7C0D8] = 1
+                  a2 = $81C91  -- "O! wypadł jakiś liścik... Przeczytajmy..."
+                else
+                  a2 = $81CBB  -- "Księga! Przed chwilą ją oglądałeś"
+                end
+              ::L09C3A::
+                call clear_text
+                call print
+                call reset_verbs
+                goto L09A54
+              end
+              call clear_text
+              call sub_1BB4E
+              call sub_1433E
+              call clear_text
+              a2 = $8049D  -- " 17.07.75: Tomasz Antkowiak lat 16, zmarł  /  tragicznie w wypadku ..."
+              call print_alt
+              call sub_1B84A
+              call wait_right_click_fast
+              call sub_1B85A
+              a1 = $610FE
+              a0 = $19C5A8
+              call decrunch
+              call show_frame
+              call sub_1BB3E
+              goto L09A54
+            end
+            a2 = $819C5  -- "Księga"
+            call quip_if_verb
+            goto L09C3A
+          end
+          goto L09A54
+        end
+        goto L09A54
+      end
+      if d2 == 3 then
+        if b[$7C0D8] == 1 then
+          if lmb then
+            call cursor_busy
+            quip_person = 0
+            if hover_mode == 1 then
+              if verb_take == 1 then
+                a2 = $81CDD  -- "Nie potrzebuję go brać!"
+              elseif verb_look == 1 then
+                call clear_text
+                call sub_1BB4E
+                call sub_1433E
+                a2 = $81D06  -- ""Miałem ostatnio widzenie. Młodzieniec  / przekroczył bramy. / Pozn..."
+                call print_alt
+                call sub_1B84A
+                call wait_right_click_fast
+                call sub_1B85A
+                a1 = $610FE
+                a0 = $19C5A8
+                call decrunch
+                call show_frame
+                call sub_1BB3E
+                call sub_1A5EC
+                b[$7C0D8] = 0
+              else
+                a2 = $81CF5  -- "Liścik"
+                call quip_if_verb_b
+              end
+              call reset_verbs
+              call clear_text
+              call print
+              goto L09A54
+            end
+            goto L09A54
+          end
+          goto L09A54
+        end
+        goto L09A54
+      end
+      goto L09A54
+    end
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $819B3  -- "Wyjście do miasta"
+      call print
+      call label_mode
+    end
+    call cursor_anim_cd88
+    if lmb then
+    else
+      goto L09A54
+    end
+    call sub_1BB4E
+    goto L0390A
+  end
+  hotspot_table = $1D25A
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+::L09D4A::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    goto L09D4A
+  end
+  if d2 == 1 then
+  else
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $819CC  -- "A fe! Buszować po parafii pod nieobecność proboszcza."
+          else
+            a2 = $819C5  -- "Księga"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L09D4A
+        end
+        goto L09D4A
+      end
+      goto L09D4A
+    end
+    goto L09D4A
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $819B3  -- "Wyjście do miasta"
+    call print
+    call label_mode
+  end
+  call cursor_anim_cd88
+  if lmb then
+  else
+    goto L09D4A
+  end
+  call sub_1BB4E
+  goto L0390A
+end

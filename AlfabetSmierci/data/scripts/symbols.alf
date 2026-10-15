@@ -1,0 +1,23 @@
+-- Variable names used by the scripts: name, size (b/w/l), original address.
+-- Generated from tools/symbols.py by tools/lifter.py.
+
+var inv_click_armed w $17958
+var verb_look w $1795A
+var verb_talk w $1795C
+var verb_take w $1795E
+var verb_give w $17960
+var verb_use w $17962
+var verb_open w $17964
+var panel_mode w $17966
+var mouse_min_y w $1CC04
+var mouse_max_y w $1CC06
+var mouse_max_x w $1CC08
+var hotspot_table l $1CEC2
+var disk_in_drive b $4EA36
+var hover_mode w $7A928
+var label_shown w $7A92A
+var quip_person w $7A92E
+var loc_id b $7BBD4
+var music_order l $7C0B6
+var inv_scroll l $7C0BE
+var train_rides b $7C0CF

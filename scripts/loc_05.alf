@@ -1,0 +1,360 @@
+routine loc_05 @ $0390A
+::L0390A::
+  loc_id = 5
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  a0 = $D0948
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C135] == 0 then
+    call sub_1A008
+  end
+  call sub_1B8B6
+  call cursor_hand
+  if b[$7C0CE] ~= 2 then
+    hotspot_table = $1CEFA
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+  ::L03994::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+      call cursor_hand
+      hover_mode = 1
+      if label_shown == 1 then
+        call clear_text
+        goto L03994
+      end
+      goto L03994
+    end
+    if d2 == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $7FE87  -- "To chyba skup makulatury. Zamknięty."
+          else
+            a2 = $7FE7C  -- "Małe drzwi"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L03994
+        end
+        goto L03994
+      end
+      goto L03994
+    end
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $7FEB5  -- "Start mały fiat. Zwróć uwagę na tylne zawieszenie... Sypie się, ale..."
+          else
+            a2 = $7FEAC  -- "Samochód"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L03994
+        end
+        goto L03994
+      end
+      goto L03994
+    end
+    if d2 == 3 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $7FF27  -- "Nieciekawy fiat 125p"
+          else
+            a2 = $7FF1E  -- "Samochód"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L03994
+        end
+        goto L03994
+      end
+      goto L03994
+    end
+    if d2 == 4 then
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          if b[$7C0D1] == 1 then
+            a2 = $7FF52  -- "Zamknięte!"
+          else
+            a2 = $7FF42  -- "Sklep. Otwarty."
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L03994
+        end
+        call clear_text
+        a2 = $7FF3C  -- "Sklep"
+        call print
+        call label_mode
+      ::L03B62::
+        call cursor_exit_a
+        if lmb then
+          if b[$7C0D1] ~= 1 then
+            call sub_1B8C6
+            goto L044FA
+          end
+          goto L03994
+        end
+        goto L03994
+      end
+      goto L03B62
+    end
+    if d2 == 5 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $7FF6E  -- "Domek, nic ciekawego."
+          else
+            a2 = $7FF68  -- "Domek"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L03994
+        end
+        goto L03994
+      end
+      goto L03994
+    end
+    if d2 == 6 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $7FF84  -- "Do stacji PKP"
+        call print
+        call label_mode
+      end
+      call cursor_anim_cd88
+      if lmb then
+        call sub_1B8C6
+        goto L035DC
+      end
+      goto L03994
+    end
+    if d2 == 7 then
+      if b[$7C135] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1A008
+              l[$1932A] = $7B3F2  -- " papierosy  "
+              call inventory_add
+              l[$1932E] = $7DF10
+              call inventory_remove
+              b[$7C135] = 0
+              call reset_verbs
+              goto L03994
+            end
+            if verb_look == 1 then
+              a2 = $7FFA4  -- "Zwyczajne rakotwory...."
+            else
+              a2 = $7FF9A  -- "Papierosy"
+              call quip_if_verb_b
+            end
+            call reset_verbs
+            call clear_text
+            call print
+            goto L03994
+          end
+          goto L03994
+        end
+        goto L03994
+      end
+      goto L03994
+    end
+    if d2 == 8 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $7FFC8  -- "Plan miasta"
+        call print
+        call label_mode
+      end
+      call cursor_anim_cd2c
+      if lmb then
+        call sub_1B8C6
+        goto L04028
+      end
+      goto L03994
+    end
+    goto L03994
+  end
+  hotspot_table = $1CF3C
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+::L03D56::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L03D56
+    end
+    goto L03D56
+  end
+  if d2 == 1 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $7FE87  -- "To chyba skup makulatury. Zamknięty."
+        else
+          a2 = $7FE7C  -- "Małe drzwi"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L03D56
+      end
+      goto L03D56
+    end
+    goto L03D56
+  end
+  if d2 == 2 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $7FEB5  -- "Start mały fiat. Zwróć uwagę na tylne zawieszenie... Sypie się, ale..."
+        else
+          a2 = $7FEAC  -- "Samochód"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L03D56
+      end
+      goto L03D56
+    end
+    goto L03D56
+  end
+  if d2 == 3 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $7FF27  -- "Nieciekawy fiat 125p"
+        else
+          a2 = $7FF1E  -- "Samochód"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L03D56
+      end
+      goto L03D56
+    end
+    goto L03D56
+  end
+  if d2 == 4 then
+    if b[$7C0FC] ~= 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $7FF5D  -- "Na parafię"
+        call print
+        call label_mode
+      end
+      call cursor_anim_cd2c
+      if lmb then
+        call sub_1B8C6
+        if b[$7C144] ~= 1 then
+          goto L0527A
+        end
+        goto L099D6
+      end
+      goto L03D56
+    end
+    goto L03D56
+  end
+  if d2 == 5 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $7FF6E  -- "Domek, nic ciekawego."
+        else
+          a2 = $7FF68  -- "Domek"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L03D56
+      end
+      goto L03D56
+    end
+    goto L03D56
+  end
+  if d2 == 6 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $7FF92  -- "Na targ"
+      call print
+      call label_mode
+    end
+    call cursor_exit_b
+    if lmb then
+      call sub_1B8C6
+      jump loc_27
+    end
+    goto L03D56
+  end
+  if d2 == 7 then
+    if b[$7C12D] ~= 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $7FFBC  -- "Na cmentarz"
+        call print
+        call label_mode
+      end
+      call cursor_exit_b
+      if lmb then
+        call sub_1B8C6
+        goto L09E40
+      end
+      goto L03D56
+    end
+    goto L03D56
+  end
+  goto L03D56
+end

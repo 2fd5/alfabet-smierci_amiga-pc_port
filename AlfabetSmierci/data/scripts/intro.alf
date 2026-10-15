@@ -1,0 +1,637 @@
+-- The intro program (disk 1, sector 22), lifted like the game. It is loaded at $3000
+-- before the main game, so its labels use the IL prefix.
+labels IL
+
+routine intro @ $03000
+  call intro_music_start
+  l[$03500] = l[$0006C]
+  l[$0006C] = $34DC
+  a6 = $DFF000
+  w[$DFF09A] = $C020
+  l[$036A6] = $52FD0
+  l[$0369E] = $29918
+  l[$036A2] = 3
+  l[$0369A] = $5000
+  w[$299A2] = $FFF8
+  w[$299A6] = $FFF8
+  w[$2990E] = $20
+  w[$29916] = $C200
+  call intro_set_bitplanes
+  l[$DFF080] = $29908
+  a0 = $76DF8
+  a1 = $52FD0
+  call intro_decrunch
+  l[$035B8] = $17
+  call intro_sub_03552
+  call intro_sub_036CA
+  l[$035B8] = $17
+  call intro_sub_03552
+  call intro_sub_0370C
+  l[$036A6] = $2AFD0
+  l[$0369E] = $29918
+  l[$036A2] = 6
+  l[$0369A] = $5000
+  w[$299A2] = $FFF8
+  w[$299A6] = $FFF8
+  w[$2990E] = $20
+  w[$29916] = $F000
+  call intro_set_bitplanes
+  a0 = $78430
+  a1 = $2AFD0
+  call intro_decrunch
+  call intro_sub_0371C
+  l[$035B8] = $13
+  call intro_sub_03552
+  call intro_sub_0375E
+  l[$036A6] = $52FD0
+  l[$0369E] = $29918
+  l[$036A2] = 3
+  l[$0369A] = $5000
+  w[$299A2] = $FFF8
+  w[$299A6] = $FFF8
+  w[$2990E] = $20
+  w[$29916] = $C200
+  call intro_set_bitplanes
+  l[$DFF080] = $29908
+  a0 = $7FC40  -- "CrM!"
+  a1 = $52FD0
+  call intro_decrunch
+  l[$035B8] = 3
+  call intro_sub_03552
+  call intro_sub_0376E
+  l[$035B8] = 2
+  call intro_sub_03552
+  call intro_sub_037B0
+::IL031BA::
+  l[$036A6] = $2AFD0
+  l[$0369E] = $29918
+  l[$036A2] = 7
+  l[$0369A] = $5000
+  w[$299A2] = $FFF8
+  w[$299A6] = $FFF8
+  w[$2990E] = $20
+  call intro_set_bitplanes
+  w[$29916] = 0
+  l[$DFF080] = $29908
+  a0 = $809DC  -- "CrM!"
+  a1 = $2AFD0
+  call intro_decrunch
+  call intro_sub_037C0
+  l[$035B8] = 5
+  call intro_sub_03552
+  w[$29916] = $8010
+  l[$035B8] = $13
+  call intro_sub_03552
+  call intro_sub_03802
+  l[$036A6] = $52FD0
+  l[$0369E] = $29918
+  l[$036A2] = 2
+  l[$0369A] = $5000
+  w[$299A2] = $FFF8
+  w[$299A6] = $FFF8
+  w[$2990E] = $20
+  w[$29916] = $B200
+  call intro_set_bitplanes
+  l[$DFF080] = $29908
+  a0 = $8CEA6  -- "CrM!"
+  a1 = $52FD0
+  call intro_decrunch
+  call intro_sub_03812
+  l[$035B8] = 6
+  call intro_sub_03552
+  call intro_sub_03854
+  l[$036A6] = $2AFD0
+  l[$0369E] = $29918
+  l[$036A2] = 2
+  l[$0369A] = $5000
+  w[$299A2] = $FFF8
+  w[$299A6] = $FFF8
+  w[$2990E] = $20
+  w[$29916] = $B200
+  call intro_set_bitplanes
+  l[$DFF080] = $29908
+  a0 = $8DCA2  -- "CrM!"
+  a1 = $2AFD0
+  call intro_decrunch
+  call intro_sub_03812
+  l[$035B8] = 6
+  call intro_sub_03552
+  call intro_sub_03854
+  l[$036A6] = $52FD0
+  l[$0369E] = $29918
+  l[$036A2] = 2
+  l[$0369A] = $5000
+  w[$299A2] = $FFF8
+  w[$299A6] = $FFF8
+  w[$2990E] = $20
+  w[$29916] = $B200
+  call intro_set_bitplanes
+  l[$DFF080] = $29908
+  a0 = $8E8DC  -- "CrM!"
+  a1 = $52FD0
+  call intro_decrunch
+  call intro_sub_03812
+  l[$035B8] = 6
+  call intro_sub_03552
+  call intro_sub_03854
+  l[$036A6] = $2AFD0
+  l[$0369E] = $29918
+  l[$036A2] = 0
+  l[$0369A] = $5000
+  w[$299A2] = 0
+  w[$299A6] = 0
+  w[$29912] = 0
+  w[$2990E] = $20
+  w[$29916] = $9200
+  call intro_set_bitplanes
+  l[$DFF080] = $29908
+  call intro_sub_03864
+  call intro_sub_035BC
+  a2 = $2A1F8
+  call intro_print
+  call intro_sub_03504
+  call intro_sub_038A6
+  call intro_sub_03864
+  call intro_sub_035BC
+  a2 = $2A568
+  call intro_print
+  call intro_sub_03504
+  call intro_sub_038A6
+  call intro_sub_03864
+  call intro_sub_035BC
+  a2 = $2A989
+  call intro_print
+  call intro_sub_03504
+  call intro_sub_038A6
+  call intro_sub_03864
+  call intro_sub_035BC
+  a2 = $2AD72
+  call intro_print
+  call intro_sub_03504
+  call intro_sub_038A6
+  call intro_music_stop
+  l[$0006C] = l[$03500]
+  w[$DFF09A] = $7FFF
+  jump intro_end_load_game
+end
+
+routine intro_sub_03504 @ $03504
+  d7.w = $2B7
+::IL03508::
+  d6.w = $32
+::IL0350C::
+  wait_raster $F0
+  if lmb then
+  else
+    d6.w -= 1
+    if d6.w ~= -1 then goto IL0350C end
+    d7.w -= 1
+    if d7.w ~= -1 then goto IL03508 end
+  end
+  d7.w = $2B7
+::IL0352E::
+  d6.w = $32
+::IL03532::
+  wait_raster $F0
+  if not lmb then
+  else
+    d6.w -= 1
+    if d6.w ~= -1 then goto IL03532 end
+    d7.w -= 1
+    if d7.w ~= -1 then goto IL0352E end
+  end
+  return
+end
+
+routine intro_sub_03552 @ $03552
+  d7 = l[$035B8]
+::IL03558::
+  d6.w = $18
+::IL0355C::
+  wait_raster $E0
+  wait_raster $00
+  if lmb then
+  else
+    d6.w -= 1
+    if d6.w ~= -1 then goto IL0355C end
+    d7.w -= 1
+    if d7.w ~= -1 then goto IL03558 end
+  end
+  d7 = l[$035B8]
+::IL0358A::
+  d6.w = $18
+::IL0358E::
+  wait_raster $FF
+  wait_raster $00
+  if not lmb then
+  else
+    d6.w -= 1
+    if d6.w ~= -1 then goto IL0358E end
+    d7.w -= 1
+    if d7.w ~= -1 then goto IL0358A end
+  end
+  return
+end
+
+routine intro_sub_035BC @ $035BC
+  a0 = $2AFD0
+  d7 = $5000
+::IL035C8::
+  l[a0++] = 0
+  d7.w -= 1
+  if d7.w ~= -1 then goto IL035C8 end
+  return
+end
+
+routine intro_print @ $035D0
+  push d0, d1, d2, d3, d4, d5, d6, d7, a0, a1, a2, a3, a4, a5, a6
+  d0 = 0
+  d1 = 0
+  d2 = 0
+  d3 = 0
+  d2 = 4
+  d3 += $730
+::IL035E4::
+  d0.b = b[a2++]
+  if d0.b ~= 0 then
+    if d0.b == $A then
+      d3 += $320
+      d2 = 4
+      goto IL035E4
+    end
+    if d0.b == $B9 then
+      goto IL035E4
+    end
+    if d0.b == $B2 then
+      goto IL035E4
+    end
+    d1.w = d3.w
+    d1 += d2
+    call intro_sub_03618
+    d2 += 1
+    goto IL035E4
+  end
+  pop d0, d1, d2, d3, d4, d5, d6, d7, a0, a1, a2, a3, a4, a5, a6
+  return
+end
+
+routine intro_sub_03618 @ $03618
+  a0 = l[$2AFC6]
+  d0.b -= $20
+::IL03622::
+  if d0.b u>= $50 then
+    a0 += $280
+    d0.b -= $50
+    goto IL03622
+  end
+  a0 += d0
+  a1 = $2AFD0
+  d5.w = w[$0366A]
+::IL03642::
+  a1 += d1
+  d7 = 7
+::IL03646::
+  d4.b = b[a0]
+  b[a1] |= d4.b
+  a0 += $50
+  a1 += $50
+  d7.w -= 1
+  if d7.w ~= -1 then goto IL03646 end
+  a0 -= $280
+  d5.w -= 1
+  if d5.w ~= -1 then goto IL03642 end
+  return
+end
+
+routine intro_set_bitplanes @ $0366C
+  a0 = l[$0369E]
+  d0 = l[$036A6]
+  d7 = l[$036A2]
+::IL0367E::
+  w[a0+$6] = d0.w
+  swap d0
+  w[a0+$2] = d0.w
+  swap d0
+  a0 = a0 + $8
+  d0 += l[$0369A]
+  d7.w -= 1
+  if d7.w ~= -1 then goto IL0367E end
+  return
+end
+
+routine intro_sub_036AA @ $036AA
+  a1 = $3EBE
+  a2 = $3ABE
+  d7 = l[$038B6]
+::IL036BC::
+  l[a1++] = l[a0++]
+  l[a2++] = 0
+  d7.w -= 1
+  if d7.w ~= -1 then goto IL036BC end
+  return
+end
+
+routine intro_sub_036CA @ $036CA
+  a0 = $761D0
+  l[$038B6] = $F
+  call intro_sub_036AA
+  l[$038BA] = 0
+  l[$038BE] = $F
+  l[$038C2] = $299BA
+  l[$038C6] = $29A3E
+  call intro_sub_038CA
+  return
+end
+
+routine intro_sub_0370C @ $0370C
+  a0 = $761D0
+  call intro_sub_036AA
+  call intro_sub_03944
+  return
+end
+
+routine intro_sub_0371C @ $0371C
+  a0 = $75FD0
+  l[$038B6] = $7F
+  call intro_sub_036AA
+  l[$038BA] = 3
+  l[$038BE] = $1F
+  l[$038C2] = $299BA
+  l[$038C6] = $29A3E
+  call intro_sub_038CA
+  return
+end
+
+routine intro_sub_0375E @ $0375E
+  a0 = $75FD0
+  call intro_sub_036AA
+  call intro_sub_03944
+  return
+end
+
+routine intro_sub_0376E @ $0376E
+  a0 = $76210
+  l[$038B6] = $F
+  call intro_sub_036AA
+  l[$038BA] = 0
+  l[$038BE] = $1F
+  l[$038C2] = $299BA
+  l[$038C6] = $29A3E
+  call intro_sub_038CA
+  return
+end
+
+routine intro_sub_037B0 @ $037B0
+  a0 = $76210
+  call intro_sub_036AA
+  call intro_sub_03944
+  return
+end
+
+routine intro_sub_037C0 @ $037C0
+  a0 = $76250
+  l[$038B6] = $FF
+  call intro_sub_036AA
+  l[$038BA] = 7
+  l[$038BE] = $1F
+  l[$038C2] = $299BA
+  l[$038C6] = $29A3E
+  call intro_sub_038CA
+  return
+end
+
+routine intro_sub_03802 @ $03802
+  a0 = $76250
+  call intro_sub_036AA
+  call intro_sub_03944
+  return
+end
+
+routine intro_sub_03812 @ $03812
+  a0 = $76650
+  l[$038B6] = 7
+  call intro_sub_036AA
+  l[$038BA] = 0
+  l[$038BE] = 7
+  l[$038C2] = $299BA
+  l[$038C6] = $29A3E
+  call intro_sub_038CA
+  return
+end
+
+routine intro_sub_03854 @ $03854
+  a0 = $76650
+  call intro_sub_036AA
+  call intro_sub_03944
+  return
+end
+
+routine intro_sub_03864 @ $03864
+  a0 = $76670
+  l[$038B6] = 1
+  call intro_sub_036AA
+  l[$038BA] = 0
+  l[$038BE] = 1
+  l[$038C2] = $299BA
+  l[$038C6] = $29A3E
+  call intro_sub_038CA
+  return
+end
+
+routine intro_sub_038A6 @ $038A6
+  a0 = $76670
+  call intro_sub_036AA
+  call intro_sub_03944
+  return
+end
+
+routine intro_sub_038CA @ $038CA
+  d5.w = $FE
+::IL038CE::
+  a0 = l[$038C2]
+  a1 = l[$038C6]
+  a2 = $3ABE
+  a3 = $3EBE
+  d6 = l[$038BA]
+::IL038EC::
+  d7 = l[$038BE]
+::IL038F2::
+  a4 = a2
+  d0.b = b[a2++]
+  d1.b = b[a3++]
+  d0.b = b[a2++]
+  d1.b = b[a3++]
+  if d1.b ~= d0.b then
+    d0.b += 1
+    b[a2-$1] = d0.b
+  end
+  d0.b = b[a2++]
+  d1.b = b[a3++]
+  if d1.b ~= d0.b then
+    d0.b += 1
+    b[a2-$1] = d0.b
+  end
+  d0.b = b[a2++]
+  d1.b = b[a3++]
+  if d1.b ~= d0.b then
+    d0.b += 1
+    b[a2-$1] = d0.b
+  end
+  a0 += 4
+  a1 += 4
+  d7.w -= 1
+  if d7.w ~= -1 then goto IL038F2 end
+  a0 += $88
+  a1 += $88
+  d6.w -= 1
+  if d6.w ~= -1 then goto IL038EC end
+  call intro_palette_current_to_copper
+  d5.w -= 1
+  if d5.w ~= -1 then goto IL038CE end
+  return
+end
+
+routine intro_sub_03944 @ $03944
+  d5.w = $FE
+::IL03948::
+  a0 = l[$038C2]
+  a1 = l[$038C6]
+  a2 = $3EBE
+  d6 = l[$038BA]
+::IL03960::
+  d7 = l[$038BE]
+::IL03966::
+  a4 = a2
+  a2 += 1
+  d0.b = b[a2++]
+  if d0.b ~= 0 then
+    d0.b -= 3
+    if d0.b ~= $FF then
+      if d0.b ~= $FE then
+        b[a2-$1] = d0.b
+      end
+    end
+  end
+  d0.b = b[a2++]
+  if d0.b ~= 0 then
+    d0.b -= 3
+    if d0.b ~= $FF then
+      if d0.b ~= $FE then
+        b[a2-$1] = d0.b
+      end
+    end
+  end
+  d0.b = b[a2++]
+  if d0.b ~= 0 then
+    d0.b -= 3
+    if d0.b ~= $FF then
+      if d0.b ~= $FE then
+        b[a2-$1] = d0.b
+      end
+    end
+  end
+  a0 += 4
+  a1 += 4
+  d7.w -= 1
+  if d7.w ~= -1 then goto IL03966 end
+  a0 += $88
+  a1 += $88
+  d6.w -= 1
+  if d6.w ~= -1 then goto IL03960 end
+  call intro_palette_target_to_copper
+  d5.w -= 1
+  if d5.w ~= -1 then goto IL03948 end
+  return
+end
+
+routine intro_palette_current_to_copper @ $039DA
+  push d0, d1, d2, d3, d4, d5, d6, d7, a0, a1, a2, a3, a4, a5, a6
+  a0 = $3ABE
+  a1 = $299B4
+  d6 = l[$038BA]
+  a1 += 6
+::IL039F2::
+  d7 = l[$038BE]
+::IL039F8::
+  d0 = 0
+  d1 = 0
+  d2 = 0
+  d3 = 0
+  d4 = 0
+  d5 = 0
+  d2.b = b[a0++]
+  d2.b = b[a0++]
+  d1.b = b[a0++]
+  d0.b = b[a0++]
+  d3.b = d0.b
+  d4.b = d1.b
+  d5.b = d2.b
+  shr d3.b, 4
+  d4.b &= $F0
+  d5.b &= $F0
+  shl d5.w, 4
+  d5.b |= d3.b
+  d5.b |= d4.b
+  d0.b &= $F
+  shl d1.b, 4
+  d2.b &= $F
+  shl d2.w, 8
+  d2.b |= d0.b
+  d2.b |= d1.b
+  w[a1] = d5.w
+  w[a1+$84] = d2.w
+  a1 += 4
+  d7.w -= 1
+  if d7.w ~= -1 then goto IL039F8 end
+  a1 = a1 + $88
+  d6.w -= 1
+  if d6.w ~= -1 then goto IL039F2 end
+  pop d0, d1, d2, d3, d4, d5, d6, d7, a0, a1, a2, a3, a4, a5, a6
+  return
+end
+
+routine intro_palette_target_to_copper @ $03A4C
+  push d0, d1, d2, d3, d4, d5, d6, d7, a0, a1, a2, a3, a4, a5, a6
+  a0 = $3EBE
+  a1 = $299B4
+  d6 = l[$038BA]
+  a1 += 6
+::IL03A64::
+  d7 = l[$038BE]
+::IL03A6A::
+  d0 = 0
+  d1 = 0
+  d2 = 0
+  d3 = 0
+  d4 = 0
+  d5 = 0
+  d2.b = b[a0++]
+  d2.b = b[a0++]
+  d1.b = b[a0++]
+  d0.b = b[a0++]
+  d3.b = d0.b
+  d4.b = d1.b
+  d5.b = d2.b
+  shr d3.b, 4
+  d4.b &= $F0
+  d5.b &= $F0
+  shl d5.w, 4
+  d5.b |= d3.b
+  d5.b |= d4.b
+  d0.b &= $F
+  shl d1.b, 4
+  d2.b &= $F
+  shl d2.w, 8
+  d2.b |= d0.b
+  d2.b |= d1.b
+  w[a1] = d5.w
+  w[a1+$84] = d2.w
+  a1 += 4
+  d7.w -= 1
+  if d7.w ~= -1 then goto IL03A6A end
+  a1 = a1 + $88
+  d6.w -= 1
+  if d6.w ~= -1 then goto IL03A64 end
+  pop d0, d1, d2, d3, d4, d5, d6, d7, a0, a1, a2, a3, a4, a5, a6
+  return
+end

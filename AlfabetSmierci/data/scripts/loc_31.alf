@@ -1,0 +1,370 @@
+routine loc_31 @ $10B64
+  loc_id = $31
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  if b[$030EE] ~= 1 then
+    a0 = $13386A
+  else
+    a0 = $10366A
+  end
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BE56
+  call cursor_hand
+  if b[$7C0CE] ~= 2 then
+    if b[$7C0DC] ~= 0 then
+      a2 = $939C0  -- "¹- Chłopie! Dobrze ci radzę! Spływaj stąd czym prędzej..."
+      call say_restore_cursor
+    else
+      b[$7C0DC] += 1
+      a2 = $93707  -- "¹- A jednak przyszedłeś!  Słuchaj, nie masz zbyt wiele czasu!.  Opo..."
+      call say
+      a2 = $9387F  -- "  podczas całego tego zamieszania. Może tam jest coś... wartościowe..."
+      call say
+      a2 = $93925  -- "²- Jaki cel?"
+      call say
+      a2 = $93932  -- "¹- Nie pytaj! Nie ma czasu! Przeszukaj półkę i zmykaj! Jak cię tu z..."
+      call say_restore_cursor
+    end
+    hotspot_table = $1D5AE
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+    call clear_text
+    call draw_verb_bar
+    call reset_verbs
+  ::L10C18::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+      if verb_talk == 1 then
+        call sub_16CBA
+        goto L10C18
+      end
+      call cursor_hand
+      hover_mode = 1
+      if label_shown == 1 then
+        call clear_text
+        goto L10C18
+      end
+      goto L10C18
+    end
+    if d2 == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 1
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $83AFF  -- "Jakiś smutny... nieogolony (jak zawsze zresztą)."
+          else
+            a2 = $83AF8  -- "Doktor"
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L10C18
+        end
+        goto L10C18
+      end
+      goto L10C18
+    end
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $83B36  -- "Ciekawe z czego jest zrobiona?..."
+          else
+            a2 = $83B30  -- "Krata"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L10C18
+        end
+        goto L10C18
+      end
+      goto L10C18
+    end
+    if d2 == 3 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $83B58  -- "Na zewnątrz"
+        call print
+        call label_mode
+      end
+      call cursor_exit_b
+      if lmb then
+        call sub_1BE66
+        jump loc_0D
+      end
+      goto L10C18
+    end
+    if d2 == 4 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $83B64  -- "Do półki"
+        call print
+        call label_mode
+      end
+      call cursor_anim_cd2c
+      if lmb then
+        call sub_1BE66
+        jump loc_15
+      end
+      goto L10C18
+    end
+    goto L10C18
+  end
+  if b[$7C147] ~= 0 then
+    b[$7C0F8] += 1
+    if b[$7C0F8] ~= 1 then
+      hotspot_table = $1D790
+      mouse_min_y = $192
+      mouse_max_y = $1EF
+      mouse_max_x = $27A
+      a2 = $941E3  -- "¹- To znowu ty? Wydaje mi się, że czegoś potrzebujesz. Spiesz się. ..."
+      call say
+      a2 = $94269  -- "²= Gdzie? / = Ile ma lat Quefrete? / = Czy miałeś kiedyś dziwne ucz..."
+      call show
+    ::L111CC::
+      wait_raster $FF
+      if not lmb then
+        if lmb then
+        else
+          goto L111CC
+        end
+      end
+      call hit_test
+      if d2 ~= -1 then
+      else
+        goto L111CC
+      end
+      if d2 == 1 then
+        a2 = $942D1  -- "¹- Do Jasnego Domu"
+        call say_restore_cursor
+      elseif d2 == 2 then
+        a2 = $942E4  -- "¹- Nie wiem. Ona była zawsze."
+        call say_restore_cursor
+      elseif d2 == 3 then
+        a2 = $93D6B  -- "¹- A nie szukałeś przypadkiem skafandra?"
+        call say
+        a2 = $93D94  -- "²- Właśnie! Ty wiesz coś o skafandrze?"
+        call say
+        a2 = $93DBB  -- "¹- Kiedy ostatnio mieszkałem w cieniu, lubiłem nurkować. Miałem  sk..."
+        call say
+        a2 = $93EC6  -- "²- I masz ją tutaj?"
+        call say
+        a2 = $93EDA  -- "¹- Niestety nie! Została w szpitalu. To było w takiej szafce. Mam p..."
+        call say
+        a2 = $93FF7  -- "²- Kogo?"
+        call say
+        a2 = $94000  -- "¹- Xanadu-Lilith, wstrętną służącą Bercera. Nie pamiętasz pielęgnia..."
+        call say
+        a2 = $940B6
+        call say
+        l[$1932A] = $7B526  -- "  kluczyk   "
+        call inventory_add
+        l[$1932E] = $7DF58
+        call inventory_remove
+        b[$7C147] = 0
+        call reset_verbs
+        a2 = $940C3  -- "¹- Jeżeli to ten skafander, to bransoletka jest dobrze strzeżona. P..."
+        call say
+      else
+        goto L111CC
+      end
+    else
+      hotspot_table = $1D790
+      mouse_min_y = $192
+      mouse_max_y = $1EF
+      mouse_max_x = $27A
+      a2 = $939FA  -- "¹- Witaj! Mamy szczęście w nieszczęściu! Jednak się spotkaliśmy!  W..."
+      call say
+      a2 = $93B7A  -- "  ale dużo mniej. Ostatnią rzeczą, którą zapamiętałem było to, że n..."
+      call say
+      a2 = $93C26  -- "²- Chyba wiem co zaszło! Ale to już teraz nie jest ważne."
+      call say
+      a2 = $93C60  -- "¹- Może i nie, ale proboszcz na pewno długo nie pociągnie..."
+      call say
+      a2 = $93C9D  -- "²= A jak długo? / = Czy miał znamię na czole? / = Wiesz. Przechodzi..."
+      call show
+    ::L11092::
+      wait_raster $FF
+      if not lmb then
+        if lmb then
+        else
+          goto L11092
+        end
+      end
+      call hit_test
+      if d2 ~= -1 then
+      else
+        goto L11092
+      end
+      if d2 == 1 then
+        a2 = $93D2E  -- "¹- Tego nie wiem."
+        call say_restore_cursor
+      elseif d2 == 2 then
+        a2 = $93D40  -- "¹- Nie pamiętam. To stało się zbyt szybko!"
+        call say_restore_cursor
+      elseif d2 u<= 4 then
+        a2 = $93D6B  -- "¹- A nie szukałeś przypadkiem skafandra?"
+        call say
+        a2 = $93D94  -- "²- Właśnie! Ty wiesz coś o skafandrze?"
+        call say
+        a2 = $93DBB  -- "¹- Kiedy ostatnio mieszkałem w cieniu, lubiłem nurkować. Miałem  sk..."
+        call say
+        a2 = $93EC6  -- "²- I masz ją tutaj?"
+        call say
+        a2 = $93EDA  -- "¹- Niestety nie! Została w szpitalu. To było w takiej szafce. Mam p..."
+        call say
+        a2 = $93FF7  -- "²- Kogo?"
+        call say
+        a2 = $94000  -- "¹- Xanadu-Lilith, wstrętną służącą Bercera. Nie pamiętasz pielęgnia..."
+        call say
+        a2 = $940B6
+        call say
+        l[$1932A] = $7B526  -- "  kluczyk   "
+        call inventory_add
+        l[$1932E] = $7DF58
+        call inventory_remove
+        b[$7C147] = 0
+        call reset_verbs
+        a2 = $940C3  -- "¹- Jeżeli to ten skafander, to bransoletka jest dobrze strzeżona. P..."
+        call say
+      else
+        goto L11092
+      end
+    end
+  elseif b[$7C146] ~= 1 then
+  else
+    a2 = $94302  -- "¹- I co znalazłeś skafander? Musisz się spieszyć!"
+    call say
+    a2 = $94334  -- "²- Nie!"
+    call say
+    a2 = $9433C  -- "¹- Widocznie czegoś ci jeszcze brakuje. Poszukaj wokoło!"
+    call say_restore_cursor
+  end
+  hotspot_table = $1D5AE
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+  call cursor_hand
+::L10E34::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    if verb_talk == 1 then
+      call sub_16CBA
+      goto L10E34
+    end
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L10E34
+    end
+    goto L10E34
+  end
+  if d2 == 1 then
+    if lmb then
+      call cursor_busy
+      quip_person = 1
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $83AFF  -- "Jakiś smutny... nieogolony (jak zawsze zresztą)."
+        else
+          a2 = $83AF8  -- "Doktor"
+          call quip_if_verb_b
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L10E34
+      end
+      goto L10E34
+    end
+    goto L10E34
+  end
+  if d2 == 2 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $83B36  -- "Ciekawe z czego jest zrobiona?..."
+        else
+          a2 = $83B30  -- "Krata"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L10E34
+      end
+      goto L10E34
+    end
+    goto L10E34
+  end
+  if d2 == 3 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $83B58  -- "Na zewnątrz"
+      call print
+      call label_mode
+    end
+    call cursor_exit_b
+    if lmb then
+      call sub_1BE66
+      jump loc_0D
+    end
+    goto L10E34
+  end
+  if d2 == 4 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $83B64  -- "Do półki"
+      call print
+      call label_mode
+    end
+    call cursor_anim_cd2c
+    if lmb then
+      call sub_1BE66
+      jump loc_15
+    end
+    goto L10E34
+  end
+  goto L10E34
+end
+
+routine loc_31_2 @ $14282
+::L14282::
+  loc_id = $31
+  call ensure_disk
+  a0 = $13386A
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BE56
+  a2 = $7EAF0  -- "Coś ty najlepszego zrobił? Przez ciebie będę tu tkwił całą wiecznoś..."
+  call say
+  call clear_text
+  call sub_1BE66
+  jump sub_142CA
+end

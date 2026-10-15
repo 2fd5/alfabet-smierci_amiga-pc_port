@@ -1,0 +1,203 @@
+routine loc_12 @ $082FC
+::L082FC::
+  loc_id = $12
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $117B6A
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BA8A
+  if b[$7C0CE] ~= 2 then
+    a2 = $80D3B  -- "¹Przywołałem cię z oddali! Uważaj na siebie! Tym razem dam Ci szans..."
+    call say
+    call clear_text
+    call sub_1BA9A
+    goto L08720
+  end
+  if b[$7C106] == 1 then
+    if b[$7C121] ~= 0 then
+      b[$7C128] += 1
+      if b[$7C128] ~= 1 then
+        a2 = $81388  -- "- Dlaczego zakłócasz mój spokój? Ja już zrobiłem co do mnie należał..."
+        call say
+      else
+        b[$7C101] = 1
+        a2 = $8109E  -- "- Jesteś.... Wiedziałem, że w końcu nadejdzie ten dzień! Obdarzam c..."
+        call say
+        a2 = $81218  -- "- Teraz rozpoznasz bez trudu siły zła, ale i zło rozpozna cię od ra..."
+        call say
+      end
+    ::L0839C::
+      call cursor_hand
+      hotspot_table = $1D1A4
+      mouse_min_y = $20
+      mouse_max_y = $253
+      mouse_max_x = $27A
+    ::L083C4::
+      wait_raster $FF
+      call ui_panel
+      call ui_combine
+      call hit_test
+      if d2 == -1 then
+        if verb_talk == 1 then
+          a2 = $80E41  -- "Nie sądzę, żeby miał teraz ochotę na pogawędkę! Nie reaguje!"
+          call say
+          call clear_text
+          verb_talk = 0
+          call draw_verb_bar
+          goto L083C4
+        end
+        call cursor_hand
+        hover_mode = 1
+        if label_shown == 1 then
+          call clear_text
+          goto L083C4
+        end
+        goto L083C4
+      end
+      if d2 == 1 then
+      else
+        if d2 == 2 then
+          if lmb then
+            call cursor_busy
+            quip_person = 0
+            if hover_mode == 1 then
+              if verb_use == 1 then
+                if w[$7C242] == 1 then
+                  call sub_08570
+                  call clear_text
+                  call reset_verbs
+                  w[$7C242] = 0
+                  goto L083C4
+                end
+                if w[$7C266] == 1 then
+                  call sub_085DC
+                  call clear_text
+                  call reset_verbs
+                  w[$7C266] = 0
+                  goto L083C4
+                end
+                if w[$7C268] == 1 then
+                  call sub_0864E
+                  call clear_text
+                  call reset_verbs
+                  w[$7C268] = 0
+                  goto L083C4
+                end
+                goto L083C4
+              end
+              if verb_look == 1 then
+                a2 = $80E05  -- "Co za dziwna twarz w wodzie! To ona mi się wtedy przyśniła."
+              else
+                a2 = $80DFA  -- "Duch rzeki"
+                call quip_if_verb
+              end
+              call clear_text
+              call print
+              call reset_verbs
+              goto L083C4
+            end
+            goto L083C4
+          end
+          goto L083C4
+        end
+        goto L083C4
+      end
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $80D36  -- "Most"
+        call print
+        call reset_verbs
+      end
+      call cursor_anim_cd2c
+      if lmb then
+      else
+        goto L083C4
+      end
+      call sub_1BA9A
+      goto L0F91A
+    end
+    a2 = $81044  -- "- Głupcze! Targnąłeś się na swoje życie! Wskoczyłeś tutaj nieprzygo..."
+    call say_restore_cursor
+    call music_stop
+    d1 = $4A
+    music_order = d1
+    call music_start
+    call sub_1BA9A
+    jump game_over_b
+  end
+  goto L0839C
+end
+
+routine loc_12_2 @ $1395C
+  loc_id = $12
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $117B6A
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BA8A
+  a2 = $89E55  -- "¹- Dokonało się! Zaraz powrócisz do świata żywych. Wszystko powróci..."
+  call say
+  a2 = $89EC8  -- "²- Jak to? To już koniec? Myślałem, że dopiero teraz się zacznie."
+  call say
+  a2 = $89F0A  -- "¹- Tak! Zacznie się! To jest koniec, ale i początek. Posłuchaj..."
+  call say
+  a2 = $89F4C  -- "²- Tak?"
+  call say
+  a2 = $89F54  -- "¹- Bercer zginął. Ludzie z Jasnego domu są wolni. Gerwazy, jego cór..."
+  call say
+  a2 = $8A003  -- "²- Chciałbym, abyś mi coś powiedział."
+  call say
+  a2 = $8A029  -- "¹- Niech zgadnę. Chcesz wiedzieć kim był żebrak?"
+  call say
+  a2 = $8A05A  -- "²- Tak!"
+  call say
+  a2 = $8A062  -- "¹- On nie jest żebrakiem! To doktor Ignacki! To dzięki niemu i twoj..."
+  call say
+  a2 = $8A1A1  -- "²- Poważny duch, a głupio rechocze! A jak się jej coś stanie?"
+  call say
+  a2 = $8A1DF  -- "¹- Nic się jej nie stanie, o ile zdążysz podać jej i sobie ten spec..."
+  call say
+  a2 = $8A228  -- "²- O! Ładna buteleczka!"
+  call say
+  l[$1932A] = $7B5D0  -- " buteleczka "
+  call inventory_add
+  l[$1932E] = $7DF78
+  call inventory_remove
+  b[$7C14F] = 0
+  a2 = $8A240  -- "¹- To da wam młodość, zdrowie i zapomnienie. Oprócz tego wszystkie ..."
+  call say
+  a2 = $8A2BA
+  call say
+  a2 = $8A2C6  -- "¹- Żegnaj! Mam nadzieję, że już nigdy nie będziesz musiał nikogo ra..."
+  call say_restore_cursor
+  call clear_text
+  call sub_1BA9A
+  goto L13A84
+end
+
+routine loc_12_3 @ $1407C
+  loc_id = $12
+  call ensure_disk
+  a0 = $117B6A
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BA8A
+  a2 = $7E583  -- "Przybyłeś do Dębow, aby uratować nas wszystkich. I co? / Niestety, ..."
+  call say
+  call clear_text
+  call sub_1BA9A
+  return
+end

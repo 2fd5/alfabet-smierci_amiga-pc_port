@@ -1,0 +1,387 @@
+routine loc_16 @ $0917C
+::L0917C::
+  loc_id = $16
+  call select_music
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $187FA0
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C136] == 0 then
+    call sub_1A55C
+  end
+  call sub_1BAF6
+  call cursor_hand
+  if b[$7C0E9] ~= 1 then
+  else
+  ::L0977A::
+    hotspot_table = $1D790
+    mouse_min_y = $192
+    mouse_max_y = $1EF
+    mouse_max_x = $27A
+    b[$7C0F0] = 1
+    a2 = $8AAD1  -- "¹- Jezu! Ale się porobiło!!! Stary Ternawski dostał nagłego ataku! ..."
+    call say
+    a2 = $8AB90  -- "²- Cooooo?"
+    call say
+    a2 = $8AB9B  -- "¹- Tak! Dzwoniła do mnie... Nie pytaj kto. Wsadzili Zembowskiego! C..."
+    call say
+    a2 = $8AC27  -- "²= Ha! Od razu skapowałem, że ten księżulo to jakiś cichociemny! Ch..."
+    call show
+  ::L097D4::
+    wait_raster $FF
+    if not lmb then
+      if lmb then
+      else
+        goto L097D4
+      end
+    end
+    call hit_test
+    if d2 ~= -1 then
+    else
+      goto L097D4
+    end
+    if d2 u<= 5 then
+    else
+      goto L097D4
+    end
+    a2 = $8AD97  -- "¹- Uspokój się i zacznij gadać jak człowiek! Jeżeli jeszcze nie zro..."
+    call say
+    a2 = $8AE77  -- "²- Ok. Kiedy byłem u księdza, zadzwonił telefon. Okazało się, że Te..."
+    call say
+    a2 = $8AF5A  -- "¹- Co potem?"
+    call say
+    a2 = $8AF67  -- "²- Miałem dziwne widzenie... Chyba straciłem przytomność. Zobaczyłe..."
+    call say
+    a2 = $8B03C
+    call say
+    a2 = $8B045  -- "²- I zobaczyłem pielęgniarkę, która chciała mnie... tego, nożem kuc..."
+    call say
+    a2 = $8B090  -- "¹- Nożem kuchennym? Skąd w szpitalu nóż kuchenny?"
+    call say
+    a2 = $8B0C2  -- "²- To jeszcze nic! W ostatniej chwili walnąłem ją parasolem księdza..."
+    call say
+    a2 = $8B124  -- "¹- W końcu ratowałeś swoje życie!"
+    call say
+    a2 = $8B146  -- "²- No a potem doktor dał mi nóż... Ha! KAZAŁ mi go zabrać i powiedz..."
+    call say
+    a2 = $8B1CA  -- "¹- Miał rację! Zwinęli go wkrótce po twoim wyjeździe! Teraz rozumiem."
+    call say
+    a2 = $8B210  -- "²= Co teraz??? / = Ale narozrabiałem, co nie maleńka? / = Nie mam p..."
+    call show
+    goto L09896
+  end
+::L091DE::
+  hotspot_table = $1D20E
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  verb_talk = 0
+  call clear_text
+  call draw_verb_bar
+::L09214::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    if verb_talk == 1 then
+      if b[$7C0E9] ~= 1 then
+        b[$7C0EA] += 1
+        if b[$7C0EA] ~= 2 then
+          hotspot_table = $1D790
+          mouse_min_y = $192
+          mouse_max_y = $1EF
+          mouse_max_x = $27A
+          a2 = $8A349  -- "¹- Hmmmm.... Mieszkam... Mieszkam ciągle w tym domu. Mam jakiś taki..."
+          call say
+          a2 = $8A3C0
+          call say
+          a2 = $8A3CB  -- "¹- Tak. To było dokładnie wtedy kiedy Tomek przyjechał z Bukowna. O..."
+          call say
+          a2 = $8A4B9  -- "²- Co dlatego?..."
+          call say
+          a2 = $8A4CB  -- "¹- Noo... dlatego tutaj przyjechali. Znaczy, on i matka. Tu zaczął ..."
+          call say
+          a2 = $8A540  -- "²- mglmpfh...."
+          call say
+          a2 = $8A54F  -- "¹- Mieliśmy się zaręczyć i w ogóle... Pojechał gdzieś na motorze i ..."
+          call say
+          a2 = $8A63C  -- "²= A nie wiesz gdzie na Śląsku? / = Czy znasz kogoś, kto był na pog..."
+          call show
+        ::L095D2::
+          wait_raster $FF
+          if not lmb then
+            if lmb then
+            else
+              goto L095D2
+            end
+          end
+          call hit_test
+          if d2 ~= -1 then
+          else
+            goto L095D2
+          end
+          if d2 u<= 3 then
+            a2 = $8A6AB  -- "¹- Taaaa. Wojtek! On był na pogrzebie. Jego najlepszy kumpel! Utoną..."
+            call say
+            a2 = $8A800  -- "²= Kiedy dokładnie się zabił? / = Czy mógłbym u ciebie przenocować?"
+            call show
+          elseif d2 == 4 then
+            a2 = $8A77E  -- "¹- Ha! Pytanie za sto punktów! Przepadaliśmy za sobą! Razem z Wojtk..."
+            call say
+            a2 = $8A7F3  -- "²- Wojtkiem?"
+            call say
+            a2 = $8A6AB  -- "¹- Taaaa. Wojtek! On był na pogrzebie. Jego najlepszy kumpel! Utoną..."
+            call say
+            a2 = $8A800  -- "²= Kiedy dokładnie się zabił? / = Czy mógłbym u ciebie przenocować?"
+            call show
+          else
+            goto L095D2
+          end
+        ::L0965A::
+          wait_raster $FF
+          if not lmb then
+            if lmb then
+            else
+              goto L0965A
+            end
+          end
+          call hit_test
+          if d2 ~= -1 then
+          else
+            goto L0965A
+          end
+          if d2 == 1 then
+            l[$1932A] = $7B5DE  -- "  parasol   "
+            call inventory_add
+            l[$1932E] = $7DF7C
+            call inventory_remove
+            b[$7C150] = 0
+            a2 = $8A842  -- "¹- Tak dokładnie to ci nie powiem. Upłynęło trochę czasu.  Możesz i..."
+            call say
+            b[$7C0CA] = 1
+            b[$7C0CB] = 1
+            b[$7C0CC] = 1
+            a2 = $8A93B
+            call say
+            a2 = $8A947  -- "¹- I nic."
+            call say
+            call sub_091DE
+          end
+          if d2 == 2 then
+          else
+            goto L0965A
+          end
+          l[$1932A] = $7B5DE  -- "  parasol   "
+          call inventory_add
+          l[$1932E] = $7DF7C
+          call inventory_remove
+          b[$7C150] = 0
+          a2 = $8A951  -- "¹- Eeeeerm.... taaak. Nie ma sprawy. Ale przysługa za przysługę! Ma..."
+          call say
+          a2 = $8A9CF  -- "²- Parasola?"
+          call say
+          a2 = $8A9DC  -- "¹- A widzisz! Na parafii są księgi wieczyste! Tam jest wszystko zap..."
+          call say
+          a2 = $8AA97
+          call say
+          a2 = $8AAA1  -- "¹- A! Spróbuj jeszcze na policji... Chopina 32!"
+          call say
+          b[$7C0CA] = 1
+          b[$7C0CB] = 1
+          b[$7C0CC] = 1
+          call sub_091DE
+          goto L0977A
+        end
+      ::L09266::
+        call sub_16CBA
+        b[$7C0EA] -= 1
+        goto L09214
+      end
+      goto L09266
+    end
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L09214
+    end
+    goto L09214
+  end
+  if d2 == 1 then
+  else
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $81830  -- "Czysta chlorowana kranówa"
+          else
+            a2 = $81827  -- "Szklanka"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L09214
+        end
+        goto L09214
+      end
+      goto L09214
+    end
+    if d2 == 3 then
+      if b[$7C136] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1A55C
+              l[$1932A] = $7B400  -- " pomarańcza "
+              call inventory_add
+              l[$1932E] = $7DF14
+              call inventory_remove
+              b[$7C136] = 0
+              call reset_verbs
+              goto L09214
+            end
+            if verb_look == 1 then
+              a2 = $81855  -- "Mniam, mniam, mniam..."
+            else
+              a2 = $8184A  -- "Pomarańcza"
+              call quip_if_verb_b
+            end
+            call reset_verbs
+            call clear_text
+            call print
+            goto L09214
+          end
+          goto L09214
+        end
+        goto L09214
+      end
+      goto L09214
+    end
+    if d2 == 4 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $81876  -- "Stara i bez gazu. Przecież nie jesteś numeroMANIAKiem, nieprawdaż?"
+          else
+            a2 = $8186C  -- "Coca-cola"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L09214
+        end
+        goto L09214
+      end
+      goto L09214
+    end
+    if lmb then
+      call cursor_busy
+      quip_person = 1
+      if hover_mode == 1 then
+        if verb_give == 1 then
+          if w[$7C178] == 1 then
+            l[$1932A] = $7B400  -- " pomarańcza "
+            call inventory_scroll_up
+            l[$1932E] = $7DF14
+            call inventory_scroll_down
+            a2 = $818EC  -- "Och! Dziękuję!!! To mój ulubiony gatunek!"
+            call clear_text
+            call print
+            call reset_verbs
+          end
+          if w[$7C17A] == 1 then
+            l[$1932A] = $7B40E  -- "  kwiatek   "
+            call inventory_scroll_up
+            l[$1932E] = $7DF18
+            call inventory_scroll_down
+            a2 = $818EC  -- "Och! Dziękuję!!! To mój ulubiony gatunek!"
+            goto L0953A
+          end
+          goto L09214
+        end
+        if verb_look == 1 then
+          a2 = $818C1  -- "Kiedy pomyślę co jest pod tą bluzeczką... "
+        else
+          a2 = $818B9  -- "Marlena"
+          call quip_if_verb
+        end
+      ::L0953A::
+        call clear_text
+        call print
+        call reset_verbs
+        goto L09214
+      end
+      goto L09214
+    end
+    goto L09214
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $8181F  -- "Wyjście"
+    call print
+    call label_mode
+  end
+  call cursor_anim_cd88
+  if lmb then
+  else
+    goto L09214
+  end
+  call sub_1BB06
+  w[$7C178] = 0
+  w[$7C17A] = 0
+  goto L0390A
+::L09896::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L09896
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L09896
+  end
+  if d2 == 1 then
+    a2 = $8B29B  -- "¹- Może wyda ci się to dziwne, ale uważam, że powinieneś pojechać d..."
+    call say
+    a2 = $8B36D  -- "²- Do szpitala?"
+    call say
+    a2 = $8B37D  -- "¹- Tak! I jeszcze jedno! Nie jest to moja niegościnność, ale wiesz...."
+    call say
+    goto L091DE
+  end
+  if d2 == 2 then
+    a2 = $8B448  -- "¹- Idiota! Chyba nie doceniasz powagi sytuacji!? Powiem ci coś Rock..."
+    call say
+    goto L091DE
+  end
+  if d2 == 3 then
+    a2 = $8B29B  -- "¹- Może wyda ci się to dziwne, ale uważam, że powinieneś pojechać d..."
+    call say
+    a2 = $8B36D  -- "²- Do szpitala?"
+    call say
+    a2 = $8B37D  -- "¹- Tak! I jeszcze jedno! Nie jest to moja niegościnność, ale wiesz...."
+    call say
+    goto L091DE
+  end
+  if d2 == 4 then
+    a2 = $8B448  -- "¹- Idiota! Chyba nie doceniasz powagi sytuacji!? Powiem ci coś Rock..."
+    call say
+    goto L091DE
+  end
+  goto L09896
+end

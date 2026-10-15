@@ -1,0 +1,307 @@
+routine loc_08 @ $04CE4
+::L04CE4::
+  loc_id = 8
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $12F514
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1B922
+  call cursor_hand
+  if b[$7C0D3] == 1 then
+    a2 = $86696  -- "¹- Dzieńdoberek szanownemu panu. Mam nadzieję, że zdrowie dopisuje..."
+    call say
+    a2 = $866DC  -- "²- Dopisuje, dopisuje. Dziękuję za adres."
+    call say
+    a2 = $86706
+    call say
+  elseif b[$7C0D2] == 0 then
+    hotspot_table = $1D790
+    mouse_min_y = $192
+    mouse_max_y = $1EF
+    mouse_max_x = $27A
+    b[$7C0D2] += 1
+    a2 = $85A97  -- "¹- Słuchaj kolego! Już mówiłem, że nie został żaden spadek! Długo t..."
+    call say
+    a2 = $85B2A
+    call show
+  ::L04F0E::
+    wait_raster $FF
+    if not lmb then
+      if lmb then
+      else
+        goto L04F0E
+      end
+    end
+    call hit_test
+    if d2 ~= -1 then
+    else
+      goto L04F0E
+    end
+    if d2 u<= 4 then
+    else
+      goto L04F0E
+    end
+    a2 = $85B94  -- "¹- Dobra dobra! Już ja was wszystkich znam!!! Mógłbyś się przynajmn..."
+    call say
+    a2 = $85BED  -- "²= Ahem.. Jestem Tomasz Antkowiak. / = Nazywam się Antkowiak... PAN..."
+    call show
+    goto L04F58
+  end
+::L04D52::
+  hotspot_table = $1D012
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L04D86::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    if verb_use == 1 then
+      if b[$7C0D3] == 0 then
+        if w[$7C226] == 1 then
+          b[$7C0D3] = 1
+          w[$7C226] = 0
+          call reset_verbs
+          hotspot_table = $1D790
+          mouse_min_y = $192
+          mouse_max_y = $1EF
+          mouse_max_x = $27A
+          a2 = $8631D  -- "¹- Ergghh DRAŃ!.. Czego chcesz? Pieniędzy? Nie mam pieniędzy! Biżut..."
+          call say
+          a2 = $863A2  -- "²= Jestem pewien, że pan coś wie, panie Stryczyński! Nie wierzę, że..."
+          call show
+        ::L05184::
+          wait_raster $FF
+          if not lmb then
+            if lmb then
+            else
+              goto L05184
+            end
+          end
+          call hit_test
+          if d2 ~= -1 then
+          else
+            goto L05184
+          end
+          if d2 == 1 then
+            a2 = $864E6  -- "¹- W porządku. Mam coś co cię zainteresuje bandyto. W mojej lewej k..."
+            call say
+            b[$7C0C9] = 1
+            goto L04D52
+          end
+          if d2 == 2 then
+            a2 = $864E6  -- "¹- W porządku. Mam coś co cię zainteresuje bandyto. W mojej lewej k..."
+            call say
+            b[$7C0C9] = 1
+            goto L04D52
+          end
+          if d2 == 3 then
+            a2 = $864E6  -- "¹- W porządku. Mam coś co cię zainteresuje bandyto. W mojej lewej k..."
+            call say
+            b[$7C0C9] = 1
+            goto L04D52
+          end
+          if d2 == 4 then
+            a2 = $8659C  -- "¹- Nic to panu nie powie. Jedyne co mogę panu dać to ten adres. A t..."
+            call say
+            b[$7C0C9] = 1
+            goto L04D52
+          end
+          if d2 == 5 then
+            a2 = $86605  -- "¹- Ja... ja nic nie wiem! Jedyne co mogę dać to ten adres... Proszę..."
+            call say
+            b[$7C0C9] = 1
+            goto L04D52
+          end
+          goto L05184
+        end
+      ::L04DE6::
+        if verb_talk == 1 then
+          if b[$7C0D3] == 1 then
+            call sub_16CBA
+            goto L04D86
+          end
+          b[$7C0D2] += 1
+          if b[$7C0D2] == 5 then
+            goto L04E24
+          end
+          if b[$7C0D2] == 2 then
+          ::L04E24::
+            call sub_16CBA
+            b[$7C0D2] -= 1
+            goto L04D86
+          end
+          if b[$7C0D2] == 3 then
+            b[$7C0D2] += 2
+            hotspot_table = $1D790
+            mouse_min_y = $192
+            mouse_max_y = $1EF
+            mouse_max_x = $27A
+            a2 = $860F1  -- "¹- Aaaaa kogo my tu mamy??? Pan namolny... O co chodzi tym razem?"
+            call say
+            a2 = $86133  -- "²= Ja tylko przyszedłem pogadać! Nie mam nic do roboty, ale chyba j..."
+            call show
+          ::L050C8::
+            wait_raster $FF
+            if not lmb then
+              if lmb then
+              else
+                goto L050C8
+              end
+            end
+            call hit_test
+            if d2 ~= -1 then
+            else
+              goto L050C8
+            end
+            if d2 == 1 then
+              a2 = $861D8  -- "¹- Pewnie, pewnie. Idź z Bogiem!"
+              call say
+              goto L04D52
+            end
+            if d2 == 2 then
+              a2 = $861F9  -- "¹- A co to? Czy ja cię przypadkiem już nie odsyłałem na parafię? Je..."
+              call say
+              b[$7C0CB] = 1
+              b[$7C0CC] = 1
+              goto L04D52
+            end
+            if d2 == 3 then
+              a2 = $862F5  -- "¹- Zegarynka to nie tutaj! Spływaj pan!"
+              call say
+              goto L04D52
+            end
+            goto L050C8
+          end
+          b[$7C0D2] -= 1
+        ::L04E56::
+          call cursor_hand
+          hover_mode = 1
+          if label_shown == 1 then
+            call clear_text
+            goto L04D86
+          end
+          goto L04D86
+        end
+        goto L04E56
+      end
+      goto L04DE6
+    end
+    goto L04DE6
+  end
+  if d2 == 1 then
+  else
+    goto L04D86
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $802F6  -- "Do centrum"
+    call print
+    call label_mode
+  end
+  call cursor_anim_cd88
+  if lmb then
+  else
+    goto L04D86
+  end
+  b[$7C0D2] += 1
+  call sub_1B932
+  goto L0390A
+::L04F58::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L04F58
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L04F58
+  end
+  if d2 == 1 then
+    a2 = $85CCF  -- "¹- Powiem panu coś panie Kantkowiak. Nie znam pana i nie chcę pana ..."
+    call say
+    b[$7C0CB] = 1
+    b[$7C0CC] = 1
+    a2 = $85D5B  -- "²= Nie zna pan nikogo takiego jak.. Gerwazy Walczewski??? On dał mi..."
+    call show
+    goto L05002
+  end
+  if d2 == 2 then
+    a2 = $85CCF  -- "¹- Powiem panu coś panie Kantkowiak. Nie znam pana i nie chcę pana ..."
+    call say
+    b[$7C0CB] = 1
+    b[$7C0CC] = 1
+    a2 = $85D5B  -- "²= Nie zna pan nikogo takiego jak.. Gerwazy Walczewski??? On dał mi..."
+    call show
+    goto L05002
+  end
+  if d2 u<= 4 then
+    a2 = $860AF  -- "¹- Hehehe! Dowcipniś się znalazł! Zjeżdżaj bo jak spuszczę psa..."
+    call say
+    goto L04D52
+  end
+  goto L04F58
+::L05002::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L05002
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L05002
+  end
+  if d2 == 1 then
+    a2 = $85E50  -- "¹- Nie znam nikogo o takim nazwisku, przyjacielu. Ja nazywam się St..."
+    call say
+    goto L04D52
+  end
+  if d2 == 2 then
+    a2 = $85E50  -- "¹- Nie znam nikogo o takim nazwisku, przyjacielu. Ja nazywam się St..."
+    call say
+    goto L04D52
+  end
+  if d2 == 3 then
+    a2 = $85FA3  -- "¹- Nie przedstawiam się pierwszym lepszym domokrążcom! Ale jeżeli t..."
+    call say
+    goto L04D52
+  end
+  if d2 == 4 then
+    a2 = $86055  -- "¹- To powiedz im, że przysyła cię Stryczyński i idź do wszystkich d..."
+    call say
+    goto L04D52
+  end
+  goto L05002
+end
+
+routine loc_08_2 @ $13F7E
+  loc_id = 8
+  call ensure_disk
+  a0 = $12F514
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1B922
+  a2 = $7E391  -- "No tak! Wiedziałem, że to schrzanisz. To gra dla ludzi z ilorazem i..."
+  call say
+  call clear_text
+  call sub_1B932
+  return
+end

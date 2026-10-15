@@ -1,0 +1,261 @@
+routine loc_23 @ $0CDA0
+::L0CDA0::
+  loc_id = $23
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $17746E
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C154] == 0 then
+    call sub_1AE14
+  end
+  call sub_1BCCA
+  call cursor_hand
+::L0CE00::
+  hotspot_table = $1D3F0
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L0CE34::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    if verb_talk == 1 then
+      b[$7C110] += 1
+      if b[$7C110] ~= 1 then
+        if b[$7C110] ~= 3 then
+          b[$7C110] -= 1
+          call sub_16CBA
+          goto L0CE34
+        end
+        b[$7C110] -= 1
+        a2 = $8305A  -- "I co? Nic nie masz dla cioci? Nieładnie!"
+        call say
+        goto L0CE00
+      end
+      hotspot_table = $1D790
+      mouse_min_y = $192
+      mouse_max_y = $1EF
+      mouse_max_x = $27A
+      a2 = $8D7A2  -- "²- Dzień dobry państwu. Państwo tak tutaj stoją..."
+      call say
+      a2 = $8D7D5  -- "¹- A pewnie, pewnie... Ty jesteś z tej kolonii? Gdzie twoja pani?"
+      call say
+      a2 = $8D817  -- "²- Nie jestem z żadnej kolonii.."
+      call say
+      a2 = $8D838  -- "¹- Nie? To może jesteś z mamą i tatą na letnisku? Bystry z ciebie c..."
+      call say
+      a2 = $8D884  -- "²- Nie jestem na żadnym letnisku!!!"
+      call say
+      a2 = $8D8A8  -- "¹- Hahahaha... Nie krzycz bo pan ściągnie pasa! Jak będziesz grzecz..."
+      call say
+      a2 = $8D90B  -- "²= Czy wy macie nierówno pod sufitem? Mam gdzieś wasz wierszyk! Dew..."
+      call show
+    ::L0D16C::
+      wait_raster $FF
+      if not lmb then
+        if lmb then
+        else
+          goto L0D16C
+        end
+      end
+      call hit_test
+      if d2 ~= -1 then
+      else
+        goto L0D16C
+      end
+      if d2 u<= 4 then
+      else
+        goto L0D16C
+      end
+      a2 = $8DA30  -- "¹- No no no... Fantazję to on ma! Wprawdzie powinieneś dostać klaps..."
+      call say
+      a2 = $8DAC8
+      call say
+      a2 = $8DAD1  -- "¹- Tak, tak... Ta cywilizacja to naprawdę zaraza! Najgorsze to te k..."
+      call say
+      a2 = $8DB6C  -- "²- No taaak.."
+      call say
+      a2 = $8DB7A  -- "¹- No proszę. Od razu widać! Najgorsze są przygodówki! Nad taką to ..."
+      call say
+      a2 = $8DBFD  -- "²- Eeeerm..."
+      call say
+      a2 = $8DC0A  -- "¹- Raz to, proszę sobie wyobrazić pani Teresko, widziałam taką grę...."
+      call say
+      a2 = $8DCEB  -- "²- No właśnie...."
+      call say
+      a2 = $8DCFD  -- "¹- Oni gadali co chcieli, a jedyne możliwości odpowiedzi to jakieś ..."
+      call say
+      a2 = $8DD96  -- "²- No właśnie... chciałem..."
+      call say
+      a2 = $8DDB3  -- "¹- No proszę! Już się nauczył! Chciałeś pewnie bajkę? To będzie tak..."
+      call say
+      a2 = $8DE0B
+      call say
+      a2 = $8DE16  -- "¹- Oto ona: "Siostra z bratem i mąż z żoną, cztery jabłka pod jabło..."
+      call say
+      a2 = $8DEA9  -- "²= Wiem! Siostra i brat to byli mąż i żona! / = Wiem! Brat się udła..."
+      call show
+      goto L0D246
+    end
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0CE34
+    end
+    goto L0CE34
+  end
+  if d2 == 1 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $82FCB  -- "W stronę kościółka"
+      call print
+      call label_mode
+    end
+    call cursor_exit_b
+    if lmb then
+      call sub_1BCDA
+      if b[$7C110] ~= 0 then
+        if b[$7C110] == 1 then
+          b[$7C110] += 2
+        end
+      end
+      w[$7C1BA] = 0
+      goto L0BF1A
+    end
+    goto L0CE34
+  end
+  if d2 == 2 then
+    if b[$7C154] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        w[$7C1BA] = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            call sub_1AE14
+            l[$1932A] = $7B6C2  -- "   gwóźdź   "
+            call inventory_add
+            l[$1932E] = $7DF8C
+            call inventory_remove
+            b[$7C154] = 0
+            call reset_verbs
+            goto L0CE34
+          end
+          if verb_look == 1 then
+            a2 = $82FEF  -- "Gwóźdź! Może od czyjejś trumny?"
+          else
+            a2 = $82FDE  -- "Gwóźdź na drodze"
+            call quip_if_verb_b
+          end
+          call reset_verbs
+          call clear_text
+          call print
+          goto L0CE34
+        end
+        goto L0CE34
+      end
+      goto L0CE34
+    end
+    goto L0CE34
+  end
+  if d2 u<= 4 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_give == 1 then
+          if w[$7C1BA] == 1 then
+            b[$19328] = 1
+            l[$1932A] = $7B722  -- "   jabłko   "
+            call inventory_scroll_up
+            l[$1932E] = $7DF98
+            call inventory_scroll_down
+            w[$7C1BA] = 0
+            l[$1932A] = $7B6D0  -- " podręcznik "
+            call inventory_add
+            l[$1932E] = $7DF90
+            call inventory_remove
+            b[$7C155] = 0
+            b[$19328] = 0
+            call draw_inventory
+            if b[$7C110] ~= 0 then
+              if b[$7C110] == 1 then
+                b[$7C110] += 2
+              end
+            end
+            a2 = $7B72F  -- "Oooo! Jesteś pojętny jak nasza Zuzia! Ślicznie. W nagrodę dostanies..."
+            call say
+            call reset_verbs
+            call sub_1BCDA
+            goto L11C06
+          end
+          goto L0CE34
+        end
+        if verb_look == 1 then
+          a2 = $83018  -- "Ci to chyba wyszli na spacerek! Sielsko jest w tym Ciemnogrodzie!"
+        else
+          a2 = $8300F  -- "Postacie"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0CE34
+      end
+      goto L0CE34
+    end
+    goto L0CE34
+  end
+  goto L0CE34
+::L0D246::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0D246
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0D246
+  end
+  if d2 u<= 4 then
+  else
+    goto L0D16C
+  end
+  a2 = $8DF3B  -- "¹- Eee tam... Chrzanisz koleś...ep..to znaczy... Niestety słodziutki."
+  call say
+  a2 = $8DF81  -- "²- No to jak!?"
+  call say
+  a2 = $8DF90  -- "¹- A kto to wie! Przynieś lepiej coś do jedzenia! Bądź grzecznym ch..."
+  call say
+  goto L0CE00
+end
+
+routine loc_23_2 @ $140C0
+  loc_id = $23
+  call ensure_disk
+  a0 = $17746E
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BCCA
+  a2 = $7E639  -- "- Widzisz Wanda, wiedziałem, że marnie skończy. / - A taki wydawał ..."
+  call say
+  call clear_text
+  call sub_1BCDA
+  return
+end

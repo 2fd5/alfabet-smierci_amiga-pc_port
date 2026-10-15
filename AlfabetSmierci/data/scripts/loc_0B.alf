@@ -1,0 +1,294 @@
+routine loc_0B @ $05C3C
+::L05C3C::
+  loc_id = $B
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $14E0C2
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C137] == 0 then
+    call sub_1A2D8
+  end
+  call sub_1B98E
+  call cursor_hand
+  hotspot_table = $1D058
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  if b[$7C0F4] ~= 1 then
+    a2 = $876BA  -- "¹- Dzień... dobry. Czym mogę służyć?"
+    call say
+    a2 = $876DF  -- "²Hmmm... pamiętam. To ona. Nawet się nie zestarzała. Kiedy to było?..."
+    call say
+    a2 = $87859  -- "zacząłem liceum. Miłość kwitła i wtedy... / Tak. Wypadek na motorze..."
+    call say
+    a2 = $879AF  -- "wspomnienia to to,że bił mnie i matkę. Wyszedłem ze szpitala i tak ..."
+    call say
+    call clear_text
+    call cursor_hand
+    b[$7C0F4] = 1
+    hotspot_table = $1D790
+    mouse_min_y = $192
+    mouse_max_y = $1EF
+    mouse_max_x = $27A
+    b[$7C0D5] += 1
+    call clear_text
+    a2 = $87A20  -- "²= Lenia? To ja, Tomek! Tomek Antkowiak! Pamiętasz mnie? / = Na imi..."
+    call print
+  ::L05FCA::
+    wait_raster $FF
+    if not lmb then
+      if lmb then
+      else
+        goto L05FCA
+      end
+    end
+    call hit_test
+    if d2 ~= -1 then
+    else
+      goto L05FCA
+    end
+    if d2 == 1 then
+      a2 = $87AFA  -- "¹- Nieprawda! Ty nie żyjesz! Zginąłeś w wypadku. To jakaś maraaa......"
+      call say
+      call sub_1B99E
+      goto L071B2
+    end
+    if d2 u<= 4 then
+      a2 = $87B52  -- "¹- Ach tak! Chyba pana pamiętam. Wydawało mi się tylko, że nazywał ..."
+      call say
+      a2 = $87BC3  -- "²- Ech...Tttaak. Ale wie pani..."
+      call say
+      a2 = $87BE4  -- "¹- Mów mi Marlena."
+      call say
+      a2 = $87BF7  -- "²- Nnno tak... ech... więc wiesz..."
+      call say
+      a2 = $87C1B  -- "¹- Zmieniłeś nazwisko..."
+      call say
+      a2 = $87C34  -- "²- O! ooo właśnie tak! Zmieniłem booo..."
+      call say
+      a2 = $87C5D  -- "¹- Ależ to jest już twoja osobista sprawa. Niestety Tomek zginął. Z..."
+      call say
+      call clear_text
+      call sub_1B99E
+      goto L0917C
+    end
+    goto L05FCA
+  end
+  if b[$7C0E9] == 1 then
+    if b[$7C0F0] ~= 1 then
+      a2 = $87DAE  -- "- O rany! Dobrze, że jesteś!!! Wskakuj!"
+      call say_restore_cursor
+      call reset_verbs
+      call clear_text
+      call sub_1B99E
+      goto L0917C
+    end
+  ::L05D2C::
+    if b[$7C0DA] == 1 then
+      if b[$7C0F5] ~= 1 then
+        hotspot_table = $1D790
+        mouse_min_y = $192
+        mouse_max_y = $1EF
+        mouse_max_x = $27A
+        b[$7C0F5] = 1
+        a2 = $87DD6  -- "¹- A! Miło znów cię widzieć! Co słychać?"
+        call say
+        a2 = $87DFF  -- "²- Nie będę wchodził. Tak tylko wpadłem."
+        call say
+        a2 = $87E28  -- "¹- Nie ma sprawy! Chcesz jeszcze o coś zapytać?"
+        call say
+        a2 = $87E58  -- "²= Co jest na wzgórzu za kościołem? / = Nie wiesz może, kto to ten...."
+        call show
+      ::L060D6::
+        wait_raster $FF
+        if not lmb then
+          if lmb then
+          else
+            goto L060D6
+          end
+        end
+        call hit_test
+        if d2 ~= -1 then
+        else
+          goto L060D6
+        end
+        if d2 == 1 then
+          a2 = $87EE8  -- "¹- Cmentarz. Nie pamiętasz?"
+          call say
+          a2 = $87FDD  -- "²- Aaaa. Dzięki."
+          call say
+          a2 = $87FEE  -- "¹- Nie ma za co. Pamiętaj o co cię prosiłam. Nie włócz się tu dobra?"
+          call say_restore_cursor
+          call reset_verbs
+          call clear_text
+        elseif d2 == 2 then
+          a2 = $87F04  -- "¹- Niesympatyczny facet. Ale ja tam nie mam z nim nic wspólnego."
+          call say
+          a2 = $87FDD  -- "²- Aaaa. Dzięki."
+          call say
+          a2 = $87FEE  -- "¹- Nie ma za co. Pamiętaj o co cię prosiłam. Nie włócz się tu dobra?"
+          call say_restore_cursor
+          call reset_verbs
+          call clear_text
+        elseif d2 == 3 then
+          a2 = $87F45  -- "¹- To najfajniejszy ksiądz, jakiego można sobie wyobrazić. A skąd m..."
+          call say
+          a2 = $87FDD  -- "²- Aaaa. Dzięki."
+          call say
+          a2 = $87FEE  -- "¹- Nie ma za co. Pamiętaj o co cię prosiłam. Nie włócz się tu dobra?"
+          call say_restore_cursor
+          call reset_verbs
+          call clear_text
+        elseif d2 == 4 then
+          a2 = $87FB1  -- "¹- Lepiej nie pytaj. Też by ci było smutno."
+          call say
+          a2 = $87FDD  -- "²- Aaaa. Dzięki."
+          call say
+          a2 = $87FEE  -- "¹- Nie ma za co. Pamiętaj o co cię prosiłam. Nie włócz się tu dobra?"
+          call say_restore_cursor
+          call reset_verbs
+          call clear_text
+        else
+          goto L060D6
+        end
+      end
+    end
+    hotspot_table = $1D058
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+  ::L05D68::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+      if verb_talk == 1 then
+        if b[$7C0D5] == 1 then
+          if b[$7C150] == 0 then
+            if b[$7C0E8] == 0 then
+              a2 = $87D07  -- "- Widzę, że ciągle nie zaniosłeś parasola. Ksiądz się będzie niecie..."
+              call say_restore_cursor
+              call reset_verbs
+              call clear_text
+              goto L05D68
+            end
+          ::L05DBA::
+            if b[$7C0E2] ~= 1 then
+              if b[$7C0E7] ~= 1 then
+                if b[$7C0F6] ~= 1 then
+                  if b[$7C0E6] == 1 then
+                    if b[$7C0E9] ~= 0 then
+                    ::L05DF4::
+                      if b[$7C0F0] ~= 0 then
+                        call sub_16CBA
+                        goto L05D68
+                      end
+                    ::L05E08::
+                      call cursor_hand
+                      hover_mode = 1
+                      if label_shown == 1 then
+                        call clear_text
+                        goto L05D68
+                      end
+                      goto L05D68
+                    end
+                  ::L0620E::
+                    a2 = $87D6B  -- "- Ha! Czego tutaj szukasz?! Tym postępkiem się zdemaskowałeś. GIŃ!"
+                    call say_restore_cursor
+                    call reset_verbs
+                    call clear_text
+                    call sub_1B99E
+                    goto L071B2
+                  end
+                  goto L05DF4
+                end
+                goto L0620E
+              end
+              goto L0620E
+            end
+            goto L0620E
+          end
+          goto L05DBA
+        end
+        goto L05DBA
+      end
+      goto L05E08
+    end
+    if d2 == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $803DB  -- "Do miasta"
+        call print
+        call label_mode
+      end
+      call cursor_exit_b
+      if lmb then
+        call sub_1B99E
+        goto L0390A
+      end
+      goto L05D68
+    end
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $803ED  -- "Wodoszczelny zegarek marki CIASTO PIENIĄDZ"
+          else
+            a2 = $803E5  -- "Zegarek"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L05D68
+        end
+        goto L05D68
+      end
+      goto L05D68
+    end
+    if d2 == 3 then
+      if b[$7C137] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1A2D8
+              l[$1932A] = $7B40E  -- "  kwiatek   "
+              call inventory_add
+              l[$1932E] = $7DF18
+              call inventory_remove
+              b[$7C137] = 0
+              call reset_verbs
+              goto L05D68
+            end
+            if verb_look == 1 then
+              a2 = $80420  -- "Na pewno nie jest to stokrotka..."
+            else
+              a2 = $80418  -- "Kwiatek"
+              call quip_if_verb_b
+            end
+            call reset_verbs
+            call clear_text
+            call print
+            goto L05D68
+          end
+          goto L05D68
+        end
+        goto L05D68
+      end
+      goto L05D68
+    end
+    goto L05D68
+  end
+  goto L05D2C
+end

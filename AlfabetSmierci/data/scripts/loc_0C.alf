@@ -1,0 +1,219 @@
+routine loc_0C @ $06252
+::L06252::
+  loc_id = $C
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $1578A6
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  b[$7C0E6] = 1
+  call sub_1B9B2
+  if b[$7C0CE] ~= 2 then
+    a2 = $8063D  -- "- Proszę... oto księga, na której ci zależało..."
+    call say_restore_cursor
+    call clear_text
+    hotspot_table = $1D072
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+  ::L062E4::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+      call cursor_hand
+      hover_mode = 1
+      if label_shown == 1 then
+        call clear_text
+        goto L062E4
+      end
+      goto L062E4
+    end
+    if d2 == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $80442  -- "Wyjście"
+        call print
+        call label_mode
+      end
+      call cursor_anim_cd88
+      if lmb then
+      else
+        goto L062E4
+      end
+    elseif d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $80451  -- "Zwyczajne biurko, model Jacuś 6"
+          else
+            a2 = $8044A  -- "Biurko"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L062E4
+        end
+        goto L062E4
+      end
+      goto L062E4
+    elseif d2 == 3 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            call sub_1B9C2
+            call sub_1433E
+            call clear_text
+            a2 = $8049D  -- " 17.07.75: Tomasz Antkowiak lat 16, zmarł  /  tragicznie w wypadku ..."
+            call print_alt
+            call sub_1B84A
+            call wait_right_click_fast
+            call sub_1B85A
+            a1 = $610FE
+            a0 = $1578A6
+            call decrunch
+            call show_frame
+            call sub_1B9B2
+          else
+            a2 = $80496  -- "Księga"
+            call quip_if_verb
+            call clear_text
+            call print
+            call reset_verbs
+            goto L062E4
+          end
+        else
+          goto L062E4
+        end
+      else
+        goto L062E4
+      end
+    else
+      goto L062E4
+    end
+    hotspot_table = $1D790
+    mouse_min_y = $192
+    mouse_max_y = $1EF
+    mouse_max_x = $27A
+    a2 = $88033  -- "¹- Słuchaj! Okropnie ważna sprawa! Przed chwilą dzwoniono ze szpita..."
+    call say
+    a2 = $88104  -- "²= Pewnie! Mogę nawet poprowadzić! Kiedyś brałem udział w amatorski..."
+    call show
+  ::L0658C::
+    wait_raster $FF
+    if not lmb then
+      if lmb then
+      else
+        goto L0658C
+      end
+    end
+    call hit_test
+    if d2 ~= -1 then
+    else
+      goto L0658C
+    end
+    if d2 == 1 then
+      a2 = $8819C  -- "¹- Świetnie! Jedziemy natychmiast!"
+      call say
+      call sub_1B9C2
+      goto L07214
+    end
+    if d2 == 2 then
+      a2 = $881BF  -- "¹- No tak... Wprawdzie wolałbym cię ze sobą zabrać, ale masz swoje ..."
+      call say
+      call sub_1B9C2
+      b[$7C0E7] = 1
+      goto L099D6
+    end
+    goto L0658C
+  end
+  hotspot_table = $1D08C
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  hotspot_table = $1D790
+  mouse_min_y = $192
+  mouse_max_y = $1EF
+  mouse_max_x = $27A
+  a2 = $88226  -- "¹- Taaaaaak! Słynna księga! To JEST klucz do pokonania Bercera. Ach..."
+  call say
+  a2 = $882B3  -- "²- Potrafi ksiądz to odcyfrować? To jest w jakimś dziwnym języku."
+  call say
+  a2 = $882F5  -- "¹- Nie dla wszystkich moja droga... to jest mój drogi!"
+  call say
+  a2 = $8832C
+  call say
+  a2 = $88358  -- "¹- Chwileczkę... tu jest bardzo wiele różnych zapisów. Jakieś dane ..."
+  call say
+  a2 = $883EF  -- "²= Idiotyzmy! Diabły nie umieją czytać!!! / = Bzdury ksiądz opowiad..."
+  call clear_print
+  call cursor_hand
+::L06668::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L06668
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L06668
+  end
+  if d2 == 1 then
+    a2 = $884FD  -- "¹- Nie gadaj głupot! Grunt, że ja umiem!"
+    call say
+  elseif d2 == 2 then
+    a2 = $88526  -- "¹- Hehehe! Dobre! Poczekaj.. chyba znalazłem..."
+    call say
+  elseif d2 == 3 then
+    a2 = $88526  -- "¹- Hehehe! Dobre! Poczekaj.. chyba znalazłem..."
+    call say
+  elseif d2 == 4 then
+    a2 = $88556  -- "¹- Żeby można je było znaleźć!!! Nie narzekaj! Źle ci się gra?"
+    call say
+  else
+    goto L06668
+  end
+  a2 = $88595  -- "¹- No i proszę!! JEST! Posłuchaj..."
+  call say
+  a2 = $885B9  -- "²- Oooooo..."
+  call say
+  a2 = $885C6  -- ""¹- Rzecz, której najbardziej się boi to jego własne odbicie. Woda ..."
+  call say
+  a2 = $886FC  -- "²- Oooooo...."
+  call say
+  if b[$7C13B] == 0 then
+  else
+    l[$1932A] = $7B45D  -- " duży klucz "
+    call inventory_add
+    l[$1932E] = $7DF28
+    call inventory_remove
+    b[$7C13B] = 0
+  end
+  a2 = $8870A  -- "¹- Zatrzymaj księgę na pamiątkę! Dam ci jeszcze coś!!! Proszę!"
+  call say
+  a2 = $88749  -- "²- Oooooo?..."
+  call say
+  a2 = $88757  -- "¹- To jest klucz do leśnego kościółka. Mam nadzieję, że potrafisz g..."
+  call say
+  a2 = $887FE  -- "²- Aaaaaa? Książeczki? Ale..."
+  call say
+  a2 = $8881C  -- "¹- Nie teraz! Na mnie czas! Czuję, że muszę oddalić się do Jasnego ..."
+  call say
+  call cursor_hand
+  call sub_1B9C2
+  goto L0390A
+end

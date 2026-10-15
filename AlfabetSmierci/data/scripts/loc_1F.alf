@@ -1,0 +1,329 @@
+routine loc_1F @ $0B558
+::L0B558::
+  loc_id = $1F
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $14FCCC
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C0CE] == 2 then
+    if b[$7C148] == 0 then
+      call sub_1AB8C
+    end
+    if b[$7C149] == 0 then
+      call sub_1ABD4
+    end
+    if b[$7C14A] == 0 then
+      call sub_1AC1C
+    end
+    call sub_1BC5E
+    call cursor_hand
+    hotspot_table = $1D332
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+    call clear_text
+    call draw_verb_bar
+    call reset_verbs
+  ::L0B7BC::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+      call cursor_hand
+      hover_mode = 1
+      if label_shown == 1 then
+        call clear_text
+        goto L0B7BC
+      end
+      goto L0B7BC
+    end
+    if d2 == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $8259D  -- "Do domu Gerwazego"
+        call print
+        call label_mode
+      end
+      call cursor_anim_cd2c
+      if lmb then
+        call sub_1BC6E
+        goto L0AC3E
+      end
+      goto L0B7BC
+    end
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_use == 1 then
+            if w[$7C24C] == 1 then
+              l[$1932A] = $7BAE4  -- "stary klucz "
+              call inventory_add
+              l[$1932E] = $7DFF0
+              call inventory_remove
+              b[$7C16D] = 0
+              w[$7C24C] = 0
+              a2 = $7BAF1  -- "Jest! Nawet nie użyłem przynęty!"
+              call clear_text
+              call print
+              call reset_verbs
+              goto L0B7BC
+            end
+          ::L0B8DC::
+            if verb_look == 1 then
+              a2 = $825F4  -- "Głęboko tu. Na dole coś błyszczy."
+            else
+              a2 = $825AF  -- "Otwór w studni"
+              call quip_if_verb
+            end
+            call clear_text
+            call print
+            call reset_verbs
+            goto L0B7BC
+          end
+          goto L0B8DC
+        end
+        goto L0B7BC
+      end
+      goto L0B7BC
+    end
+    if d2 == 3 then
+      if b[$7C148] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1AB8C
+              l[$1932A] = $7B534  -- "   młotek   "
+              call inventory_add
+              l[$1932E] = $7DF5C
+              call inventory_remove
+              b[$7C148] = 0
+              call reset_verbs
+              goto L0B7BC
+            end
+            if verb_look == 1 then
+              a2 = $8261D  -- "Bardzo zgrabny młoteczek."
+            else
+              a2 = $82616  -- "Młotek"
+              call quip_if_verb_b
+            end
+            call reset_verbs
+            call clear_text
+            call print
+            goto L0B7BC
+          end
+          goto L0B7BC
+        end
+        goto L0B7BC
+      end
+      goto L0B7BC
+    end
+    if d2 == 4 then
+      if b[$7C16A] == 0 then
+        if b[$7C149] == 1 then
+          if lmb then
+            call cursor_busy
+            quip_person = 0
+            if hover_mode == 1 then
+              if verb_take == 1 then
+                call sub_1ABD4
+                l[$1932A] = $7B542  -- "Ziele Tereni"
+                call inventory_add
+                l[$1932E] = $7DF60
+                call inventory_remove
+                b[$7C149] = 0
+                call reset_verbs
+                goto L0B7BC
+              end
+              if verb_look == 1 then
+                a2 = $82659  -- "O! Ziółko Jakuba!"
+              else
+                a2 = $82652  -- "Ziółko"
+                call quip_if_verb_b
+              end
+              call reset_verbs
+              call clear_text
+              call print
+              goto L0B7BC
+            end
+            goto L0B7BC
+          end
+          goto L0B7BC
+        end
+        goto L0B7BC
+      end
+      goto L0B7BC
+    end
+    if d2 == 5 then
+      if b[$7C16A] == 0 then
+        if b[$7C14A] == 1 then
+          if lmb then
+            call cursor_busy
+            quip_person = 0
+            if hover_mode == 1 then
+              if verb_take == 1 then
+                call sub_1AC1C
+                l[$1932A] = $7B550  -- "Ziele Jakuba "
+                call inventory_add
+                l[$1932E] = $7DF64
+                call inventory_remove
+                b[$7C14A] = 0
+                call reset_verbs
+                goto L0B7BC
+              end
+              if verb_look == 1 then
+                a2 = $82672  -- "O! Ziółko Tereni!"
+              else
+                a2 = $8266B  -- "Ziółko"
+                call quip_if_verb_b
+              end
+              call reset_verbs
+              call clear_text
+              call print
+              goto L0B7BC
+            end
+            goto L0B7BC
+          end
+          goto L0B7BC
+        end
+        goto L0B7BC
+      end
+      goto L0B7BC
+    end
+    if d2 == 6 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $82684  -- "Do kościółka"
+        call print
+        call label_mode
+      end
+      call cursor_exit_b
+      if lmb then
+        call sub_1BC6E
+        goto L0BF1A
+      end
+      goto L0B7BC
+    end
+    if d2 == 7 then
+      if b[$7C0EC] == 0 then
+        if hover_mode == 1 then
+          call clear_text
+          a2 = $82691  -- "Na łąkę"
+          call print
+          call label_mode
+        end
+        call cursor_anim_cd88
+        if lmb then
+          call sub_1BC6E
+          goto L0BBDE
+        end
+        goto L0B7BC
+      end
+      goto L0B7BC
+    end
+    goto L0B7BC
+  end
+  call sub_1AB8C
+  call sub_1BC5E
+  call cursor_hand
+  hotspot_table = $1D320
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L0B634::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0B634
+    end
+    goto L0B634
+  end
+  if d2 == 1 then
+  else
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_use == 1 then
+            if w[$7C1FC] == 1 then
+              l[$1932A] = $7B42A  -- "stary klucz "
+              call inventory_scroll_up
+              l[$1932E] = $7DF20
+              call inventory_scroll_down
+              b[$7C0ED] = 1
+              w[$7C1FC] = 0
+              a2 = $7B437  -- "Plum i nie ma klucza..."
+              call clear_text
+              call print
+              call reset_verbs
+              goto L0B634
+            end
+          ::L0B754::
+            if verb_look == 1 then
+              a2 = $825BE  -- "Echo!!!......  - echo..echo...echo! Rety! Głęboko tu!"
+            else
+              a2 = $825AF  -- "Otwór w studni"
+              call quip_if_verb
+            end
+            call clear_text
+            call print
+            call reset_verbs
+            goto L0B634
+          end
+          goto L0B754
+        end
+        goto L0B634
+      end
+      goto L0B634
+    end
+    goto L0B634
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $8259D  -- "Do domu Gerwazego"
+    call print
+    call label_mode
+  end
+  call cursor_anim_cd2c
+  if lmb then
+  else
+    goto L0B634
+  end
+  call sub_1BC6E
+  goto L0AC3E
+end
+
+routine loc_1F_2 @ $14148
+  loc_id = $1F
+  call ensure_disk
+  a0 = $14FCCC
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BC5E
+  a2 = $7E7E4  -- "- No widzisz, prawda.... Gdybyś, prawda, porozmawiał ze mną, czyli ..."
+  call say
+  call clear_text
+  call sub_1BC6E
+  return
+end

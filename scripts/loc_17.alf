@@ -1,0 +1,25 @@
+routine loc_17 @ $09952
+::L09952::
+  loc_id = $17
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  if b[$030EE] ~= 1 then
+    a0 = $1928EA
+  else
+    a0 = $1038EA
+  end
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  b[$7C0DA] = 1
+  call sub_1BB1A
+  a2 = $8191E  -- " /      "Widzę zachód słońca, czerwony zachód słońca... /       Otw..."
+  call say
+  call clear_text
+  call sub_1BA76
+  jump loc_05
+end

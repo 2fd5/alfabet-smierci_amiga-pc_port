@@ -1,0 +1,294 @@
+routine loc_11 @ $07D32
+::L07D32::
+  loc_id = $11
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $10D488
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BA66
+  call cursor_hand
+  b[$7C0CD] = 1
+  if b[$7C0CE] ~= 2 then
+    hotspot_table = $1D14E
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+  ::L07DB8::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+      call cursor_hand
+      hover_mode = 1
+      if label_shown == 1 then
+        call clear_text
+        goto L07DB8
+      end
+      goto L07DB8
+    end
+    if d2 == 1 then
+      if hover_mode == 1 then
+        if b[$7C0E9] ~= 0 then
+          if b[$7C0F0] ~= 0 then
+            if b[$7C0DA] == 1 then
+            ::L07E30::
+              call clear_text
+              a2 = $80B47  -- "Lepiej nie wchodzić! Nie ma tu nic do szukania, a można być znalezi..."
+              call print
+              call label_mode
+              goto L07DB8
+            end
+          ::L07E4C::
+            call clear_text
+            a2 = $80B3F  -- "Wejście"
+            call print
+            call label_mode
+          ::L07E64::
+            call cursor_exit_a
+            if lmb then
+              if b[$7C0DA] ~= 1 then
+                if b[$7C0F0] == 1 then
+                  call sub_1BA76
+                  goto L09952
+                end
+                if b[$7C0E9] ~= 1 then
+                  call sub_1BA76
+                  goto L075AC
+                end
+                goto L07DB8
+              end
+              goto L07DB8
+            end
+            goto L07DB8
+          end
+          goto L07E30
+        end
+        goto L07E4C
+      end
+      goto L07E64
+    end
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $80C73  -- "Odrapana tabliczka z napisem IZBA PRZYJĘĆ. Szpitale są jednak w tru..."
+          else
+            a2 = $80C66  -- "Izba przyjęć"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L07DB8
+        end
+        goto L07DB8
+      end
+      goto L07DB8
+    end
+    if d2 == 3 then
+      if b[$7C0DA] ~= 1 then
+        if b[$7C0E9] ~= 0 then
+          if b[$7C0E9] ~= 1 then
+            if b[$7C0E4] < 2 then
+            ::L07F46::
+              if hover_mode == 1 then
+                call clear_text
+                a2 = $80CC5  -- "Wyjście"
+                call print
+                call label_mode
+              end
+              call cursor_anim_cd2c
+              if lmb then
+                call sub_1BA76
+                if b[$7C0E9] == 0 then
+                  if b[$7C0E4] ~= 1 then
+                    goto L0390A
+                  end
+                  goto L07214
+                end
+                if b[$7C0DA] == 1 then
+                  goto L0390A
+                end
+                goto L07214
+              end
+              goto L07DB8
+            end
+            goto L07DB8
+          end
+          goto L07F46
+        end
+        goto L07F46
+      end
+      goto L07F46
+    end
+    if d2 == 4 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $80CEC  -- "Ten chuderlawy gość z kościstą muszką pod szyją uśmiecha się zachęc..."
+          else
+            a2 = $80CD5  -- "Drzwiczki elektryczki."
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L07DB8
+        end
+        goto L07DB8
+      end
+      goto L07DB8
+    end
+    goto L07DB8
+  end
+  hotspot_table = $1D170
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+::L0803A::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    w[$7A92C] = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0803A
+    end
+    goto L0803A
+  end
+  if d2 == 1 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $80B3F  -- "Wejście"
+      call print
+      call label_mode
+    end
+    call cursor_exit_a
+    if lmb then
+      if b[$7C15D] ~= 1 then
+        if b[$7C12D] ~= 1 then
+          if b[$7C132] ~= 1 then
+            if b[$7C16E] ~= 0 then
+              if b[$7C147] == 0 then
+                call sub_1BA76
+                jump loc_32
+              end
+              if b[$7C16D] == 0 then
+                call sub_1BA76
+                jump loc_13
+              end
+              goto L0803A
+            end
+            if w[$7A92C] == 1 then
+              a2 = $80C3A  -- "Wolałbym już jej nie denerwować. Ten nóż..."
+              call clear_text
+              call print
+              call reset_verbs
+              w[$7A92C] = 0
+              goto L0803A
+            end
+            goto L0803A
+          end
+          if w[$7A92C] == 1 then
+            a2 = $80BB5  -- "Nie ma sensu tam iść! Mam teraz ważniejsze sprawy na głowie."
+            call clear_text
+            call print
+            call reset_verbs
+            w[$7A92C] = 0
+            goto L0803A
+          end
+          goto L0803A
+        end
+        if w[$7A92C] == 1 then
+          a2 = $80B9C  -- "Boję się nawet wchodzić!"
+          call clear_text
+          call print
+          call reset_verbs
+          w[$7A92C] = 0
+          goto L0803A
+        end
+        goto L0803A
+      end
+      if w[$7A92C] == 1 then
+        a2 = $80BF2  -- "Nie sądzę, żeby tu było coś ciekawego. Poza tym. Mam pewne uprzedze..."
+        call clear_text
+        call print
+        call reset_verbs
+        w[$7A92C] = 0
+        goto L0803A
+      end
+      goto L0803A
+    end
+    goto L0803A
+  end
+  if d2 == 2 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $80C73  -- "Odrapana tabliczka z napisem IZBA PRZYJĘĆ. Szpitale są jednak w tru..."
+        else
+          a2 = $80C66  -- "Izba przyjęć"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0803A
+      end
+      goto L0803A
+    end
+    goto L0803A
+  end
+  if d2 == 3 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $80CCD  -- "Na targ"
+      call print
+      call label_mode
+    end
+    call cursor_anim_cd2c
+    if lmb then
+      call sub_1BA76
+      goto L0DA7A
+    end
+    goto L0803A
+  end
+  if d2 == 4 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $80CEC  -- "Ten chuderlawy gość z kościstą muszką pod szyją uśmiecha się zachęc..."
+        else
+          a2 = $80CD5  -- "Drzwiczki elektryczki."
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0803A
+      end
+      goto L0803A
+    end
+    goto L0803A
+  end
+  goto L0803A
+end

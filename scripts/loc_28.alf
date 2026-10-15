@@ -1,0 +1,345 @@
+routine loc_28 @ $0EA88
+::L0EA88::
+  loc_id = $28
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $1A934C
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BD5A
+  if b[$7C103] < 1 then
+    call cursor_hand
+    hotspot_table = $1D4C8
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+    call clear_text
+    call draw_verb_bar
+    call reset_verbs
+  ::L0EB18::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+    else
+      if d2 u<= 2 then
+        if lmb then
+          call cursor_busy
+          quip_person = 1
+          if hover_mode == 1 then
+            if verb_look == 1 then
+              a2 = $8350F  -- "Wypisz, wymaluj masarz!"
+            else
+              a2 = $83508  -- "Masarz"
+              call quip_if_verb
+            end
+            call clear_text
+            call print
+            call reset_verbs
+            goto L0EB18
+          end
+          goto L0EB18
+        end
+        goto L0EB18
+      end
+      goto L0EB18
+    end
+    if verb_talk == 1 then
+    else
+    ::L0EB5C::
+      call cursor_hand
+      hover_mode = 1
+      if label_shown == 1 then
+        call clear_text
+        goto L0EB18
+      end
+      goto L0EB18
+    end
+    b[$7C103] += 1
+    if b[$7C103] ~= 1 then
+      goto L0EB5C
+    end
+    hotspot_table = $1D790
+    mouse_min_y = $192
+    mouse_max_y = $1EF
+    mouse_max_x = $27A
+    a2 = $8FA35  -- "²- Dzień dobry! Z tego co widzę, trafiłem na stoisko mięsne."
+    call say
+    a2 = $8FA72  -- "¹- Tak. U mnie wszystkie asortymenty. Do wyboru, chociaż kolor jest..."
+    call say
+    a2 = $8FABD  -- "²= A jest sarnina? / = Czy mógłby mi pan powiedzieć jak się zabija ..."
+    call show
+  ::L0EC26::
+    wait_raster $FF
+    if not lmb then
+      if lmb then
+      else
+        goto L0EC26
+      end
+    end
+    call hit_test
+    if d2 ~= -1 then
+    else
+      goto L0EC26
+    end
+    if d2 == 1 then
+      a2 = $8FB38  -- "¹- Niestety nie ma. Skończyła mi się wczoraj. Wie pan, szczerze mów..."
+      call say
+      a2 = $8FBAB  -- "²- Ja też nie widzę w tym nic zabawnego, ale cóż. Trzeba coś jeść."
+      call say
+    elseif d2 == 2 then
+      a2 = $8FBEE  -- "¹- Sarny? Podobnie jak króliki. Jednak cóż może być fascynującego w..."
+      call say
+      a2 = $8FC54  -- "²- No tak... Rozumiem. Przy odrobinie rutyny, każdy zawód zaczyna b..."
+      call say
+    elseif d2 == 3 then
+      a2 = $8FCA1  -- "¹- Niestety! Jeżeli nawet mam to zostawiłem je w domu. Przyznam się..."
+      call say
+      a2 = $8FD7D  -- "²- Tępa?"
+      call say
+      a2 = $8FD86  -- "¹- Oczywiście! To przecież żadna przyjemność, zabić jednym ciosem. ..."
+      call say
+      a2 = $8FE1B  -- "²- Tak pan uważa? Celowo pan zadaje zwierzętom ból??? To obrzydliwe!"
+      call say
+    else
+      goto L0EC26
+    end
+    a2 = $8FE60  -- "¹- Nie o to mi chodziło. Wie pan. Agonia zwierząt mnie nie rusza! S..."
+    call say
+    a2 = $8FEF5  -- "²- Człowiek?"
+    call say
+    a2 = $8FF02  -- "¹- W zabijaniu... W zabijaniu ludzi jest coś pociągającego. Wie pan..."
+    call say
+    a2 = $8FFB2  -- "²- Chyba nie mówi pan poważnie?!?"
+    call say
+    a2 = $8FFD4  -- "¹- Jak najbardziej. Problem z ludźmi polega na tym, że nie można ic..."
+    call say
+    a2 = $90085  -- "¹- Jest pan sadystą albo czubkiem! Żegnam!"
+    call say
+    call clear_text
+    call sub_1BD6A
+    goto L0DA7A
+  end
+  hotspot_table = $1D790
+  mouse_min_y = $192
+  mouse_max_y = $1EF
+  mouse_max_x = $27A
+  b[$7C103] += 1
+  a2 = $900B0  -- "¹- Hej hej! Czyżbyś przyniósł mi wiadomość o jakimś człowieku do za..."
+  call say
+  a2 = $900FA  -- "²= Jest pan obrzydliwym, paranoicznym psychopatą! To pana powinno s..."
+  call show
+::L0ED6E::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0ED6E
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0ED6E
+  end
+  if d2 == 1 then
+    a2 = $901E8  -- "¹- De gustibus non disputandum est, co znaczy:  Jak ci się nie podo..."
+    call say
+    call sub_1BD6A
+    goto L0DA7A
+  end
+  if d2 == 2 then
+    a2 = $9023C  -- "¹- To nie są majaki! Jestem śmiertelnie poważny. Jak ci się nie pod..."
+    call say
+    call sub_1BD6A
+    goto L0DA7A
+  end
+  if d2 == 3 then
+    a2 = $902C6  -- "¹- Szczerze mówiąc... Jeżeli to ma być następny zwykły facet to... ..."
+    call say
+    a2 = $9031F  -- "²- Jak pan chce."
+    call say
+    a2 = $90330  -- "¹- Chyba, że byłby to ktoś, kto nie znika po śmierci i można go poć..."
+    call say
+    a2 = $9038B  -- "²= Eeee...Takich to nie znam. / = Mam kogoś takiego!"
+    call show
+    goto L0EE4E
+  end
+  if d2 == 4 then
+    a2 = $90B00  -- "¹- Ciebie? Chyba sobie żartujesz! A zresztą... Czemu nie? MASZ!"
+    call say
+    call sub_1BD6A
+    call music_stop
+    d1 = $4A
+    music_order = d1
+    call music_start
+    goto L14006
+  end
+  goto L0ED6E
+::L0EE4E::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0EE4E
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0EE4E
+  end
+  if d2 == 1 then
+    a2 = $903BE  -- "¹- To mi nie zawracaj głowy! Chociaż... Ty wyglądasz całkiem apetyc..."
+    call say
+    call music_stop
+    d1 = $4A
+    music_order = d1
+    call music_start
+    call sub_1BD6A
+    goto L14006
+  end
+  if d2 == 2 then
+    a2 = $90418  -- "¹- Bzdura..."
+    call say
+    a2 = $90425  -- "²- Ale ja na serio, znam tego gościa!"
+    call say
+    a2 = $9044B  -- "¹- Tomek Antkowiak???"
+    call say
+    a2 = $90461  -- "²= Tak, to ja, a co? / = Tak, to ten. Zna go pan?"
+    call show
+    goto L0EEE8
+  end
+  goto L0EE4E
+::L0EEE8::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0EEE8
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0EEE8
+  end
+  if d2 == 1 then
+    a2 = $90491  -- "¹- O bratku!!!! Dopadłem cię! Co ja gadam? Sam się wpakowałeś w moj..."
+    call say
+    a2 = $9051C  -- "²- Co to ma znaczyć?!"
+    call say
+    a2 = $90532  -- "¹- Dokładnie tyle, że właśnie przestałeś żyć!"
+    call say
+    call music_stop
+    d1 = $4A
+    music_order = d1
+    call music_start
+    call sub_1BD6A
+    goto L14006
+  end
+  if d2 == 2 then
+    a2 = $90560  -- "¹- Czy ja go znam?  Też pytanie. To jest rozwiązanie wszystkich moi..."
+    call say
+    a2 = $9060E  -- "²= Stoi przed panem! To ja! / = Cały czas leży przed tym kościółkie..."
+    call show
+    goto L0EF82
+  end
+  goto L0EEE8
+::L0EF82::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0EF82
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0EF82
+  end
+  if d2 == 1 then
+    a2 = $906A8  -- "¹- O bratku!!!! Dopadłem cię! Co ja gadam? Sam się wpakowałeś w moj..."
+    call say
+    a2 = $90733
+    call say
+    a2 = $9073C  -- "¹- Dokładnie tyle, że właśnie przestałeś żyć!"
+    call say
+    call music_stop
+    d1 = $4A
+    music_order = d1
+    call music_start
+    call sub_1BD6A
+    goto L14006
+  end
+  if d2 == 2 then
+    a2 = $9076A  -- "¹- Chyba sobie żartujesz? Wiem kto leży pod kościółkiem i wiem, że ..."
+    call say
+    a2 = $907B8  -- "²- Przecież to on!"
+    call say
+    a2 = $907CB  -- "¹- Nie nabierzesz mnie tak! Poza tym, ty też nieźle się nadajesz. T..."
+    call say
+    call music_stop
+    d1 = $4A
+    music_order = d1
+    call music_start
+    call sub_1BD6A
+    goto L14006
+  end
+  if d2 == 3 then
+    a2 = $9082B  -- "¹- Chyba nie sądziłeś, że przełknę taki bajer?  Ale wiesz?  Ty też ..."
+    call say
+    call music_stop
+    d1 = $4A
+    music_order = d1
+    call music_start
+    call sub_1BD6A
+    goto L14006
+  end
+  if d2 == 4 then
+    a2 = $908C0  -- "¹- W starej oberży!?"
+    call say
+    a2 = $908D5  -- "²- Tak."
+    call say
+    a2 = $908DD  -- "¹- Niesamowite! Powiedz mi, bo nie chce mi się wierzyć... Skąd go z..."
+    call say
+    a2 = $90926  -- "²- Byłem na targu i chciałem kupić bronę..."
+    call say
+    a2 = $90952  -- "¹- Typu KILLER-SS7?"
+    call say
+    a2 = $90966  -- "²- Tak!"
+    call say
+    a2 = $9096E  -- "¹- Bujasz mnie stary! Ostatnia jaka wyszła to..."
+    call say
+    a2 = $9099F  -- "²- KILLER-SS4!"
+    call say
+    a2 = $909AE  -- "¹- O właśnie!"
+    call say
+    a2 = $909BC  -- "²- Pomyliło mi się, nie mam głowy do numerków."
+    call say
+    a2 = $909EB  -- "¹- Chyba, że tak... No i co?"
+    call say
+    a2 = $90A08  -- "²- No i tam go spotkałem! Chyba też chciał kupić coś takiego."
+    call say
+    a2 = $90A46  -- "¹- To się trzyma kupy! Pewnie kombinuje, jak mnie wykończyć!"
+    call say
+    a2 = $90A83  -- "²- Ja tam nie wiem!"
+    call say
+    a2 = $90A97  -- "¹- W porządku. Wierzę ci! Chodźmy tam zaraz."
+    call say
+    a2 = $90AC4  -- "²- Dobra!"
+    call say
+    a2 = $90ACE  -- "¹- Ale jak nie przyjdzie... Ty zginiesz za niego!"
+    call say
+    call sub_1BD6A
+    goto L0F15E
+  end
+  goto L0EF82
+end

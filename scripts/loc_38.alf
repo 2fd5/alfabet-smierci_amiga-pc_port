@@ -1,0 +1,110 @@
+routine loc_38 @ $1316A
+::L1316A::
+  loc_id = $38
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $155986
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C144] == 0 then
+    call sub_1A9DC
+  end
+  call sub_1BF2E
+  call cursor_hand
+  hotspot_table = $1D6A4
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L131F8::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L131F8
+    end
+    goto L131F8
+  end
+  if d2 == 1 then
+    if b[$7C144] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            call sub_1A9DC
+            l[$1932A] = $7B4FC  -- "stara księga"
+            call inventory_add
+            l[$1932E] = $7DF4C
+            call inventory_remove
+            b[$7C144] = 0
+            call reset_verbs
+            goto L131F8
+          end
+          if verb_look == 1 then
+            a2 = $840EE  -- "Jakaś stara księga. Dziwne, że jeszcze nie zgniła w tych warunkach."
+          else
+            a2 = $840E6  -- "Książka"
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L131F8
+        end
+        goto L131F8
+      end
+      goto L131F8
+    end
+    goto L131F8
+  end
+  if d2 == 2 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $8413C  -- "Tajna kwatera szatana obok leśnej kapliczki?!? Kto by pomyślał!"
+        else
+          a2 = $84132  -- "Kapliczka"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L131F8
+      end
+      goto L131F8
+    end
+    goto L131F8
+  end
+  if d2 == 3 then
+  else
+    goto L131F8
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $8417C  -- "Do środka"
+    call print
+    call label_mode
+  end
+  call cursor_exit_a
+  if lmb then
+  else
+    goto L131F8
+  end
+  call sub_1BF3E
+  goto L12E9E
+end

@@ -1,0 +1,301 @@
+routine loc_33 @ $1158C
+::L1158C::
+  loc_id = $33
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $13E052
+  call sub_19422
+  if b[$7C100] ~= 1 then
+    if b[$7C11F] == 1 then
+      call sub_1B3B4
+    elseif b[$7C120] == 1 then
+      call sub_1B36C
+    end
+  end
+  call sub_1BE9E
+  call cursor_hand
+  if b[$7C100] ~= 0 then
+    hotspot_table = $1D604
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+    call clear_text
+    call draw_verb_bar
+    call reset_verbs
+  ::L11AAA::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+      call cursor_hand
+      hover_mode = 1
+      if label_shown == 1 then
+        call clear_text
+        goto L11AAA
+      end
+      goto L11AAA
+    end
+    if d2 == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $83D3D  -- "Nic a nic się nie zmienił."
+          else
+            a2 = $83D35  -- "Strumyk"
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L11AAA
+        end
+        goto L11AAA
+      end
+      goto L11AAA
+    end
+    if d2 == 2 then
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          call clear_text
+          a2 = $83D6D  -- "Po prostu wejście."
+          call print
+          call label_mode
+          goto L11AAA
+        end
+        call clear_text
+        a2 = $83D58  -- "Wejście do piwniczki"
+        call print
+        call label_mode
+      ::L11BA0::
+        call cursor_exit_a
+        if lmb then
+          call sub_1BEAE
+          goto L12E9E
+        end
+        goto L11AAA
+      end
+      goto L11BA0
+    end
+    if d2 == 3 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $83D80  -- "Do stracha na wróble"
+        call print
+        call label_mode
+      end
+      call cursor_anim_cd88
+      if lmb then
+        call sub_1BEAE
+        goto L10880
+      end
+      goto L11AAA
+    end
+    goto L11AAA
+  end
+  hotspot_table = $1D5EA
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L11642::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    if verb_use == 1 then
+      if b[$7C11F] ~= 0 then
+        goto L11642
+      end
+      if w[$7C248] ~= 1 then
+        goto L11642
+      end
+      l[$1932A] = $7B992
+      call inventory_scroll_up
+      l[$1932E] = $7DFB8
+      call inventory_scroll_down
+      call cursor_hand
+      call reset_verbs
+      b[$7C11F] = 1
+      b[$7C120] = 0
+      call sub_1B3B4
+      goto L11642
+    end
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L11642
+    end
+    goto L11642
+  end
+  if d2 == 1 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        call draw_verb_bar
+        w[$7C254] = 0
+        w[$7C216] = 0
+        if verb_use == 1 then
+          call reset_verbs
+          if w[$7C224] == 1 then
+            if b[$7C165] ~= 0 then
+              b[$19328] = 1
+              l[$1932A] = $7B57A  -- "  wiaderko  "
+              call inventory_scroll_up
+              l[$1932E] = $7DF70
+              call inventory_scroll_down
+              l[$1932A] = $7B9E6  -- "wiadro wody "
+              call inventory_add
+              l[$1932E] = $7DFD0
+              call inventory_remove
+              b[$7C165] = 0
+              b[$19328] = 0
+              call draw_inventory
+              call draw_verb_bar
+              call clear_text
+              call reset_verbs
+              goto L11642
+            end
+            goto L11642
+          end
+          goto L11642
+        end
+        if verb_look == 1 then
+          a2 = $83BF2  -- "Woda w tym strumyku jest zimna i czysta."
+        else
+          a2 = $83BEA  -- "Strumyk"
+          call quip_if_verb_b
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L11642
+      end
+      goto L11642
+    end
+    goto L11642
+  end
+  if d2 == 2 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        call draw_verb_bar
+        w[$7C224] = 0
+        if verb_take == 1 then
+          if b[$7C166] ~= 0 then
+            if b[$7C11F] == 1 then
+              call sub_1B3FC
+              l[$1932A] = $7B9F4  -- " skafander  "
+              call inventory_add
+              l[$1932E] = $7DFD4
+              call inventory_remove
+              b[$7C166] = 0
+              b[$7C11F] = 0
+              a2 = $83CB5  -- "Mam! Mam skafander! Jest trochę pokiereszowany i dziurawy. Nie wiem..."
+            else
+            ::L118A8::
+              call quip_if_verb
+            end
+          else
+            goto L118A8
+          end
+        ::L119F8::
+          call clear_text
+          call print
+          call reset_verbs
+          goto L11642
+        end
+        if verb_use == 1 then
+          call reset_verbs
+          if w[$7C254] == 1 then
+            if b[$7C120] == 0 then
+              b[$19328] = 0
+              l[$1932A] = $7B9E6  -- "wiadro wody "
+              call inventory_scroll_up
+              l[$1932E] = $7DFD0
+              call inventory_scroll_down
+              b[$7C120] = 1
+              w[$7C254] = 0
+              call sub_1B36C
+              a2 = $83C86  -- "Chlust! No i proszę! Pole siłowe jak na dłoni!"
+              goto L119F8
+            end
+            goto L11642
+          end
+          if w[$7C216] == 1 then
+            if b[$7C120] == 1 then
+              if b[$7C16F] == 1 then
+                b[$19328] = 1
+                l[$1932A] = $7B518  -- "   aparat   "
+                call inventory_scroll_up
+                l[$1932E] = $7DF54
+                call inventory_scroll_down
+                l[$1932A] = $7BB1F  -- " fotka pola "
+                call inventory_add
+                l[$1932E] = $7DFF8
+                call inventory_remove
+                b[$7C16F] = 0
+                b[$19328] = 0
+                w[$7C216] = 0
+                call draw_inventory
+                call draw_verb_bar
+                call clear_text
+                call reset_verbs
+                goto L11642
+              end
+              goto L11642
+            end
+            goto L11642
+          end
+          goto L11642
+        end
+        if verb_look == 1 then
+          if b[$7C11F] == 1 then
+            a2 = $83C51  -- "No no no... Skafander Zembowskiego! A to ci dopiero."
+            goto L119F8
+          end
+          a2 = $83C25  -- "Niczego nie mogę wypatrzeć w tej piwniczce!"
+          goto L119F8
+        end
+        a2 = $83C1B  -- "Piwniczka"
+        call quip_if_verb
+        goto L119F8
+      end
+      goto L11642
+    end
+    goto L11642
+  end
+  if d2 == 3 then
+  else
+    goto L11642
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $83D20  -- "Do stracha na wróble"
+    call print
+    call label_mode
+  end
+  verb_use = 0
+  call cursor_anim_cd88
+  if lmb then
+  else
+    goto L11642
+  end
+  w[$7C254] = 0
+  w[$7C224] = 0
+  w[$7C216] = 0
+  call sub_1BEAE
+  goto L10880
+end

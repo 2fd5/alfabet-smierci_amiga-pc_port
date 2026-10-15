@@ -1,0 +1,238 @@
+routine loc_06 @ $04028
+::L04028::
+  loc_id = 6
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  a0 = $D919C
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C0C6] == 1 then
+    call sub_1A050
+  end
+  if b[$7C0C7] == 1 then
+    call sub_1A098
+  end
+  if b[$7C0C8] == 1 then
+    call sub_1A0E0
+  end
+  if b[$7C0C9] == 1 then
+    call sub_1A128
+  end
+  if b[$7C0CA] == 1 then
+    call sub_1A170
+  end
+  if b[$7C0CB] == 1 then
+    call sub_1A1B8
+  end
+  if b[$7C0CC] == 1 then
+    call sub_1A200
+  end
+  if b[$7C0CD] == 1 then
+    call sub_1A248
+  end
+  call sub_1A290
+  call sub_1B8DA
+  call cursor_hand
+  hotspot_table = $1CF76
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+::L0412A::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    w[$7A92C] = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0412A
+    end
+    goto L0412A
+  end
+  if d2 == 1 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $7FFD4  -- "Centrum Dębów"
+      call print
+      call label_mode
+    end
+    call cursor_anim_cd2c
+    if lmb then
+      call sub_1B8EA
+      goto L0390A
+    end
+    goto L0412A
+  end
+  if d2 == 2 then
+    if b[$7C0C6] == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $80027  -- "Janina Stachura"
+        call print
+        call label_mode
+      end
+      if lmb then
+        call sub_1B8EA
+        goto L04CE4
+      end
+      goto L0412A
+    end
+    goto L0412A
+  end
+  if d2 == 3 then
+    if b[$7C0C7] == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $80037  -- "W. Prokopiewicz"
+        call print
+        call label_mode
+      end
+      if lmb then
+        if train_rides ~= 1 then
+          if w[$7A92C] == 1 then
+            call clear_text
+            a2 = $7FFE2  -- "Jeszcze nie czas na wizyty. Chyba powinienem jeszcze z kimś pogadać."
+            call print
+            w[$7A92C] = 0
+            goto L0412A
+          end
+          goto L0412A
+        end
+        call sub_1B8EA
+        goto L05A62
+      end
+      goto L0412A
+    end
+    goto L0412A
+  end
+  if d2 == 4 then
+    if b[$7C0C8] == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $80047  -- "Marlena Żyhoniuk"
+        call print
+        call label_mode
+      end
+      if lmb then
+        if train_rides ~= 1 then
+          if w[$7A92C] == 1 then
+            call clear_text
+            a2 = $7FFE2  -- "Jeszcze nie czas na wizyty. Chyba powinienem jeszcze z kimś pogadać."
+            call print
+            w[$7A92C] = 0
+            goto L0412A
+          end
+          goto L0412A
+        end
+        call sub_1B8EA
+        goto L05C3C
+      end
+      goto L0412A
+    end
+    goto L0412A
+  end
+  if d2 == 5 then
+    if b[$7C0C9] == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $80058  -- "R.P.Urylewscy"
+        call print
+        call label_mode
+      end
+      if lmb then
+        call sub_1B8EA
+        goto L0A676
+      end
+      goto L0412A
+    end
+    goto L0412A
+  end
+  if d2 == 6 then
+    if b[$7C0CA] == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $80066  -- "Policja"
+        call print
+        call label_mode
+      end
+      if lmb then
+        call sub_1B8EA
+        goto L067A8
+      end
+      goto L0412A
+    end
+    goto L0412A
+  end
+  if d2 == 7 then
+    if b[$7C0CB] == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $8006E  -- "Parafia św. Wojciecha"
+        call print
+        call label_mode
+      end
+      if lmb then
+        call sub_1B8EA
+        if b[$7C0E6] == 1 then
+          goto L099D6
+        end
+        goto L0527A
+      end
+      goto L0412A
+    end
+    goto L0412A
+  end
+  if d2 == 8 then
+    if b[$7C0CC] == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $80084  -- "Cmentarz komunalny"
+        call print
+        call label_mode
+      end
+      if lmb then
+        call sub_1B8EA
+        goto L09E40
+      end
+      goto L0412A
+    end
+    goto L0412A
+  end
+  if d2 == 9 then
+    if b[$7C0CD] == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $80097  -- "Szpital rejonowy w Dębach"
+        call print
+        call label_mode
+      end
+      if lmb then
+        call sub_1B8EA
+        goto L07D32
+      end
+      goto L0412A
+    end
+    goto L0412A
+  end
+  if d2 == $A then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $800B1  -- "Do centrum"
+      call print
+      call label_mode
+    end
+    if lmb then
+      call sub_1B8EA
+      goto L0390A
+    end
+    goto L0412A
+  end
+  goto L0412A
+end

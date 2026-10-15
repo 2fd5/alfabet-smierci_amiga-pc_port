@@ -1,0 +1,782 @@
+routine loc_27 @ $0DA7A
+::L0DA7A::
+  loc_id = $27
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $19DE86
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C15A] == 0 then
+    call sub_1AFC4
+  end
+  if b[$7C15B] == 0 then
+    call sub_1B00C
+  end
+  if b[$7C15C] == 0 then
+    call sub_1B054
+  end
+  call sub_1BD36
+  call cursor_hand
+  if b[$7C12D] ~= 1 then
+    if b[$7C126] == 1 then
+      if b[$7C16D] ~= 0 then
+        call clear_text
+        a2 = $832ED  -- "Och... Czuję jakbym się zapadał do środka! Arrrghhh!"
+        call say
+        call reset_verbs
+        call music_stop
+        d1 = $4A
+        music_order = d1
+        call music_start
+        call sub_1BD46
+        jump game_over_b
+      end
+    ::L0DB54::
+      hotspot_table = $1D46E
+      mouse_min_y = $20
+      mouse_max_y = $253
+      mouse_max_x = $27A
+      call clear_text
+      call draw_verb_bar
+      call reset_verbs
+    ::L0DB88::
+      wait_raster $FF
+      call ui_panel
+      call ui_combine
+      call hit_test
+      if d2 == -1 then
+        call cursor_hand
+        hover_mode = 1
+        if label_shown == 1 then
+          call clear_text
+          goto L0DB88
+        end
+        goto L0DB88
+      end
+      if d2 == 1 then
+        if hover_mode == 1 then
+          call clear_text
+          a2 = $832E2  -- "Do centrum"
+          call print
+          call label_mode
+        end
+        call cursor_exit_a
+        if lmb then
+          w[$7C1C2] = 0
+          call sub_1BD46
+          jump loc_05
+        end
+        goto L0DB88
+      end
+      if d2 == 2 then
+        if b[$7C105] ~= 0 then
+          if hover_mode == 1 then
+            call clear_text
+            a2 = $83322  -- "Do masarza"
+            call print
+            call label_mode
+          end
+          call cursor_anim_cd88
+          if lmb then
+            w[$7C1C2] = 0
+            call sub_1BD46
+            if b[$7C0DF] ~= 1 then
+              if b[$7C0E0] ~= 1 then
+              ::L0DC92::
+                if d2 == 3 then
+                  if lmb then
+                    call cursor_busy
+                    quip_person = 1
+                    if hover_mode == 1 then
+                      if verb_give == 1 then
+                        if b[$7C15C] == 1 then
+                          if w[$7C1C2] == 1 then
+                            a2 = $83365  -- "Oooo! Prawdziwy ruski sikor! Właśnie taki chciałem kupić! Dam ci za..."
+                            call clear_text
+                            call print
+                            call reset_verbs
+                            call sub_1B054
+                            b[$19328] = 1
+                            l[$1932A] = $7B8AC  -- "  zegarek   "
+                            call inventory_scroll_up
+                            l[$1932E] = $7DFA8
+                            call inventory_scroll_down
+                            l[$1932A] = $7B8BA  -- "stary młynek"
+                            call inventory_add
+                            l[$1932E] = $7DFAC
+                            call inventory_remove
+                            b[$7C15C] = 0
+                            b[$19328] = 0
+                            call draw_inventory
+                            call reset_verbs
+                            goto L0DB88
+                          end
+                          goto L0DB88
+                        end
+                        goto L0DB88
+                      end
+                      if verb_talk == 1 then
+                        if b[$7C102] == 1 then
+                          if b[$7C105] ~= 0 then
+                            call sub_16CBA
+                            goto L0DB88
+                          end
+                          hotspot_table = $1D790
+                          mouse_min_y = $192
+                          mouse_max_y = $1EF
+                          mouse_max_x = $27A
+                          b[$7C105] = 1
+                          a2 = $8E634  -- "¹- Ahoy there, fancy pants!"
+                          call say
+                          a2 = $8E650  -- "²- Że co?"
+                          call say
+                          a2 = $8E65A  -- "¹- Och przepraszam! Wczoraj grałem w... Mniejsza z tym. Jak leci?"
+                          call say
+                          a2 = $8E69C
+                          call say
+                          a2 = $8E6A7  -- "¹- Tak myślałem! Masz jakąś sprawę?"
+                          call say
+                          a2 = $8E6CB  -- "²= Gdzie mieszka ten cały masarz? / = Zabiłem masarza! Jestem boski!"
+                          call show
+                        ::L0E55E::
+                          wait_raster $FF
+                          if not lmb then
+                            if lmb then
+                            else
+                              goto L0E55E
+                            end
+                          end
+                          call hit_test
+                          if d2 ~= -1 then
+                          else
+                            goto L0E55E
+                          end
+                          if d2 == 1 then
+                            a2 = $8E70E  -- "¹- Tam! Trochę prosto, trochę w prawo... Ja tam dokładnie nie wiem...."
+                            call say
+                            goto L0DB54
+                          end
+                          if d2 == 2 then
+                            a2 = $8E762  -- "¹- Tak? Żarty sobie stroisz! Jego? Hehehehe... Idź w prawo za targi..."
+                            call say
+                            goto L0DB54
+                          end
+                          goto L0E55E
+                        end
+                        b[$7C104] += 1
+                        if b[$7C103] < 2 then
+                          if b[$7C103] >= 1 then
+                            if b[$7C104] ~= 3 then
+                              hotspot_table = $1D790
+                              mouse_min_y = $192
+                              mouse_max_y = $1EF
+                              mouse_max_x = $27A
+                              a2 = $8E20B  -- "²- Rany! Chłopie, ten tam... masarz to jakiś czubek!"
+                              call say
+                              a2 = $8E240  -- "¹- Mówił ci pewnie, że chce zabić i poćwiartować żywego /   człowieka."
+                              call say
+                              a2 = $8E285  -- "²- Tak! Skąd wiesz?... Eee... Skąd pan wie???"
+                              call say
+                              a2 = $8E2B3  -- "¹- Staaary! Ten gość to autentyczny świr! Psychopata! Na domiar złe..."
+                              call say
+                              a2 = $8E342  -- "²- I nikt nic nie robi?"
+                              call say
+                              a2 = $8E35A
+                              call say
+                              a2 = $8E363  -- "²= No dobra. Ale ćwiartuje ich później? I co? / = Ale przecież musz..."
+                              call show
+                            ::L0E3AA::
+                              wait_raster $FF
+                              if not lmb then
+                                if lmb then
+                                else
+                                  goto L0E3AA
+                                end
+                              end
+                              call hit_test
+                              if d2 ~= -1 then
+                              else
+                                goto L0E3AA
+                              end
+                              if d2 u<= 2 then
+                              else
+                                goto L0E3AA
+                              end
+                              a2 = $8E3C9  -- "¹- Huhuuu!! Naiwniak z ciebie stary! Czy nikt ci nie powiedział, że..."
+                              call say
+                              a2 = $8E425  -- "²- Znika?"
+                              call say
+                              a2 = $8E42F  -- "¹- No tak! Urwałeś się z choinki???"
+                              call say
+                              a2 = $8E453  -- "²- Nie nie. Tak tylko..."
+                              call say
+                              call text_white
+                              goto L0DB54
+                            end
+                          ::L0DDEE::
+                            call sub_16CBA
+                            b[$7C104] -= 1
+                            goto L0DB88
+                          end
+                          if b[$7C104] ~= 2 then
+                            if b[$7C103] ~= 0 then
+                              goto L0DDEE
+                            end
+                            hotspot_table = $1D790
+                            mouse_min_y = $192
+                            mouse_max_y = $1EF
+                            mouse_max_x = $27A
+                            a2 = $8DFDF  -- "²= Dzień dobry panu. Czy jest pan dealerem firmy INTERROWER? Szukam..."
+                            call show
+                          ::L0E270::
+                            wait_raster $FF
+                            if not lmb then
+                              if lmb then
+                              else
+                                goto L0E270
+                              end
+                            end
+                            call hit_test
+                            if d2 ~= -1 then
+                            else
+                              goto L0E270
+                            end
+                            if d2 u<= 3 then
+                              a2 = $8E0B7  -- "¹- Ten rower dostałem od ojca! Pamięta jeszcze niemiecki front. Nie..."
+                              call say
+                              a2 = $8E110  -- "²- A czym?"
+                              call say
+                              a2 = $8E11B  -- "¹- Tym i owym... Interes leci."
+                              call say
+                              a2 = $8E13A  -- "²- Aha...aha... No tak."
+                              call show
+                              call text_white
+                              goto L0DB54
+                            end
+                            if d2 == 4 then
+                              a2 = $8E152  -- "¹- Joanna lubi je tylko jesienią."
+                              call say
+                              a2 = $8E174
+                              call say
+                              a2 = $8E17B  -- "¹- Ale ja nie lubię Joanny! W tym tkwi problem!"
+                              call say
+                              a2 = $8E1AB  -- "²- No tak... A co pan tu właściwie robi?"
+                              call say
+                              a2 = $8E1D4  -- "¹- To i tamto. Nie interesuj się zbytnio."
+                              call say
+                              a2 = $8E1FE
+                              call show
+                              call text_white
+                              goto L0DB54
+                            end
+                            goto L0E270
+                          end
+                          goto L0DDEE
+                        end
+                        if b[$7C104] < 4 then
+                          hotspot_table = $1D790
+                          mouse_min_y = $192
+                          mouse_max_y = $1EF
+                          mouse_max_x = $27A
+                          a2 = $8E46C  -- "¹- Witam! Nasz ciekawski!"
+                          call say
+                          a2 = $8E486  -- "²= Co pan robi wieczorem? Bo ja nic. / = Nie zna pan takich czterec..."
+                          call show
+                        ::L0E44C::
+                          wait_raster $FF
+                          if not lmb then
+                            if lmb then
+                            else
+                              goto L0E44C
+                            end
+                          end
+                          call hit_test
+                          if d2 ~= -1 then
+                          else
+                            goto L0E44C
+                          end
+                          if d2 == 1 then
+                            a2 = $8E556  -- "¹- Jak to co? Pracuję!"
+                            call say
+                          elseif d2 u<= 3 then
+                            a2 = $8E56D  -- "¹- Znam! Próbowali mi ostatnio sprzedać jakąś psiarę. Spławiłem ich!"
+                            call say
+                          elseif d2 u<= 5 then
+                            a2 = $8E5B2  -- "¹- Jakim kościołem? To tu jest jakiś kościół???"
+                            call say
+                          else
+                            goto L0E44C
+                          end
+                          a2 = $8E5E2
+                          call say
+                          a2 = $8E5F6  -- "¹- Chyba właśnie idzie jakiś klient. Na razie!"
+                          call say
+                          a2 = $8E625  -- "²- Na razie..."
+                          call say
+                          call text_white
+                          goto L0DB54
+                        end
+                        goto L0DDEE
+                      end
+                      if verb_look == 1 then
+                        a2 = $83342  -- "Ten wygląda na sprzedawcę rowerów."
+                      else
+                        a2 = $8332D  -- "Handlarz z rowerkiem"
+                        call quip_if_verb
+                      end
+                      call clear_text
+                      call print
+                      call reset_verbs
+                      goto L0DB88
+                    end
+                    goto L0DB88
+                  end
+                  goto L0DB88
+                end
+                if d2 u<= 5 then
+                  if lmb then
+                    call cursor_busy
+                    quip_person = 1
+                    if hover_mode == 1 then
+                      w[$7C1C2] = 0
+                      if verb_talk == 1 then
+                        b[$7C0FA] += 1
+                        if b[$7C15B] == 1 then
+                          if b[$7C0FA] ~= 1 then
+                            a2 = $8EED5  -- "²- Jak tam brony?"
+                            call say
+                            a2 = $8EEE7  -- "¹- Trzymają się dobrze!"
+                            call say
+                            goto L0DB54
+                          end
+                          hotspot_table = $1D790
+                          mouse_min_y = $192
+                          mouse_max_y = $1EF
+                          mouse_max_x = $27A
+                          a2 = $8E805  -- "²- Dzień dobry!"
+                          call say
+                          a2 = $8E815  -- "¹- Wcale nie taki dobry! Chciałem kupić bronę, ale nie było."
+                          call say
+                          a2 = $8E852  -- "²= Bronę? Jestem Bronek Brona! Sprzedaję brony! Każdy typ! / = A co..."
+                          call show
+                        ::L0E5FC::
+                          wait_raster $FF
+                          if not lmb then
+                            if lmb then
+                            else
+                              goto L0E5FC
+                            end
+                          end
+                          call hit_test
+                          if d2 ~= -1 then
+                          else
+                            goto L0E5FC
+                          end
+                          if d2 == 1 then
+                            a2 = $8E8EA  -- "¹- A masz pan bronę typu KILLER-SS4?"
+                            call say
+                            a2 = $8E90F  -- "²- Uuuuu! Widzę, że panu chodzi o coś cięższego. No tej akurat nie ..."
+                            call say
+                            a2 = $8E963  -- "¹- Co ale?"
+                            call say
+                            a2 = $8E96E  -- "²- Ale mam inną. KAT-7. Oryginalna rumuńska produkcja. Jeszcze ciepła!"
+                            call say
+                            a2 = $8E9B5  -- "¹- Eeeee.... Ja chciałem właśnie tamtą. "
+                            call say
+                            a2 = $8E9DE  -- "²- Mogę jeszcze dać panu młotek."
+                            call say
+                            a2 = $8E9FF  -- "¹- No młotek mogę wziąć. Ale nie zapłacę."
+                            call say
+                            a2 = $8EA29  -- "²- To nic z tego."
+                            call say
+                            call text_white
+                            goto L0DB54
+                          end
+                          if d2 == 2 then
+                            a2 = $8EA3B  -- "¹- Brona? Brona to jest.... to jest... ten... no... To jest coś fan..."
+                            call say
+                            a2 = $8EA8F  -- "²- Tak? A co w niej fantastycznego?"
+                            call say
+                            a2 = $8EAB3  -- "¹- Na przykład, weźmy taką bronę KILLER9-S4 4x4. W magazynie BRONAM..."
+                            call say
+                            a2 = $8EB8F  -- "²- Taaak?"
+                            call say
+                            a2 = $8EB99  -- "¹- Albo na przykład taka lekka SLAUGHTER V1. Używana od lat na kiel..."
+                            call say
+                            a2 = $8EC1F  -- "²- Ooooo..."
+                            call say
+                            a2 = $8EC2B  -- "¹- Albo coś dla zmotoryzowanych. Brona sportowa typu ROADKILL K5. P..."
+                            call say
+                            a2 = $8ED13  -- "²- Przekonał mnie pan. W najbliższej przyszłości, kupię sobie jakąś."
+                            call say
+                            a2 = $8ED58  -- "¹- A tak, koniecznie, koniecznie! Jak co to do mnie jak w dym! Na j..."
+                            call say
+                            a2 = $8EDD0  -- "²- Na pewno nie przegapię!"
+                            call say
+                            call text_white
+                            goto L0DB54
+                          end
+                          if d2 == 3 then
+                            a2 = $8EDEB  -- "¹- Co? Młotek? A co można zrobię z młotkiem? Karmnik dla sikorek?"
+                            call say
+                            a2 = $8EE2D  -- "²- No wie pan... Młotek się przyda!"
+                            call say
+                            a2 = $8EE51  -- "¹- Eeeee.... Ja wolę brony."
+                            call say
+                            goto L0DB54
+                          end
+                          if d2 == 4 then
+                            a2 = $8EE6D  -- "¹- Nie. Kierowcą walca!"
+                            call say
+                            a2 = $8EE85  -- "²- Znaczy, robi pan w drogowym?"
+                            call say
+                            a2 = $8EEA5  -- "¹- Nie, nie. Używam go jako taksówki."
+                            call say
+                            a2 = $8EECB
+                            call say
+                            call text_white
+                            goto L0DB54
+                          end
+                          goto L0E5FC
+                        end
+                        if b[$7C0FB] ~= 0 then
+                          a2 = $8F7D0  -- "²- I jak? Znalazł się?"
+                          call say
+                          a2 = $8F7E7
+                          call say
+                          a2 = $8F7EE  -- "²- No... zegarek."
+                          call say
+                          a2 = $8F800  -- "¹- Zegarek? Czyj?"
+                          call say
+                          a2 = $8F812  -- "²- No.... Pański! Oryginalny ruski Poljot! Ten co panu ukradli!"
+                          call say
+                          a2 = $8F852  -- "¹- Mój??? Panie, mnie jeszcze w życiu nic nie ukradli!!! Za bystry ..."
+                          call say
+                          a2 = $8F924  -- "²- Tak! I słusznie! Złodziejstwo trzeba karać!"
+                          call say
+                          a2 = $8F953  -- "¹- Jak najbardziej! Całkowicie się z panem zgadzam. I... I gdyby pa..."
+                          call say
+                          goto L0DB54
+                        end
+                        hotspot_table = $1D790
+                        mouse_min_y = $192
+                        mouse_max_y = $1EF
+                        mouse_max_x = $27A
+                        b[$7C0FB] = 1
+                        a2 = $8EEFF  -- "²- Jak leci?"
+                        call say
+                        a2 = $8EF0C  -- "¹- Zależy skąd! A tak z innej beczki... Nie wiesz co się stało z mo..."
+                        call say
+                        a2 = $8EF61  -- "²= Zwinąłem go panu. Niezły budzik! / = Tym Poljotem, co go pan mia..."
+                        call show
+                      ::L0E800::
+                        wait_raster $FF
+                        if not lmb then
+                          if lmb then
+                          else
+                            goto L0E800
+                          end
+                        end
+                        call hit_test
+                        if d2 ~= -1 then
+                        else
+                          goto L0E800
+                        end
+                        if d2 == 1 then
+                          a2 = $8EFE5  -- "¹- Hehehehe! Dobry kawał! Pan nie byłby w stanie mi go zwinąć! Panu..."
+                          call say
+                          a2 = $8F05D  -- "²- Ale ja go ukradłem. Naprawdę!"
+                          call say
+                          a2 = $8F07E  -- "¹- Niechże pan da spokój! Przecież zaraz bym zauważył, Jestem bardz..."
+                          call say
+                          a2 = $8F0D7  -- "²- A ja go jednak zwinąłem, i co pan na to?"
+                          call say
+                          a2 = $8F103  -- "¹- Ba... Skoro pan tak twierdzi... Niech panu będzie, ale ja i tak ..."
+                          call say
+                          a2 = $8F152  -- "²- Dlaczego????"
+                          call say
+                          a2 = $8F162  -- "¹- Co dlaczego???"
+                          call say
+                          a2 = $8F174  -- "²- Dlaczego pan twierdzi, że to nie ja ukradłem panu zegarek?"
+                          call say
+                          a2 = $8F1B2  -- "¹- A co mi pan tu z jakimś zegarkiem! Zawracanie głowy. Ja nie miał..."
+                          call say
+                          a2 = $8F20B  -- "²- Jak pan chce! Przyda mi się taki oryginalny ruski Poljot!"
+                          call say
+                          a2 = $8F248  -- "¹- Co? A skąd pan wie, że to był ruski Poljot???"
+                          call say
+                          a2 = $8F279  -- "²- A tak mi się tylko powiedziało. Czy ja coś mówiłem?"
+                          call say
+                          a2 = $8F2B0  -- "¹- Panie! Panie! Pan coś kręcisz! Ja się znam na ludziach! Pan mi ś..."
+                          call say
+                          a2 = $8F309  -- "²- Jaaa? Nic podobnego."
+                          call say
+                          a2 = $8F321  -- "¹- Na pewno? Bo wie pan... Ja zaraz wyczuję, jak mnie ktoś robi w k..."
+                          call say
+                          a2 = $8F36A  -- "²- No pewnie, pewnie! Znałem kiedyś takiego. Pracował w ORMO."
+                          call say
+                          a2 = $8F3A8  -- "¹- No no no... My tu gadu, gadu a złodziej z zegarkiem już pewnie n..."
+                          call say
+                          a2 = $8F405  -- "²- No pewnie, pewnie. Na mnie też już czas!"
+                          call say
+                          call text_white
+                          goto L0DB54
+                        end
+                        if d2 == 2 then
+                          a2 = $8F431  -- "¹- Właśnie tym Poljotem! To był oryginalny ruski Poljot! Nie żadna ..."
+                          call say
+                          a2 = $8F4A4  -- "²- Mój szwagier, który jest murarzem, też miał takiego Poljota i ch..."
+                          call say
+                          a2 = $8F549  -- "¹- Hmmmm... Mojego dostałem na komunię!"
+                          call say
+                          a2 = $8F571  -- "²- Pańską?"
+                          call say
+                          a2 = $8F57C  -- "¹- Nie, syna...  Za mały jeszcze smarkacz jest.   Chciałem mu go od..."
+                          call say
+                          a2 = $8F608  -- "²- To pół biedy. Syn się ucieszy!"
+                          call say
+                          a2 = $8F62A  -- "¹- No może..."
+                          call say
+                          goto L0DB54
+                        end
+                        if d2 == 3 then
+                          a2 = $8F638  -- "¹- Miałem taką cebulę na ręce. Wygrałem kiedyś w karty. Zwinęli mi go."
+                          call say
+                          a2 = $8F67F  -- "²- Kiedy?"
+                          call say
+                          a2 = $8F689  -- "¹- Dzisiaj!"
+                          call say
+                          a2 = $8F695  -- "²- No coś podobnego! Złodziejstwo się szerzy! Bandyckie nasienie!"
+                          call say
+                          a2 = $8F6D7  -- "¹- Tak, tak! Coś okropnego! Wyjdzie człowiek kupić bronę i zegarek ..."
+                          call say
+                          a2 = $8F724  -- "²- To rzeczywiście okropne. Życzę powodzenia w szukaniu!"
+                          call say
+                          a2 = $8F75D  -- "¹- Aaaa. Dzięki, dzięki."
+                          call say
+                          goto L0DB54
+                        end
+                        if d2 == 4 then
+                          a2 = $8F776  -- "²- A jakie pan ma?"
+                          call say
+                          a2 = $8F789  -- "¹- Zielone."
+                          call say
+                          a2 = $8F795  -- "²- Blado?"
+                          call say
+                          a2 = $8F79F  -- "¹- Ciemno."
+                          call say
+                          a2 = $8F7AA  -- "²- No to rzeczywiście. Nic ciekawego."
+                          call say
+                          call text_white
+                          goto L0DB54
+                        end
+                        goto L0E800
+                      end
+                      if verb_look == 1 then
+                        a2 = $833BD  -- "Nieciekawy gość!"
+                      else
+                        a2 = $833B7  -- "Koleś"
+                        call quip_if_verb
+                      end
+                      call clear_text
+                      call print
+                      call reset_verbs
+                      goto L0DB88
+                    end
+                    goto L0DB88
+                  end
+                  goto L0DB88
+                end
+                if d2 == 6 then
+                  if b[$7C15B] == 1 then
+                    if lmb then
+                      call cursor_busy
+                      quip_person = 0
+                      if hover_mode == 1 then
+                        w[$7C1C2] = 0
+                        if verb_take == 1 then
+                          call sub_1B00C
+                          l[$1932A] = $7B8AC  -- "  zegarek   "
+                          call inventory_add
+                          l[$1932E] = $7DFA8
+                          call inventory_remove
+                          call draw_inventory
+                          b[$7C15B] = 0
+                          call reset_verbs
+                          goto L0DB88
+                        end
+                        if verb_look == 1 then
+                          a2 = $833E6  -- "Śliczny zegareczek. Chyba Poljot!"
+                        else
+                          a2 = $833CE  -- "Zegarek na ręce kolesia"
+                          call quip_if_verb
+                        end
+                        call clear_text
+                        call print
+                        call reset_verbs
+                        goto L0DB88
+                      end
+                      goto L0DB88
+                    end
+                    goto L0DB88
+                  end
+                  goto L0DB88
+                end
+                if d2 == 7 then
+                  if b[$7C15A] == 1 then
+                    if lmb then
+                      call cursor_busy
+                      quip_person = 0
+                      if hover_mode == 1 then
+                        w[$7C1C2] = 0
+                        if verb_take == 1 then
+                          call sub_1AFC4
+                          l[$1932A] = $7B89E
+                          call inventory_add
+                          l[$1932E] = $7DFA4
+                          call inventory_remove
+                          call draw_inventory
+                          b[$7C15A] = 0
+                          call reset_verbs
+                          goto L0DB88
+                        end
+                        if verb_look == 1 then
+                          a2 = $83418  -- "Wieża kościelna... albo ratuszowa."
+                        else
+                          a2 = $83408  -- "Wieża kościelna"
+                          call quip_if_verb
+                        end
+                        call clear_text
+                        call print
+                        call reset_verbs
+                        goto L0DB88
+                      end
+                      goto L0DB88
+                    end
+                    goto L0DB88
+                  end
+                  goto L0DB88
+                end
+                if d2 == 8 then
+                  if b[$7C15C] ~= 0 then
+                    if lmb then
+                      call cursor_busy
+                      quip_person = 0
+                      if hover_mode == 1 then
+                        w[$7C1C2] = 0
+                        if verb_take == 1 then
+                          a2 = $83467  -- "A ty co? To nie muzeum, żeby sobie można było brać! Tu się kupuje!"
+                        elseif verb_look == 1 then
+                          a2 = $83442  -- "Zupełnie taki jak miała moja babcia."
+                        else
+                          a2 = $8343B  -- "Młynek"
+                          call quip_if_verb
+                        end
+                        call clear_text
+                        call print
+                        call reset_verbs
+                        goto L0DB88
+                      end
+                      goto L0DB88
+                    end
+                    goto L0DB88
+                  end
+                  goto L0DB88
+                end
+                if d2 == 9 then
+                  if hover_mode == 1 then
+                    call clear_text
+                    a2 = $834AA  -- "W stronę szpitala"
+                    call print
+                    call label_mode
+                  end
+                  call cursor_anim_cd2c
+                  if lmb then
+                    w[$7C1C2] = 0
+                    call sub_1BD46
+                    goto L07D32
+                  end
+                  goto L0DB88
+                end
+                if d2 == $A then
+                  if hover_mode == 1 then
+                    call clear_text
+                    a2 = $834BC  -- "Na most"
+                    call print
+                    call label_mode
+                  end
+                  call cursor_exit_b
+                  if lmb then
+                    w[$7C1C2] = 0
+                    call sub_1BD46
+                    goto L0F91A
+                  end
+                  goto L0DB88
+                end
+                if d2 == $B then
+                  if hover_mode == 1 then
+                    w[$7C1C2] = 0
+                    if verb_look == 1 then
+                      call clear_text
+                      a2 = $834D3  -- "Stragan jak każdy inny."
+                      call print
+                      call label_mode
+                    elseif b[$7C102] == 1 then
+                      call clear_text
+                      a2 = $834EB  -- "Zamknięte. Ciekawe dlaczego?"
+                      call print
+                      call label_mode
+                    else
+                      call clear_text
+                      a2 = $834C4  -- "Budka rzeźnika"
+                      call print
+                      call label_mode
+                    end
+                  end
+                  call cursor_exit_b
+                  if lmb then
+                    if b[$7C102] ~= 1 then
+                      w[$7C1C2] = 0
+                      call sub_1BD46
+                      goto L0EA88
+                    end
+                    goto L0DB88
+                  end
+                  goto L0DB88
+                end
+                goto L0DB88
+              end
+              goto L13392
+            end
+            goto L067A8
+          end
+          goto L0DB88
+        end
+        goto L0DB88
+      end
+      goto L0DC92
+    end
+    goto L0DB54
+  end
+  goto L0DB54
+end
+
+routine loc_27_2 @ $14216
+  loc_id = $27
+  call ensure_disk
+  a0 = $19DE86
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BD36
+  a2 = $7E9EA  -- "A, to Ty! Poznaję cię! To Ty świsnąłeś mi mojego tego... jak on się..."
+  call say
+  call clear_text
+  call sub_1BD46
+  return
+end

@@ -1,0 +1,29 @@
+routine loc_02 @ $13EF6
+  loc_id = 2
+  call ensure_disk
+  a0 = $10C49C
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BFBE
+  a2 = $7E14D  -- "Niestety! Nie będzie Ci dane skończenie tej gry.Swoim postępowaniem..."
+  call say
+  call clear_text
+  call sub_1BFCE
+  return
+end
+
+routine loc_02_2 @ $13F3A
+  loc_id = 2
+  call ensure_disk
+  a0 = $139384
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1B946
+  a2 = $7E2A1  -- "No synu! Zawiodłeś nas srodze. Zamiast sprawnie wykonać zadanie, kt..."
+  call say
+  call clear_text
+  call sub_1B956
+  return
+end

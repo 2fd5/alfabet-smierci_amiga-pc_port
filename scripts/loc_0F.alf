@@ -1,0 +1,180 @@
+routine loc_0F @ $07214
+::L07214::
+  loc_id = $F
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $17744A
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  b[$7C0E4] += 1
+  if b[$7C0E3] == 1 then
+    call sub_1A3B0
+  end
+  if b[$7C13A] == 0 then
+    call sub_1A3F8
+  end
+  call sub_1BA1E
+  call delay_200
+  call delay_200
+  call delay_200
+  call delay_200
+  call sub_1BA2E
+  call sub_14360
+  call clear_text
+  a2 = $809E7
+  call print_alt
+  call sub_1C006
+  call delay_200
+  call delay_200
+  call delay_200
+  call delay_200
+  call sub_1C016
+  goto L072E2
+end
+
+routine loc_0F_2 @ $072E2
+::L072E2::
+  loc_id = $F
+  call ensure_disk
+  a0 = $17744A
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C0E3] == 1 then
+    call sub_1A3B0
+  end
+  if b[$7C13A] == 0 then
+    call sub_1A3F8
+  end
+  call sub_1BA1E
+  call cursor_hand
+  hotspot_table = $1D10A
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+::L07358::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L07358
+    end
+    goto L07358
+  end
+  if d2 == 1 then
+  else
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $80A25  -- "Dużo to to nie wyciąga."
+          else
+            a2 = $80A15  -- "Prędkościomierz"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L07358
+        end
+        goto L07358
+      end
+      goto L07358
+    end
+    if d2 == 3 then
+      if b[$7C13A] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              if b[$7C0E3] ~= 1 then
+                call reset_verbs
+                goto L07358
+              end
+              call sub_1A3F8
+              l[$1932A] = $7B450
+              call inventory_add
+              l[$1932E] = $7DF24
+              call inventory_remove
+              b[$7C13A] = 0
+              call reset_verbs
+              goto L07358
+            end
+            if verb_open == 1 then
+              b[$7C0E3] = 1
+              call sub_1A3B0
+              a2 = $80A45  -- "Schowek na rękawiczki"
+            else
+              a2 = $80A3D  -- "Schowek"
+              call quip_if_verb_b
+            end
+            call reset_verbs
+            call clear_text
+            call print
+            goto L07358
+          end
+          goto L07358
+        end
+        goto L07358
+      end
+      goto L07358
+    end
+    if d2 == 4 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $80A61  -- "Średnio wygodne fotele, obite sztucznym futerkiem."
+          else
+            a2 = $80A5B  -- "Fotel"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L07358
+        end
+        goto L07358
+      end
+      goto L07358
+    end
+    goto L07358
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $809DF  -- "Wyjście"
+    call print
+    call label_mode
+  end
+  call cursor_exit_a
+  if lmb then
+  else
+    goto L07358
+  end
+  call sub_1BA2E
+  if b[$7C0E4] ~= 1 then
+    if b[$7C0DA] ~= 1 then
+      if b[$7C0E9] ~= 0 then
+        goto L05C3C
+      end
+    ::L07404::
+      goto L0390A
+    end
+    goto L07404
+  end
+  goto L07D32
+end

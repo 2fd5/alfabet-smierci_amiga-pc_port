@@ -1,0 +1,21 @@
+routine loc_1C @ $0A946
+::L0A946::
+  loc_id = $1C
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $1BA9BC
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  b[$7C0E1] = 1
+  call sub_1BBCE
+  a2 = $822DD  -- " /        "Oto chwila prawdy przed śmiercią. Ja wiem, że ty żyjesz...."
+  call say
+  call clear_text
+  call sub_1BBDE
+  goto L0390A
+end

@@ -1,0 +1,164 @@
+routine loc_04 @ $035DC
+::L035DC::
+  loc_id = 4
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $1160A0
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1B892
+  call cursor_hand
+  hotspot_table = $1CED0
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+::L0364E::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0364E
+    end
+    goto L0364E
+  end
+  if d2 == 1 then
+    if hover_mode == 1 then
+      if verb_look == 1 then
+        call cursor_hand
+        if b[$7C0E2] == 1 then
+          a2 = $7FD51  -- "No tak! Teraz już na pewno nigdzie nim nie pojedziesz."
+        elseif b[$7C0E1] == 1 then
+          if b[$7C145] == 0 then
+            if b[$7C139] == 0 then
+              a2 = $7FD2B  -- "Tak! Jechać czas najwyższy! Wsiadasz?"
+            else
+            ::L036F6::
+              a2 = $7FCB4  -- "No tak! Można jechać do córki Gerwazego. Mam jednak wrażenie, że ni..."
+            end
+          else
+            goto L036F6
+          end
+        else
+          a2 = $7FC7D  -- "Tym pociągiem chyba na razie nigdzie nie pojedziesz..."
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0364E
+      end
+      call clear_text
+      a2 = $7FC76  -- "Pociąg"
+      call print
+      call label_mode
+    ::L03732::
+      call cursor_exit_a
+      if lmb then
+        if train_rides == 0 then
+          call sub_1B8A2
+          goto L030F0
+        end
+        if b[$7C0E2] ~= 1 then
+          if b[$7C0E1] == 1 then
+            if b[$7C145] == 0 then
+              if b[$7C139] == 0 then
+                call sub_1B8A2
+                goto L0A9B4
+              end
+              goto L0364E
+            end
+            goto L0364E
+          end
+          goto L0364E
+        end
+        goto L0364E
+      end
+      goto L0364E
+    end
+    goto L03732
+  end
+  if d2 == 2 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $7FD90  -- "Stary dworzec kolejowy... Pamięta chyba czasy J23."
+        else
+          a2 = $7FD88  -- "Dworzec"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0364E
+      end
+      goto L0364E
+    end
+    goto L0364E
+  end
+  if d2 == 3 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $7FDCA  -- "Zdaję sobie sprawę, że ten płotek wygląda intrygująco, ale nie sądz..."
+        else
+          a2 = $7FDC3  -- "Płotek"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0364E
+      end
+      goto L0364E
+    end
+    goto L0364E
+  end
+  if d2 == 4 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $7FE3D  -- "Wymarzone druty do rozwieszenia prania...."
+        else
+          a2 = $7FE37  -- "Druty"
+          call quip_if_verb
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0364E
+      end
+      goto L0364E
+    end
+    goto L0364E
+  end
+  if d2 == 5 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $7FE68  -- "Droga do miasteczka"
+      call print
+      call label_mode
+    end
+    call cursor_exit_b
+    if lmb then
+      call sub_1B8A2
+      goto L0390A
+    end
+    goto L0364E
+  end
+  goto L0364E
+end

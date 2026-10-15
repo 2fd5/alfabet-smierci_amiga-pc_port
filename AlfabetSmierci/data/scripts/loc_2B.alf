@@ -1,0 +1,177 @@
+routine loc_2B @ $0F15E
+::L0F15E::
+  loc_id = $2B
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $10181A
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BD7E
+  b[$1CA10] = 0
+  a2 = $90B40  -- "¹- Bardzo lubię tę knajpę. Już tu kiedyś załatwiłem paru kolesi."
+  call say
+  a2 = $90B81  -- "²- Uhm... Przyjemnie tu bardzo."
+  call say
+  a2 = $90BA1  -- "¹- Piwko jest tu trochę wodniste, ale i tak niezłe."
+  call say
+  a2 = $90BD5  -- "²- Fajnie się pieni."
+  call say
+  a2 = $90BEA  -- "¹- Podobnie jak niektórzy kolesie przed śmiercią. Super widok."
+  call say
+  a2 = $90C29  -- "²- Nigdy nie widziałem, ale i tak lubię piankę."
+  call say
+  a2 = $90C59  -- "¹- A propos pianki... Ten twój znajomy coś się spóźnia..."
+  call say
+  a2 = $90C93  -- "²- Powiedział, że może się trochę spóźnić. Coś tam ma załatwić...."
+  call say
+  a2 = $90CD6  -- "¹- Uhmmmm. Pamiętaj, że jeśli nie przyjdzie...."
+  call say
+  a2 = $90D06  -- "²- Pamiętam pamiętam..."
+  call say
+  call text_white
+  call cursor_hand
+  hotspot_table = $1D4DA
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L0F1EE::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+  else
+    if d2 u<= 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 1
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $8352F  -- "Jak zawsze uśmiechnięty"
+          else
+            a2 = $83527  -- "Masarz."
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0F1EE
+        end
+        goto L0F1EE
+      end
+      goto L0F1EE
+    end
+    if d2 == 3 then
+      if lmb then
+        call cursor_busy
+        quip_person = 1
+        if hover_mode == 1 then
+          if verb_use == 1 then
+            if w[$7C26E] == 1 then
+              l[$1932A] = $7BBBC  -- "  proszek   "
+              call inventory_scroll_up
+              l[$1932E] = $7E004
+              call inventory_scroll_down
+              b[$7C11E] = 1
+              a2 = $8357E  -- "Sssssyp. Nawet nie zauważył."
+              call clear_text
+              call print
+              call reset_verbs
+              goto L0F1EE
+            end
+            goto L0F1EE
+          end
+          if verb_look == 1 then
+            a2 = $83554  -- "Pyszne piwko. Trochę za dużo wody dolali."
+          else
+            a2 = $83547  -- "Piwo masarza"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0F1EE
+        end
+        goto L0F1EE
+      end
+      goto L0F1EE
+    end
+    goto L0F1EE
+  end
+  if verb_give ~= 1 then
+    if verb_talk ~= 1 then
+      if verb_open ~= 1 then
+        call delay_c9e2
+        if b[$1CA10] == 1 then
+        else
+          call cursor_hand
+          hover_mode = 1
+          if label_shown == 1 then
+            call clear_text
+            goto L0F1EE
+          end
+          goto L0F1EE
+        end
+      else
+      ::L0F230::
+      end
+    else
+      goto L0F230
+    end
+  else
+    goto L0F230
+  end
+  a2 = $90D1E  -- "¹- Zaczyna mi to brzydko pachnieć. Czuję, że on nie przyjdzie! Po c..."
+  call say
+  a2 = $90DE4  -- "²- Nie ma się co denerwować... O! Chyba właśnie wchodzi! Tak to on!..."
+  call say
+  a2 = $90E44  -- "¹- Taaak!... Gloup...gloup...gloup..."
+  call say
+  if b[$7C11E] ~= 1 then
+    goto L0F44E
+  end
+  if b[$7C11D] ~= 0 then
+    a2 = $90F78  -- "¹- Widzę go... To ten!"
+    call say
+    a2 = $90F8F  -- "²- Gdzie?"
+    call say
+    a2 = $90F99  -- "¹- Wszędzie... Wszędzie... Co się ze mną dzieje???? Duszno mi! Zost..."
+    call say
+    call sub_1BD8E
+    b[$7C102] = 1
+    l[$1932A] = $7B948  -- " mały klucz "
+    call inventory_add
+    l[$1932E] = $7DFB0
+    call inventory_remove
+    b[$7C15D] = 0
+    call sub_14360
+    call clear_text
+    a2 = $9102E  -- " /  /  /  /  / "Udało ci się otruć Masarza. Okrutnego psychopatę. /..."
+    call print_alt
+    call sub_1C006
+    call wait_right_click_fast
+    call sub_1C016
+    goto L0DA7A
+  end
+::L0F44E::
+  a2 = $90E6A  -- "¹- No i gdzie on jest??? Zrobiłeś mnie w konia stary! Coś mi się wy..."
+  call say
+  a2 = $90F0B
+  call say
+  a2 = $90F17  -- "¹- Nieważne! I tak nie ma czasu się zastanawiać! Twoja godzina wybi..."
+  call say
+  call music_stop
+  d1 = $4A
+  music_order = d1
+  call music_start
+  call sub_1BD8E
+  goto L1425A
+end

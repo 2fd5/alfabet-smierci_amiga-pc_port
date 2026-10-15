@@ -1,0 +1,86 @@
+routine loc_1B @ $0A676
+::L0A676::
+  loc_id = $1B
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $1B14DC
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BBAA
+  call cursor_hand
+::L0A6C6::
+  hotspot_table = $1D2B0
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L0A6FA::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    if verb_talk == 1 then
+      b[$7C0DB] += 1
+      if b[$7C0DB] ~= 1 then
+        if b[$7C0DB] ~= 2 then
+          call sub_16CBA
+          b[$7C0DB] -= 1
+          goto L0A6FA
+        end
+        a2 = $8C05E  -- "¹- Ty jeszcze tutaj??? Spiesz się! Jasny Dom czeka!"
+        call say
+        a2 = $8C092  -- "²- No tak... Chyba pójdę. Do widzenia"
+        call say
+        a2 = $8C0B8  -- "¹- Do widzenia, do widzenia! Pozdrów córkę!"
+        call say
+        goto L0A6C6
+      end
+      hotspot_table = $1D790
+      mouse_min_y = $192
+      mouse_max_y = $1EF
+      mouse_max_x = $27A
+      a2 = $8BC48  -- "¹- Witam młodzieńcze! Co cię tu sprowadza?"
+      call say
+      a2 = $8BC73  -- "²= Dostałem ten adres od Gerwazego! Chciałbym się z nim zobaczyć. /..."
+      call show
+      goto L0A826
+    end
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0A6FA
+    end
+    goto L0A6FA
+  end
+  if d2 == 1 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $822CB  -- "Do miasta"
+      call print
+      call label_mode
+    end
+    call cursor_exit_b
+    if lmb then
+      if b[$7C0DB] > 1 then
+        if b[$7C0DB] == 2 then
+          b[$7C0DB] -= 1
+        else
+          b[$7C0DB] -= 2
+        end
+      end
+      call sub_1BBBA
+      goto L04028
+    end
+    goto L0A6FA
+  end
+  goto L0A6FA
+end

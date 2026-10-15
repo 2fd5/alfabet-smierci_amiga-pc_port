@@ -1,0 +1,199 @@
+routine loc_1E @ $0AC3E
+::L0AC3E::
+  loc_id = $1E
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  if b[$7C0CE] ~= 2 then
+    call ensure_disk
+    a0 = $13BFE6
+    a1 = $610FE
+    call decrunch
+    call show_frame
+    if b[$7C0DD] == 0 then
+      call sub_1AC64
+    end
+    call sub_1BC16
+    if b[$7C0EF] ~= 1 then
+      b[$7C0EF] += 1
+      goto L0B502
+    end
+    if b[$7C0ED] ~= 0 then
+      if b[$7C0F3] ~= 1 then
+        call sub_0B512
+      end
+    ::L0ACD4::
+      call cursor_hand
+      hotspot_table = $1D2D4
+      mouse_min_y = $20
+      mouse_max_y = $253
+      mouse_max_x = $27A
+      call clear_text
+      call draw_verb_bar
+      call reset_verbs
+    ::L0AD0E::
+      wait_raster $FF
+      call ui_panel
+      call ui_combine
+      call hit_test
+      if d2 == -1 then
+        if verb_use == 1 then
+          if w[$7C214] == 1 then
+            call sub_1BC26
+            call sub_1433E
+            call sub_1B75C
+            call sub_1B84A
+            call clear_text
+            a2 = $8C382  -- "²- No proszę! Tak się na nie napalałem, a tu tylko jakiś urzędniczy..."
+            call say
+            call clear_text
+            call sub_1B85A
+            a1 = $610FE
+            a0 = $13BFE6
+            call decrunch
+            call show_frame
+            call sub_1BC16
+            l[$1932A] = $7B50A
+            call inventory_scroll_up
+            l[$1932E] = $7DF50
+            call inventory_scroll_down
+            w[$7C214] = 0
+            b[$7C0EE] = 1
+            a2 = $8C3F8  -- "¹- Rysunek, który widziałeś to klucz. To jest owo pojawiające się n..."
+            call say
+            call clear_text
+            call reset_verbs
+            goto L0AD0E
+          end
+        ::L0ADEC::
+          if verb_talk == 1 then
+            if b[$7C0EE] == 1 then
+              call sub_16CBA
+              goto L0AD0E
+            end
+          ::L0AE0C::
+            call clear_text
+            a2 = $8C735  -- "Dlaczego nie robisz tego o co cię proszę? Nie wiem jak ty, ale ja n..."
+            call say
+            call clear_text
+            call sub_1BC26
+            b[$7C0F6] = 1
+            goto L035DC
+          end
+          call cursor_hand
+          hover_mode = 1
+          if label_shown == 1 then
+            call clear_text
+            goto L0AD0E
+          end
+          goto L0AD0E
+        end
+        goto L0ADEC
+      end
+      if d2 == 1 then
+        if hover_mode == 1 then
+          call clear_text
+          a2 = $823BC  -- "Wyjście do studni"
+          call print
+          call label_mode
+        end
+        call cursor_exit_b
+        if lmb then
+          call sub_1BC26
+          goto L0B558
+        end
+        goto L0AD0E
+      end
+      if d2 == 2 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_look == 1 then
+              a2 = $823D6  -- "Kicz gigant! Marysia nie ma chyba gustu."
+            else
+              a2 = $823CE  -- "Obrazek"
+              call quip_if_verb
+            end
+            call clear_text
+            call print
+            call reset_verbs
+            goto L0AD0E
+          end
+          goto L0AD0E
+        end
+        goto L0AD0E
+      end
+      if d2 == 3 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_look == 1 then
+              a2 = $82451  -- "Lustereczko, powiedz przecie..."
+            else
+              a2 = $8244A  -- "Lustro"
+              call quip_if_verb
+            end
+            call clear_text
+            call print
+            call reset_verbs
+            goto L0AD0E
+          end
+          goto L0AD0E
+        end
+        goto L0AD0E
+      end
+      if d2 == 4 then
+        if b[$7C0DD] == 1 then
+          if lmb then
+            call cursor_busy
+            quip_person = 0
+            if hover_mode == 1 then
+              if verb_use == 1 then
+                if b[$7C0F3] ~= 1 then
+                  a2 = $82506  -- "A po co miałbym pić to świństwo?"
+                  goto L0B046
+                end
+                b[$7C0DD] = 0
+                call sub_1AC64
+                call clear_text
+                a2 = $8C68D  -- "- Czuję się słabo i sennie... Baaaardzo sennie... Czy mi się wydawa..."
+                call say
+                call clear_text
+                call sub_1BC26
+                call reset_verbs
+                call sub_0B05C
+                call draw_inventory
+                b[$7C135] = 0
+                b[$7C138] = 0
+                b[$7C0F2] = 0
+                b[$7C0CE] = 2
+                goto L0B080
+              end
+              if verb_look == 1 then
+                a2 = $824D8  -- "Brejowate toto i śmierdzi jak stare kalesony."
+              else
+                a2 = $824CE  -- "Miksturka"
+                call quip_if_verb
+              end
+            ::L0B046::
+              call clear_text
+              call print
+              call reset_verbs
+              goto L0AD0E
+            end
+            goto L0AD0E
+          end
+          goto L0AD0E
+        end
+        goto L0AD0E
+      end
+      goto L0AD0E
+    end
+    goto L0AE0C
+  end
+  goto L0B080
+end

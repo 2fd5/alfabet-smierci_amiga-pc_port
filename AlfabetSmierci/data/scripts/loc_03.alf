@@ -1,0 +1,267 @@
+routine loc_03 @ $030F0
+::L030F0::
+  loc_id = 3
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $10181A
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1B86E
+  hotspot_table = $1CEC6
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L0316E::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+  else
+    if d2 == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 1
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $7FC5A  -- "Czy te oczy mogą kłamać??? "
+          else
+            a2 = $7FC52  -- "Okulary"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L0316E
+        end
+        goto L0316E
+      end
+      goto L0316E
+    end
+    goto L0316E
+  end
+  call cursor_hand
+  hover_mode = 1
+  if verb_talk == 1 then
+  else
+    goto L0316E
+  end
+  call cursor_off
+  call clear_text
+  call sub_1B87E
+  a0 = $10C49C
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BFBE
+  hotspot_table = $1D790
+  mouse_min_y = $192
+  mouse_max_y = $1EF
+  mouse_max_x = $27A
+  train_rides += 1
+  a2 = $84442  -- "¹- Proszę pana, pan siada... Jeżeli nie jedzie pan do Jeżówki to po..."
+  call say
+  a2 = $84538  -- "²= Niestety nie palę, ale mogę poczęstować pana Mentoskiem... / = N..."
+  call show
+::L0327E::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0327E
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0327E
+  end
+  if d2 == 1 then
+    a2 = $84651  -- "¹- A nie ma pan Tic-Tac'ów? Wie pan, jestem na diecie, a to tylko..."
+    call say
+    a2 = $84696  -- "²= Tak, tak... Pan też liczy kalorie. Mam dobre Mentoski, o smaku T..."
+    call show
+    goto L03344
+  elseif d2 == 2 then
+    a2 = $84BF2  -- "¹- Och. Bardzo się cieszę, że mogę z panem pogadać. Jak tak człowie..."
+    call say
+    a2 = $84D50  -- "  Na poczatku to bagatelizowałem, ale potem było już coraz gorzej. ..."
+    call say
+    a2 = $84E0C  -- "²= Jakie przykrości? / = Trochę mnie to smuci, zamierzałem się zatr..."
+    call show
+  elseif d2 == 3 then
+    a2 = $84BF2  -- "¹- Och. Bardzo się cieszę, że mogę z panem pogadać. Jak tak człowie..."
+    call say
+    a2 = $84D50  -- "  Na poczatku to bagatelizowałem, ale potem było już coraz gorzej. ..."
+    call say
+    a2 = $84E0C  -- "²= Jakie przykrości? / = Trochę mnie to smuci, zamierzałem się zatr..."
+    call show
+  elseif d2 == 4 then
+    a2 = $850D7  -- "¹- Tak.... Coś słyszałem. Chodzi taki jeden wesołek i wróży. A może..."
+    call say
+    goto L0357E
+  else
+    goto L0327E
+  end
+::L034DE::
+  wait_raster $E0
+  if not lmb then
+    if lmb then
+    else
+      goto L034DE
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L034DE
+  end
+  if d2 == 1 then
+    call sub_035CA
+    a2 = $84E84  -- "¹- Mówiłem już, że nie chcę o nich mówić... Jeżeli jedzie pan na dł..."
+    call say
+    call clear_text
+    call sub_1BFCE
+    goto L035DC
+  end
+  if d2 == 2 then
+    call sub_035CA
+    a2 = $84F69  -- "¹- Proszę! Oto adres. Powinien się przydać. Jestem nawet pewien, że..."
+    call say
+    call clear_text
+    call sub_1BFCE
+    goto L035DC
+  end
+  if d2 == 3 then
+    call sub_035CA
+    a2 = $84FDD  -- "¹- Hehehehe... Wiem. Jest dość komiczne. Imiona jednak, młody człow..."
+    call say
+    call clear_text
+    call sub_1BFCE
+    goto L035DC
+  end
+  goto L034DE
+::L03344::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L03344
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L03344
+  end
+  if d2 == 1 then
+    a2 = $8472C  -- "¹- Nie nie... od takich bolą mnie zęby,a nie mam przy sobie pasty S..."
+    call say
+    a2 = $84779  -- "²= To pan nie używa Kolega-Tabs? Ja to sobie dałem od razu wyrwać w..."
+    call show
+    goto L033B0
+  elseif d2 == 2 then
+    a2 = $84983  -- "¹- Ach... Coca-Cola... A jak ją jeszcze zagryźć SNICKERSEM.."
+    call say
+    a2 = $849C0  -- "²= Ja wolę Marsy, bo Mars jest dobry na wszySTKO. / = Ach te orzesz..."
+    call show
+    goto L03454
+  else
+    goto L03344
+  end
+::L0357E::
+  a2 = $85146  -- "²- Ma pan rację."
+  call say
+  a2 = $85157  -- "¹- Więc?"
+  call say
+  a2 = $85160  -- "²- Jeżeli ten pociąg nie odjedzie za pięć sekund to chętnie z panem..."
+  call say
+  a2 = $84BF2  -- "¹- Och. Bardzo się cieszę, że mogę z panem pogadać. Jak tak człowie..."
+  call say
+  a2 = $84D50  -- "  Na poczatku to bagatelizowałem, ale potem było już coraz gorzej. ..."
+  call say
+  a2 = $84E0C  -- "²= Jakie przykrości? / = Trochę mnie to smuci, zamierzałem się zatr..."
+  call show
+  goto L034DE
+::L033B0::
+  wait_raster $E0
+  if not lmb then
+    if lmb then
+    else
+      goto L033B0
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L033B0
+  end
+  if d2 == 1 then
+    a2 = $848B1  -- "¹- Wie pan co? Mnie już męczy ta głupia rozmowa. Porozmawiajmy powa..."
+    call say
+    goto L0357E
+  end
+  if d2 == 2 then
+    a2 = $848B1  -- "¹- Wie pan co? Mnie już męczy ta głupia rozmowa. Porozmawiajmy powa..."
+    call say
+    goto L0357E
+  end
+  if d2 == 3 then
+    a2 = $848FC  -- "¹- Nie interesuję się murarzami młody człowieku.Porozmawiajmy o czy..."
+    call say
+    goto L0357E
+  end
+  if d2 == 4 then
+    a2 = $848FC  -- "¹- Nie interesuję się murarzami młody człowieku.Porozmawiajmy o czy..."
+    call say
+    goto L0357E
+  end
+  if d2 == 5 then
+    a2 = $8494B  -- "¹- Proszę, szkoda czasu. Porozmawiajmy o czymś innym..."
+    call say
+    goto L0357E
+  end
+  goto L033B0
+::L03454::
+  wait_raster $E0
+  if not lmb then
+    if lmb then
+    else
+      goto L03454
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L03454
+  end
+  if d2 == 1 then
+    a2 = $84AC4  -- "¹- Nie lubię Marsów. Są za słodkie. Powinniśmy jednak porozmawiać o..."
+    call say
+    goto L0357E
+  end
+  if d2 == 2 then
+    a2 = $84B24  -- "¹- Lubię też sobie pojeść, ale smalec szkodzi mi na wątrobę.  Myślę..."
+    call say
+    goto L0357E
+  end
+  if d2 == 3 then
+    a2 = $84B24  -- "¹- Lubię też sobie pojeść, ale smalec szkodzi mi na wątrobę.  Myślę..."
+    call say
+    goto L0357E
+  end
+  if d2 == 4 then
+    a2 = $84B8F  -- "¹- Fuj.... Śledzie są okropnie słone, ale nie przywołałem pana tuta..."
+    call say
+    goto L0357E
+  end
+  goto L03454
+end

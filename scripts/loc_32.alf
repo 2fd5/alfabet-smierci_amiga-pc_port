@@ -1,0 +1,125 @@
+routine loc_32 @ $112F4
+  loc_id = $32
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $1BF04E
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C140] == 0 then
+    call sub_1A7E4
+  end
+  if b[$7C141] == 0 then
+    call sub_1A82C
+  end
+  call sub_1BE7A
+  call cursor_hand
+  hotspot_table = $1D5D0
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L1139C::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L1139C
+    end
+    goto L1139C
+  end
+  if d2 == 1 then
+    if b[$7C140] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            call sub_1A7E4
+            l[$1932A] = $7B49F
+            call inventory_add
+            l[$1932E] = $7DF3C
+            call inventory_remove
+            b[$7C140] = 0
+            call reset_verbs
+            goto L1139C
+          end
+          if verb_look == 1 then
+            a2 = $83B81  -- "Buteleczka z eterem. Czuć!!!"
+          else
+            a2 = $83B6D  -- "Buteleczka z eterem"
+            call quip_if_verb_b
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L1139C
+        end
+        goto L1139C
+      end
+      goto L1139C
+    end
+    goto L1139C
+  end
+  if d2 == 2 then
+    if b[$7C141] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            call sub_1A82C
+            l[$1932A] = $7B4AC
+            call inventory_add
+            l[$1932E] = $7DF40
+            call inventory_remove
+            b[$7C141] = 0
+            call reset_verbs
+            goto L1139C
+          end
+          if verb_look == 1 then
+            a2 = $83BAC  -- "Kawałek gazy. Pewnie zostawiła go jakaś pielęgniarka."
+          else
+            a2 = $83B9E  -- "Kawałek gazy."
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L1139C
+        end
+        goto L1139C
+      end
+      goto L1139C
+    end
+    goto L1139C
+  end
+  if d2 == 3 then
+  else
+    goto L1139C
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $83BE2  -- "Wyjście"
+    call print
+    call label_mode
+  end
+  call cursor_exit_b
+  if lmb then
+  else
+    goto L1139C
+  end
+  call sub_1BE8A
+  jump loc_13
+end

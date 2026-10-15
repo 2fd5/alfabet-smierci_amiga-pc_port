@@ -1,0 +1,716 @@
+routine loc_22 @ $0BF1A
+::L0BF1A::
+  loc_id = $22
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $16BD1A
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C167] == 0 then
+    call sub_1B444
+  end
+  if b[$7C168] == 0 then
+    call sub_1B4D4
+  end
+  if b[$7C169] == 0 then
+    call sub_1B564
+  end
+  if b[$7C0DE] == 1 then
+    call sub_1B5AC
+    if b[$7C16B] == 0 then
+      call sub_1B5F4
+    end
+    if b[$7C0DF] == 0 then
+      call sub_1B684
+    end
+    if b[$7C0E0] == 1 then
+      call sub_1B6CC
+    end
+  end
+  call sub_1BCA6
+  call cursor_hand
+::L0BFE8::
+  hotspot_table = $1D386
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L0C01C::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    if verb_talk == 1 then
+      if b[$7C113] ~= 1 then
+        if b[$7C155] == 0 then
+          if b[$7C16A] ~= 0 then
+            if b[$7C16A] ~= 1 then
+            ::L0C082::
+              call sub_16CBA
+              goto L0C01C
+            end
+            hotspot_table = $1D790
+            mouse_min_y = $192
+            mouse_max_y = $1EF
+            mouse_max_x = $27A
+            b[$7C114] += 1
+            a2 = $8D2C5  -- "²= Mam coś co pana zainteresuje! / = Da mi pan tę książkę, którą pa..."
+            call show
+          ::L0CC58::
+            wait_raster $FF
+            if not lmb then
+              if lmb then
+              else
+                goto L0CC58
+              end
+            end
+            call hit_test
+            if d2 ~= -1 then
+            else
+              goto L0CC58
+            end
+            if d2 u<= 2 then
+              a2 = $8D388  -- "¹- O! Widzę, że przyniosłeś jakiś album! Chętnie się wymienię za mo..."
+              call say
+              l[$1932A] = $7B6D0  -- " podręcznik "
+              call inventory_scroll_up
+              l[$1932E] = $7DF90
+              call inventory_scroll_down
+              a2 = $8D3D9  -- "²- Proszę, oto ona!"
+              call say
+              l[$1932A] = $7BABA  -- "  zielnik   "
+              call inventory_add
+              l[$1932E] = $7DFE4
+              call inventory_remove
+              b[$7C16A] = 0
+              call reset_verbs
+              a2 = $8D3ED  -- "¹- Zawsze marzyłem o takiej księdze jak ta. Z podręcznikiem do biol..."
+              call say
+              a2 = $8D494  -- "²- Och! Dziękuję! Nie było trzeba! Oooo! To stara księga zielarska...."
+              call say
+              a2 = $8D4F2  -- "¹- Kiedyś...aaaooouuummm...kiedyś, kiedy byłem w Amsterdamie...aaaa..."
+              call say
+              a2 = $8D541  -- "²- Proszę?"
+              call say
+              a2 = $8D54C  -- "¹- Aoouummm..Albo to było w Opolu?... Chrrrmmmpfhh.. aaaooouummmm....."
+              call say
+              a2 = $8D59A
+              call say
+              a2 = $8D5A9  -- "¹- Nie...chhrrrmmmpffff...W Lublinie...Chrrrrrr....fiuuuuu...chrrrr..."
+              call say
+              a2 = $8D5F6  -- "²- To w końcu gdzie?"
+              call say
+              a2 = $8D60B  -- "¹- Chrrrrrr....."
+              call say
+              goto L0BFE8
+            end
+            if d2 == 3 then
+              a2 = $8D61C  -- "¹- Nie mam pojęcia...chrrrrrgggmmmmfffff...fiuuuuuuu..."
+              call say
+              goto L0BFE8
+            end
+            if d2 == 4 then
+              a2 = $8D654  -- "¹- Adres, proszę bardzo: /   Maciej Frontkiewicz, ul.Będzińska 43b/..."
+              call say
+              goto L0BFE8
+            end
+            goto L0CC58
+          end
+          a2 = $8D755  -- "¹- Aaauuumpf! To znowu ty? Dajże mi spać... Chrrrrrrrrrgghhhhmmmm....."
+          call say
+          goto L0BFE8
+        end
+        goto L0C082
+      end
+      hotspot_table = $1D790
+      mouse_min_y = $192
+      mouse_max_y = $1EF
+      mouse_max_x = $27A
+      a2 = $8C7B1  -- "²= Haaalooo! Huhu! Proszę się obudzić! Chciałbym pogadać! / = Nares..."
+      call show
+    ::L0C9A8::
+      wait_raster $FF
+      if not lmb then
+        if lmb then
+        else
+          goto L0C9A8
+        end
+      end
+      call hit_test
+      if d2 ~= -1 then
+      else
+        goto L0C9A8
+      end
+      if d2 u<= 4 then
+      else
+        goto L0C9A8
+      end
+      a2 = $8C88D  -- "¹- Chrrrrr.....fiuuuuuu....chrrrrrrmkpkpkpk...fiuuuuuu...."
+      call say
+      a2 = $8C8C8  -- "²- No obudź się! Tylko na chwilkę... Chcę pogadać!"
+      call say
+      a2 = $8C8FB  -- "¹- Mniummmm...Ciammmm..ciamm...chrrrrrr...."
+      call say
+      a2 = $8C927  -- "²= HEEEEEEEEJ! WSTAWAJ ŚPIOCHU!!! / = Dobra! Nie zależy mi! NIE ZAL..."
+      call show
+      goto L0CA0A
+    end
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0C01C
+    end
+    goto L0C01C
+  end
+  if d2 == 1 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $82A5F  -- "W stronę starego domu"
+      call print
+      call label_mode
+    end
+    call cursor_anim_cd2c
+    if lmb then
+      call sub_1BCB6
+      if b[$7C114] ~= 0 then
+        b[$7C114] -= 1
+      end
+      goto L0D2B2
+    end
+    goto L0C01C
+  end
+  if d2 == 2 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $82A75  -- "Do drogi"
+      call print
+      call label_mode
+    end
+    call cursor_anim_cd88
+    if lmb then
+      call sub_1BCB6
+      if b[$7C114] ~= 0 then
+        b[$7C114] -= 1
+      end
+      if b[$7C155] ~= 0 then
+        goto L0CDA0
+      end
+      goto L11C06
+    end
+    goto L0C01C
+  end
+  if d2 == 3 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $82A7E  -- "Do studni"
+      call print
+      call label_mode
+    end
+    call cursor_exit_b
+    if lmb then
+      call sub_1BCB6
+      if b[$7C114] ~= 0 then
+        b[$7C114] -= 1
+      end
+      goto L0B558
+    end
+    goto L0C01C
+  end
+  if d2 == 4 then
+    if b[$7C16A] == 0 then
+      if b[$7C167] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1B444
+              l[$1932A] = $7BA78  -- "Florus Cudus"
+              call inventory_add
+              l[$1932E] = $7DFD8
+              call inventory_remove
+              b[$7C167] = 0
+              call reset_verbs
+              goto L0C01C
+            end
+            if verb_look == 1 then
+              a2 = $82A8F  -- "Hmmm! Florus Cudus!"
+            else
+              a2 = $82A88  -- "Ziółko"
+              call quip_if_verb_b
+            end
+            call reset_verbs
+            call clear_text
+            call print
+            goto L0C01C
+          end
+          goto L0C01C
+        end
+        goto L0C01C
+      end
+      goto L0C01C
+    end
+    goto L0C01C
+  end
+  if d2 == 5 then
+    if b[$7C168] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            call sub_1B4D4
+            l[$1932A] = $7BA86  -- "   pędzel   "
+            call inventory_add
+            l[$1932E] = $7DFDC
+            call inventory_remove
+            b[$7C168] = 0
+            call reset_verbs
+            goto L0C01C
+          end
+          if verb_look == 1 then
+            a2 = $82AB5  -- "Sfatygowany pędzel do golenia."
+          else
+            a2 = $82AA3  -- "Pędzel do golenia"
+            call quip_if_verb_b
+          end
+          call reset_verbs
+          call clear_text
+          call print
+          goto L0C01C
+        end
+        goto L0C01C
+      end
+      goto L0C01C
+    end
+    goto L0C01C
+  end
+  if d2 == 6 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_use == 1 then
+          if w[$7C260] == 1 then
+            if b[$7C116] ~= 1 then
+              w[$7C260] = 0
+              b[$7C116] = 1
+              a2 = $82B89  -- "Teraz mogę kogoś kropnąć!!!"
+              goto L0C430
+            end
+            goto L0C01C
+          end
+          if w[$7C224] == 1 then
+            w[$7C224] = 0
+            a2 = $82BA5  -- "Nie widzę sensu przelewania wody do wiadra"
+            goto L0C430
+          end
+          if w[$7C25C] == 1 then
+            if b[$7C115] ~= 1 then
+              w[$7C25C] = 0
+              b[$7C115] = 1
+              a2 = $82B60  -- "Ziiiiiimnnnna....brrrrr. No! Napełniłem!"
+              goto L0C430
+            end
+            goto L0C01C
+          end
+          goto L0C01C
+        end
+        if verb_take == 1 then
+          a2 = $82B2C  -- "Epfff! Nic z tego. Chyba jest czymś przytwierdzone."
+        elseif verb_look == 1 then
+          a2 = $82AF3  -- "No no... Duże naczynie! Ta woda to chyba woda święcona!."
+        else
+          a2 = $82AD4  -- "Duże naczynie z wodą święconą."
+          call quip_if_verb_b
+        end
+      ::L0C430::
+        call reset_verbs
+        call clear_text
+        call print
+        goto L0C01C
+      end
+      goto L0C01C
+    end
+    goto L0C01C
+  end
+  if d2 == 7 then
+    if b[$7C169] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            call sub_1B564
+            l[$1932A] = $7BAAC  -- "  kubeczek  "
+            call inventory_add
+            l[$1932E] = $7DFE0
+            call inventory_remove
+            b[$7C169] = 0
+            call reset_verbs
+            goto L0C01C
+          end
+          if verb_look == 1 then
+            a2 = $82BD9  -- "Kubeczek marki Ćmielów. Są w nim resztki kawy."
+          else
+            a2 = $82BD0  -- "Kubeczek"
+            call quip_if_verb_b
+          end
+          call reset_verbs
+          call clear_text
+          call print
+          goto L0C01C
+        end
+        goto L0C01C
+      end
+      goto L0C01C
+    end
+    goto L0C01C
+  end
+  if d2 == 8 then
+    if b[$7C16A] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            a2 = $82C33  -- "Nic z tego! Trzyma ją mocno."
+          elseif verb_look == 1 then
+            a2 = $82C10  -- "Jakaś księga! Trzyma ją pod pachą."
+          else
+            a2 = $82C08  -- "Książka"
+            call quip_if_verb_b
+          end
+          call reset_verbs
+          call clear_text
+          call print
+          goto L0C01C
+        end
+        goto L0C01C
+      end
+      goto L0C01C
+    end
+    goto L0C01C
+  end
+  if d2 == 9 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_open == 1 then
+          if b[$7C0DE] ~= 0 then
+            goto L0C638
+          else
+            a2 = $82D33  -- "Zamknięte, trzeba użyć klucza..."
+          end
+        ::L0C63E::
+          call reset_verbs
+          call clear_text
+          call print
+          goto L0C01C
+        end
+        if verb_use == 1 then
+          if w[$7C200] == 1 then
+            call sub_1B5AC
+            l[$1932A] = $7B45D  -- " duży klucz "
+            call inventory_scroll_up
+            l[$1932E] = $7DF28
+            call inventory_scroll_down
+            w[$7C200] = 0
+            b[$7C0DE] = 1
+            call reset_verbs
+            goto L0C01C
+          end
+        ::L0C638::
+          call quip_if_verb
+          goto L0C63E
+        end
+        if verb_look == 1 then
+          a2 = $82D09  -- "Solidne, dębowe drzwi z dziurką na klucz."
+          goto L0C63E
+        end
+        a2 = $82CF6  -- "Drzwi do kościółka"
+        goto L0C638
+      end
+      goto L0C01C
+    end
+    goto L0C01C
+  end
+  if d2 == $A then
+    if b[$7C0DE] ~= 0 then
+      if b[$7C16B] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1B5F4
+              l[$1932A] = $7BAC8  -- "  kropidło  "
+              call inventory_add
+              l[$1932E] = $7DFE8
+              call inventory_remove
+              b[$7C16B] = 0
+              call reset_verbs
+              goto L0C01C
+            end
+            if verb_look == 1 then
+              a2 = $82D85  -- "Hmmm... Kropidło..."
+            else
+              a2 = $82D7C  -- "Kropidło"
+              call quip_if_verb_b
+            end
+            call reset_verbs
+            call clear_text
+            call print
+            goto L0C01C
+          end
+          goto L0C01C
+        end
+        goto L0C01C
+      end
+      goto L0C01C
+    end
+  ::L0C712::
+    if d2 == $B then
+      if b[$7C0DE] ~= 0 then
+        if b[$7C12D] ~= 1 then
+          if b[$7C0DF] == 1 then
+            if lmb then
+              call cursor_busy
+              quip_person = 0
+              if hover_mode == 1 then
+                if verb_use == 1 then
+                  b[$7C0DF] = 0
+                  b[$7C0E0] = 1
+                  call sub_1B684
+                  call sub_1B6CC
+                  a2 = $82E42  -- "Umpfh! Ciężka jak lokomotywa. Udało mi się ją tylko przesunąć w prawo!"
+                elseif verb_take == 1 then
+                  a2 = $82DF4  -- "Wprawdzie ksiądz zabronił, ale... Emmmmmmmpf! Eeep! Nic z tego! Nie..."
+                elseif verb_look == 1 then
+                  a2 = $82DBA  -- "Książeczka! Ma posklejane kartki i jest dziwnie ciężka..."
+                else
+                  a2 = $82D99  -- "Książeczka w otwartych drzwiach."
+                  call quip_if_verb_b
+                end
+                call reset_verbs
+                call clear_text
+                call print
+                goto L0C01C
+              end
+              goto L0C01C
+            end
+            goto L0C01C
+          end
+          goto L0C01C
+        end
+        goto L0C01C
+      end
+    ::L0C7DA::
+      if d2 == $C then
+        if b[$7C0DE] ~= 0 then
+          if b[$7C12D] ~= 1 then
+            if b[$7C0E0] == 1 then
+              if lmb then
+                call cursor_busy
+                quip_person = 0
+                if hover_mode == 1 then
+                  if verb_use == 1 then
+                    b[$7C0DF] = 1
+                    b[$7C0E0] = 0
+                    call sub_1B714
+                    call sub_1B63C
+                    a2 = $82F31  -- "Errrghhh! Epf! Jest! Ufff... Przesunąłem ją w lewo!"
+                  elseif verb_take == 1 then
+                    a2 = $82EE3  -- "Wprawdzie ksiądz zabronił, ale... Emmmmmmmpf! Eeep! Nic z tego! Nie..."
+                  elseif verb_look == 1 then
+                    a2 = $82EA9  -- "Książeczka! Ma posklejane kartki i jest dziwnie ciężka..."
+                  else
+                    a2 = $82E89  -- "Książeczka w otwartych drzwiach"
+                    call quip_if_verb_b
+                  end
+                  call reset_verbs
+                  call clear_text
+                  call print
+                  goto L0C01C
+                end
+                goto L0C01C
+              end
+              goto L0C01C
+            end
+            goto L0C01C
+          end
+          goto L0C01C
+        end
+      ::L0C8A2::
+        if d2 == $D then
+          if lmb then
+            call cursor_busy
+            quip_person = 0
+            if hover_mode == 1 then
+              if verb_use == 1 then
+                if w[$7C25C] == 1 then
+                  if b[$7C115] == 0 then
+                    call quip_if_verb_b
+                    goto L0C964
+                  end
+                  b[$7C119] += 1
+                  if b[$7C119] < 2 then
+                    b[$7C113] = 0
+                    w[$7C25C] = 0
+                    hotspot_table = $1D790
+                    mouse_min_y = $192
+                    mouse_max_y = $1EF
+                    mouse_max_x = $27A
+                    b[$7C114] += 1
+                    a2 = $8CD2C  -- "¹- Empfhghlmkmpfghhh.... Ciam ciam.... Aaaaa! Witam!"
+                    call say
+                    a2 = $8CD61  -- "²- Obudziłem pana?"
+                    call say
+                    a2 = $8CD74  -- "¹- Nie nie... To ten deszcz.... O! Już nawet nie pada!"
+                    call say
+                    a2 = $8CDAB  -- "²= Chciałbym tę książkę, którą pan ma w kieszeni. / = Zatańcz pan k..."
+                    call show
+                  ::L0CB20::
+                    wait_raster $FF
+                    if not lmb then
+                      if lmb then
+                      else
+                        goto L0CB20
+                      end
+                    end
+                    call hit_test
+                    if d2 ~= -1 then
+                    else
+                      goto L0CB20
+                    end
+                    if d2 u<= 2 then
+                      a2 = $8CE6C  -- "¹- Tak za darmo? Co mi za to dasz?"
+                      call say
+                      a2 = $8CE8F  -- "²= Eerrmmm... Mam chusteczkę haftowaną.... Trochę przybrudzoną. / =..."
+                      call show
+                      goto L0CB9C
+                    end
+                    if d2 u<= 4 then
+                      a2 = $8CF1E  -- "¹- Nie, ale dzwoniłem tam wczoraj i nikt nie odpowiadał..."
+                      call say
+                      a2 = $8CF59
+                      call say
+                      a2 = $8CF66  -- "¹- Tak, tak... Chrrrrrrrr....fiuuuuu...ciuciumciumciummmm....chrrr...."
+                      call say
+                      goto L0BFE8
+                    end
+                    goto L0CB20
+                  end
+                  w[$7C25C] = 0
+                  w[$7C260] = 0
+                  w[$7C224] = 0
+                  a2 = $82FAC  -- "Wolałbym go dalej nie polewać!"
+                  goto L0C430
+                end
+                goto L0C01C
+              end
+              if verb_look == 1 then
+                a2 = $82F73  -- "Jakiś menelowaty gość. Wygląda na martwego albo śpiącego"
+              else
+                a2 = $82F65  -- "Gość na ławce"
+                call quip_if_verb_b
+              end
+            ::L0C964::
+              call reset_verbs
+              call clear_text
+              call print
+              goto L0C01C
+            end
+            goto L0C01C
+          end
+          goto L0C01C
+        end
+        goto L0C01C
+      end
+      goto L0C8A2
+    end
+    goto L0C7DA
+  end
+  goto L0C712
+::L0CA0A::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0CA0A
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0CA0A
+  end
+  if d2 u<= 4 then
+  else
+    goto L0CA0A
+  end
+  a2 = $8C9C5  -- "¹- Heiin? Co?... Później Justysiu!... Dzisiaj jest wolna sobotaaahh..."
+  call say
+  a2 = $8CA57  -- "²- No nie! Nie mam już siły...."
+  call say
+  a2 = $8CA77  -- "¹- Chrrrrrrmmmmpfffh....uhmmmmm...chrrrr....ciamciamciammmmm...chrr..."
+  call say
+  goto L0BFE8
+::L0CB9C::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0CB9C
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0CB9C
+  end
+  if d2 u<= 3 then
+    a2 = $8CFAD  -- "¹- Eeeee... Nie chcę. Przyjdź kiedy będziesz miał coś ciekawego. Ch..."
+    call say
+    goto L0BFE8
+  end
+  if d2 == 4 then
+    a2 = $8D053  -- "¹- Noo.... Aaooouuummm... Przepraszam za to ziewnięcie. Słucham?"
+    call say
+    a2 = $8D094  -- "²- No to... ermmm... Był sobie...  Albo nie!   Siedzi pijany facet ..."
+    call say
+    a2 = $8D1C9  -- "¹- ...i podchodzi do niego zakonnica?.."
+    call say
+    a2 = $8D1F1
+    call say
+    a2 = $8D1FA  -- "¹- Znaaaaam! Taki stary kawał...Aaaoouummm. Nic z tego! Gdybyś opow..."
+    call say
+    goto L0BFE8
+  end
+  goto L0CB9C
+end
+
+routine loc_22_2 @ $14104
+  loc_id = $22
+  call ensure_disk
+  a0 = $16BD1A
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BCA6
+  a2 = $7E6ED  -- "Chrrrrrrr.....fffiuuuuuu......Chrrrrrrr....fiuuuu... Co?... Co?... ..."
+  call say
+  call clear_text
+  call sub_1BCB6
+  return
+end

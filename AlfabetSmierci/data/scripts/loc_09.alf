@@ -1,0 +1,400 @@
+routine loc_09 @ $0527A
+::L0527A::
+  loc_id = 9
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $139384
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1B946
+  call cursor_hand
+  if b[$7C0CE] ~= 2 then
+  ::L052D6::
+    hotspot_table = $1D01C
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+    call clear_text
+    call draw_verb_bar
+    call reset_verbs
+  ::L0530A::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+      if verb_talk == 1 then
+        if b[$7C150] == 0 then
+          b[$7C0E8] = 1
+          hotspot_table = $1D790
+          mouse_min_y = $192
+          mouse_max_y = $1EF
+          mouse_max_x = $27A
+          a2 = $86EC6  -- "¹- Witam!"
+          call say
+          a2 = $86ED0  -- "²= Przychodzę od Marleny. Zapomniał ksiądz PARASOLA. / = Przychodzę..."
+          call show
+        ::L05892::
+          wait_raster $FF
+          if not lmb then
+            if lmb then
+            else
+              goto L05892
+            end
+          end
+          call hit_test
+          if d2 ~= -1 then
+          else
+            goto L05892
+          end
+          if d2 == 1 then
+            a2 = $86FCE  -- "¹- Ach! No taaaak... parasol. Możesz go sobie zatrzymać, wygrałem g..."
+            call say
+            a2 = $8711B  -- "²= Szukam wiadomości proszę księdza. Nazywam się Tomasz Antkowiak, ..."
+            call show
+          elseif d2 u<= 4 then
+            a2 = $87086  -- "¹- Jak zwykle w świetnym humorze... Widzę, że przynosisz mi parasol..."
+            call say
+            a2 = $8711B  -- "²= Szukam wiadomości proszę księdza. Nazywam się Tomasz Antkowiak, ..."
+            call show
+          else
+            goto L05892
+          end
+        ::L05902::
+          wait_raster $FF
+          if not lmb then
+            if lmb then
+            else
+              goto L05902
+            end
+          end
+          call hit_test
+          if d2 ~= -1 then
+          else
+            goto L05902
+          end
+          if d2 u<= 4 then
+          else
+            goto L05902
+          end
+          a2 = $87218  -- "¹- Ależ proszę...Wejdź. Ja nazywam się Alfred Źrebak. Nie czuję się..."
+          call say
+          call sub_1B956
+          goto L06252
+        end
+        if b[$7C0D4] == 1 then
+          call sub_16CBA
+          goto L0530A
+        end
+        if b[$7C0D4] == 3 then
+          call sub_16CBA
+          goto L0530A
+        end
+        if b[$7C0D4] < 4 then
+          if b[$7C0D4] == 4 then
+          ::L05386::
+            call sub_16CBA
+            goto L0530A
+          end
+          b[$7C0D4] += 1
+          if b[$7C0D4] ~= 1 then
+            if b[$7C0D4] ~= 2 then
+            end
+            hotspot_table = $1D790
+            mouse_min_y = $192
+            mouse_max_y = $1EF
+            mouse_max_x = $27A
+            a2 = $86CF0  -- "¹- Ho ho... z czym przychodzimy tym razem?"
+            call say
+            if b[$7C0D4] ~= 2 then
+              a2 = $86D1B  -- "²= Z prawdziwym łukiem Winnetou, zrobionym przed laty ze stuletnieg..."
+              call show
+            else
+              a2 = $86E4F  -- "²= Tak tylko... przechodziłem."
+              call show
+            end
+          ::L057FE::
+            wait_raster $FF
+            if not lmb then
+              if lmb then
+              else
+                goto L057FE
+              end
+            end
+            call hit_test
+            if d2 ~= -1 then
+            else
+              goto L057FE
+            end
+            if b[$7C0D4] == 2 then
+              goto L05848
+            end
+            if d2 u<= 4 then
+              a2 = $86E6E  -- "¹- A jednak dowcipniś z pana.... hehehe.. miłego dnia!"
+              call say
+              goto L052D6
+            end
+          ::L05848::
+            a2 = $86EA5  -- "¹- Ach tak... Życzę miłego dnia."
+            call say
+            goto L052D6
+          end
+          hotspot_table = $1D790
+          mouse_min_y = $192
+          mouse_max_y = $1EF
+          mouse_max_x = $27A
+          a2 = $86710  -- "²= Niech będzie pochwalony... / = Dzieńdoberek... / = Dzień dobry, ..."
+          call show
+        ::L0555E::
+          wait_raster $FF
+          if not lmb then
+            if lmb then
+            else
+              goto L0555E
+            end
+          end
+          call hit_test
+          if d2 ~= -1 then
+          else
+            goto L0555E
+          end
+          if d2 == 1 then
+            a2 = $8679C  -- "¹- Na wieki wieków... Czym mogę służyć?"
+            call say
+            a2 = $8686B  -- "²= Nie wie ksiądz, gdzie tu jest Klonowa? / = Znał ksiądz może Wojt..."
+            call show
+          elseif d2 == 2 then
+            a2 = $867C4  -- "¹- ....Dzień dobry... Kim pan jest?"
+            call say
+            a2 = $86A27  -- "²= Jestem... Nazywam się Tomasz Antkowiak. / = Winnetou! Czy blada ..."
+            call show
+            goto L056A6
+          elseif d2 == 3 then
+            a2 = $867C4  -- "¹- ....Dzień dobry... Kim pan jest?"
+            call say
+            a2 = $86A27  -- "²= Jestem... Nazywam się Tomasz Antkowiak. / = Winnetou! Czy blada ..."
+            call show
+            goto L056A6
+          elseif d2 == 4 then
+            a2 = $867E8  -- "¹- Stryczyński... Stryczyński... Ach wiem! To ten, który się wprowa..."
+            call say
+            a2 = $86B88  -- "²= Po co? Powiedział, że tu się opiekują bezdomnymi... / = Powiedzi..."
+            call show
+            goto L0573C
+          else
+            goto L0555E
+          end
+        ::L0561A::
+          wait_raster $FF
+          if not lmb then
+            if lmb then
+            else
+              goto L0561A
+            end
+          end
+          call hit_test
+          if d2 ~= -1 then
+          else
+            goto L0561A
+          end
+          if d2 == 1 then
+            a2 = $8694E  -- "¹- W centrum jest dokładny plan miasta, ale nie sądzę żeby tu była ..."
+            call say
+            goto L052D6
+          end
+          if d2 == 2 then
+            a2 = $8699D  -- "¹- Wiem tylko że utonął. Może na policji będą mieli dokładniejsze i..."
+            call say
+            goto L052D6
+          end
+          if d2 == 3 then
+            a2 = $869EB  -- "¹- Nie."
+            call say
+            goto L052D6
+          end
+          if d2 == 4 then
+            a2 = $869F3  -- "¹- Niestety nie. Nie udostępniam ksiąg nieznajomym."
+            call say
+            goto L052D6
+          end
+          goto L0561A
+        end
+        goto L05386
+      end
+      call cursor_hand
+      hover_mode = 1
+      if label_shown == 1 then
+        call clear_text
+        goto L0530A
+      end
+      goto L0530A
+    end
+    if d2 == 1 then
+      if hover_mode == 1 then
+        call clear_text
+        a2 = $80301  -- "Wyjście do centrum"
+        call print
+        call label_mode
+      end
+      call cursor_anim_cd88
+      if lmb then
+        if b[$7C0D4] ~= 0 then
+          b[$7C0D4] += 1
+        end
+        call sub_1B956
+        goto L0390A
+      end
+      goto L0530A
+    end
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_take == 1 then
+          call reset_verbs
+          a2 = $80338  -- "I co byś z nim zrobił?"
+        elseif verb_look == 1 then
+          a2 = $8031B  -- "POPIERAJ SWOJEGO PROBOSZCZA!"
+        else
+          a2 = $80314  -- "Ksiądz"
+          call quip_if_verb_b
+        end
+        call clear_text
+        call print
+        call reset_verbs
+        goto L0530A
+      end
+      goto L0530A
+    end
+    goto L0530A
+  end
+  hotspot_table = $1D01C
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call draw_verb_bar
+  b[$7C0FC] = 1
+  hotspot_table = $1D790
+  mouse_min_y = $192
+  mouse_max_y = $1EF
+  mouse_max_x = $27A
+  a2 = $872B4  -- "¹- Ooooch. Nie poznałem na początku. Przychodzisz pod postacią Vale..."
+  call say
+  a2 = $872FC  -- "²- Tak! Poznał ksiądz! Mam tutaj księgę, którą wydostałem z sekretn..."
+  call say
+  a2 = $8734A  -- "¹- Pssssss.... Wiem o co chodzi. Nie trzeba mówić głośno."
+  call say
+  a2 = $87384  -- "²= Co ksiądz wie o Quefrete Xang? Można jej zaufać? / = Czy ksiądz ..."
+  call clear_print
+  call cursor_hand
+::L0599E::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0599E
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0599E
+  end
+  if d2 == 1 then
+    a2 = $87403  -- "¹- Oczywiście mój drogi. Powiem ci jednak coś o czym musisz wiedzie..."
+    call say
+    a2 = $874B0  -- "²- Tę Marlenę? Moją Marlenę?..."
+    call say
+    a2 = $874D0  -- "¹- Tak! A na domiar złego przydzielili jej opiekunkę-Wiedźmę ze szp..."
+    call say
+    a2 = $8751A
+    call say
+    a2 = $87531  -- "¹- Nie zadawaj pytań... Nie masz czasu. Chodź! Spróbuję coś wymyśli..."
+    call say
+    call sub_1B956
+    goto L06252
+  end
+  if d2 u<= 4 then
+    a2 = $875AC  -- "¹- Umarłem w świecie światła.  Nie pytaj jak to się stało.  Teraz m..."
+    call say
+    a2 = $874B0  -- "²- Tę Marlenę? Moją Marlenę?..."
+    call say
+    a2 = $874D0  -- "¹- Tak! A na domiar złego przydzielili jej opiekunkę-Wiedźmę ze szp..."
+    call say
+    a2 = $8751A
+    call say
+    a2 = $87531  -- "¹- Nie zadawaj pytań... Nie masz czasu. Chodź! Spróbuję coś wymyśli..."
+    call say
+    call sub_1B956
+    goto L06252
+  end
+  goto L0599E
+::L056A6::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L056A6
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L056A6
+  end
+  if d2 == 1 then
+    a2 = $86AA3  -- "¹- Nie znam nikogo o takim nazwisku... Czym mogę służyć?"
+    call say
+    a2 = $8686B  -- "²= Nie wie ksiądz, gdzie tu jest Klonowa? / = Znał ksiądz może Wojt..."
+    call show
+    goto L0561A
+  end
+  if d2 == 2 then
+    a2 = $86ADC  -- "¹- Kiepski żart... ale śmieszny...hehehehe... Czym mogę służyć Winn..."
+    call say
+    a2 = $8686B  -- "²= Nie wie ksiądz, gdzie tu jest Klonowa? / = Znał ksiądz może Wojt..."
+    call show
+    goto L0561A
+  end
+  if d2 == 3 then
+    a2 = $86B25  -- "¹- Przekaż Zbychowi pozdrowienia od Alfreda... A teraz na poważnie...."
+    call say
+    a2 = $8686B  -- "²= Nie wie ksiądz, gdzie tu jest Klonowa? / = Znał ksiądz może Wojt..."
+    call show
+    goto L0561A
+  end
+  goto L056A6
+::L0573C::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0573C
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0573C
+  end
+  if d2 == 1 then
+    a2 = $86BE8  -- "¹- To fakt, ale pan zdaje się, na takowego nie wygląda. Czy mogę je..."
+    call say
+    a2 = $8686B  -- "²= Nie wie ksiądz, gdzie tu jest Klonowa? / = Znał ksiądz może Wojt..."
+    call show
+    goto L0561A
+  end
+  if d2 == 2 then
+    a2 = $86C49  -- "¹- Taaaa....to znaczy, tak się tutaj mówi kiedy chce się kogoś pozb..."
+    call say
+    a2 = $8686B  -- "²= Nie wie ksiądz, gdzie tu jest Klonowa? / = Znał ksiądz może Wojt..."
+    call show
+    goto L0561A
+  end
+  goto L0573C
+end

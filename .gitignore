@@ -1,0 +1,14 @@
+orig/
+work/
+__pycache__/
+*.pyc
+extracted/
+tools/winuae/*
+!tools/winuae/alfabet.uae
+tools/openmpt/
+deps/
+tools/toolchain/
+build/
+dist/
+AlfabetSmierci/saves/
+CLAUDE.local.md

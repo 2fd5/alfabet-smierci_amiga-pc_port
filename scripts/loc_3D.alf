@@ -1,0 +1,71 @@
+routine loc_3D @ $13CFA
+  loc_id = $3D
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $168FD6
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  call sub_1BF9A
+  call wait_right_click_fast
+  call sub_1BFAA
+  call sub_14360
+  call clear_text
+  a2 = $7EBAC  -- " /  / Udało Ci się! Dokonałeś wielkiej rzeczy! Twoje  / nazwisko zo..."
+  call print_alt
+  call sub_1C006
+  call wait_right_click_fast
+  call sub_1C016
+  call sub_14360
+  call clear_text
+  a2 = $7EDD1  -- " /  / Mamy nadzieję, że przyjemnie spędziłeś(aś) czas, / grając w A..."
+  call print_alt
+  call sub_1C006
+  call wait_right_click_fast
+  call sub_1C016
+  call sub_14360
+  call clear_text
+  a2 = $7F02F  -- "      Autorzy chcieliby serdecznie podziękować: /  /         Dyrekc..."
+  call print_alt
+  call sub_1C006
+  call wait_right_click_fast
+  call sub_1C016
+  call sub_14360
+  call clear_text
+  a2 = $7F25B
+  call print_alt
+  call sub_1C006
+  call wait_right_click_fast
+  call sub_1C016
+  call sub_14360
+  call clear_text
+  a2 = $7F43E  -- " /  /  /  /  /  /  /  Osobiste podziękowania i pozdrowienia autorów:"
+  call print_alt
+  call sub_1C006
+  call wait_right_click_fast
+  call sub_1C016
+  call sub_14360
+  call clear_text
+  a2 = $7F475  -- "           Maciej 'Maniak' Frontkiewicz /  /          Osobiste podz..."
+  call print_alt
+  call sub_1C006
+  call wait_right_click_fast
+  call sub_1C016
+  call sub_14360
+  call clear_text
+  a2 = $7F6F5  -- "            Ryszard 'Justus' Bagiński /  /          Osobiste podzię..."
+  call print_alt
+  call sub_1C006
+  call wait_right_click_fast
+  call sub_1C016
+  call sub_14360
+  call clear_text
+  a2 = $7F8F4  -- "             Michał'Dixan05'Prochownik /  /            Osobiste pod..."
+  call print_alt
+  call sub_1C006
+  jump halt
+end

@@ -1,0 +1,290 @@
+routine loc_13 @ $08720
+::L08720::
+  loc_id = $13
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $124606
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  b[$1CA10] = 0
+  if b[$7C0CE] == 2 then
+    call sub_1A440
+    if b[$7C14F] ~= 0 then
+      call sub_1AD84
+    end
+  end
+  call sub_1BAAE
+  call cursor_hand
+  if b[$7C0CE] ~= 2 then
+    hotspot_table = $1D1B6
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+  ::L087CA::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+    else
+      if d2 == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 1
+          if hover_mode == 1 then
+            if verb_look == 1 then
+              a2 = $813F4  -- "Chyba chce czegoś od Ciebie!"
+            else
+              a2 = $813E7  -- "Pielęgniarka"
+              call quip_if_verb
+            end
+            call clear_text
+            call print
+            call reset_verbs
+            goto L087CA
+          end
+          goto L087CA
+        end
+        goto L087CA
+      end
+      goto L087CA
+    end
+    if verb_give ~= 1 then
+      if verb_look ~= 1 then
+        if verb_talk ~= 1 then
+          if verb_open ~= 1 then
+            if verb_use == 1 then
+              if w[$7C22A] == 1 then
+                b[$7C0E9] = 1
+                w[$7C22A] = 0
+                call reset_verbs
+                call sub_1BABE
+                goto L075AC
+              end
+            ::L08876::
+              call delay_c9e2
+              if b[$1CA10] == 1 then
+                call music_stop
+                d1 = $4A
+                music_order = d1
+                call music_start
+                call sub_1BABE
+                jump game_over_b
+              end
+              call cursor_hand
+              hover_mode = 1
+              if label_shown == 1 then
+                call clear_text
+                goto L087CA
+              end
+              goto L087CA
+            end
+            goto L08876
+          end
+        ::L0881A::
+          call music_stop
+          d1 = $4A
+          music_order = d1
+          call music_start
+          call sub_1BABE
+          jump game_over_b
+        end
+        goto L0881A
+      end
+      goto L0881A
+    end
+    goto L0881A
+  end
+  hotspot_table = $1D1C0
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+::L08956::
+  wait_raster $FF
+  call ui_panel
+  if b[$7C101] == 1 then
+    if b[$7C112] ~= 1 then
+      d6 = 0
+      d6.b = ciaa_pra
+      if bit(d6.b, 7) == 0 then
+        w[$59AD8] = $FFF
+        a2 = $7E13B  -- "Wyzwoliłeś moc!!!"
+        call clear_text
+        call print
+        call delay_200
+        call delay_200
+        call delay_200
+        w[$59AD8] = 0
+        b[$7C112] = 1
+        call cursor_off
+        a2 = $8144C  -- "²To ja Ci nie daruję! Patrz!..."
+        call clear_text
+        call print
+        call delay_c9c6
+        a2 = $8146C  -- "¹Aaaaaaarrrrghhh!!!! Kim Ty jesteś! KIM TY JESTEŚ??? Przestań... KI..."
+        call clear_text
+        call print
+        call delay_c9c6
+        call clear_text
+        b[$7C132] = 1
+        call sub_1BABE
+        goto L07D32
+      end
+    ::L08A18::
+      call ui_combine
+      call hit_test
+      if d2 == -1 then
+        if verb_use == 1 then
+          if w[$7C216] == 1 then
+            if b[$7C16E] ~= 0 then
+              if b[$7C111] ~= 1 then
+                a2 = $816A1  -- "Chciałeś mnie oślepić? Gdzie wypisują te głupoty o tym, że zombie b..."
+                call clear_text
+                call print
+                call reset_verbs
+                call delay_c9c6
+                call music_stop
+                d1 = $4A
+                music_order = d1
+                call music_start
+                call sub_1BABE
+                jump game_over_b
+              end
+              l[$1932A] = $7BB12  -- "fotka Xanadu"
+              call inventory_add
+              l[$1932E] = $7DFF4
+              call inventory_remove
+              b[$7C16E] = 0
+              a2 = $8164A  -- "MMmmmh! Czy to blask ogni piekielnych?... Nie chce mi się wstawać....."
+              call clear_text
+              call print
+              call reset_verbs
+              call delay_c9c6
+              call reset_verbs
+              goto L08956
+            end
+            goto L08956
+          end
+          goto L08956
+        end
+        call cursor_hand
+        hover_mode = 1
+        if label_shown == 1 then
+          call clear_text
+          goto L08956
+        end
+        goto L08956
+      end
+      if d2 == 1 then
+        if b[$7C16E] == 0 then
+          if hover_mode == 1 then
+            call clear_text
+            a2 = $81411  -- "Wyjście"
+            call print
+            call label_mode
+          end
+          call cursor_anim_cd88
+          if lmb then
+            call sub_1BABE
+            goto L07D32
+          end
+          goto L08956
+        end
+        goto L08956
+      end
+      if d2 == 2 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_use == 1 then
+              if w[$7C20C] == 2 then
+                w[$7C20C] = 0
+                l[$1932A] = $7B4AC
+                call inventory_scroll_up
+                l[$1932E] = $7DF40
+                call inventory_scroll_down
+                b[$7C141] = 0
+                b[$7C111] = 1
+                call sub_1A4CE
+                a2 = $81427  -- "Och....chrrrrrr...tracę przytomność!"
+                goto L08C14
+              end
+              goto L08956
+            end
+            if verb_look == 1 then
+              a2 = $814DE  -- "Ja tę twarz już gdzieś widziałem! Gdzie to kurde było???"
+            else
+              a2 = $81419  -- "Twarz wiedźmy"
+              call quip_if_verb
+            end
+          ::L08C14::
+            call clear_text
+            call print
+            call reset_verbs
+            goto L08956
+          end
+          goto L08956
+        end
+        goto L08956
+      end
+      if d2 == 3 then
+        if b[$7C14F] == 1 then
+          if lmb then
+            call cursor_busy
+            quip_person = 0
+            if hover_mode == 1 then
+              if verb_take == 1 then
+                if b[$7C111] ~= 1 then
+                  a2 = $81550  -- "AAAA! Nic z tego kochasiu! Ona jest moja! Ty natomiast pójdziesz do..."
+                  call clear_text
+                  call print
+                  call reset_verbs
+                  call music_stop
+                  d1 = $4A
+                  music_order = d1
+                  call music_start
+                  call delay_c9c6
+                  call sub_1BABE
+                  jump game_over_b
+                end
+                a2 = $8159C  -- "Myślałeś, że nie poczuję spryciarzu? Po jasnej stronie Ci się udało..."
+                call clear_text
+                call print
+                call reset_verbs
+                call music_stop
+                d1 = $4A
+                music_order = d1
+                call music_start
+                call delay_c9c6
+                call sub_1BABE
+                jump game_over_b
+              end
+              if verb_look == 1 then
+                a2 = $81523  -- "Niewłaściwa bransoletka na niewłaściwej ręce"
+              else
+                a2 = $81517  -- "Bransoletka"
+                call quip_if_verb
+              end
+              call clear_text
+              call print
+              call reset_verbs
+              goto L08956
+            end
+            goto L08956
+          end
+          goto L08956
+        end
+        goto L08956
+      end
+      goto L08956
+    end
+    goto L08A18
+  end
+  goto L08A18
+end

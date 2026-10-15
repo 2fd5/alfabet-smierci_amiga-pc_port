@@ -1,0 +1,210 @@
+routine loc_15 @ $08D34
+  loc_id = $15
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $17F7A2
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C0CE] == 2 then
+    call sub_1AAFC
+    if b[$7C146] == 0 then
+      call sub_1AB44
+    end
+  end
+  if b[$7C145] == 0 then
+    call sub_1AAB4
+  end
+  call sub_1BAD2
+  call cursor_hand
+  if b[$7C0CE] ~= 2 then
+    hotspot_table = $1D1DA
+    mouse_min_y = $20
+    mouse_max_y = $253
+    mouse_max_x = $27A
+  ::L08DE8::
+    wait_raster $FF
+    call ui_panel
+    call ui_combine
+    call hit_test
+    if d2 == -1 then
+      call cursor_hand
+      hover_mode = 1
+      if label_shown == 1 then
+        call clear_text
+        goto L08DE8
+      end
+      goto L08DE8
+    end
+    if d2 == 1 then
+    else
+      if d2 == 2 then
+        if b[$7C0D6] == 0 then
+          if lmb then
+            call cursor_busy
+            quip_person = 0
+            if hover_mode == 1 then
+              if verb_look == 1 then
+                call sub_1AA6C
+                b[$7C0D6] = 1
+                a2 = $81721  -- "Szpargały, szpargały, szpargały... O! Tu coś jest!"
+              else
+                a2 = $8171A  -- "Szafka"
+                call quip_if_verb
+              end
+              call clear_text
+              call print
+              call reset_verbs
+              goto L08DE8
+            end
+            goto L08DE8
+          end
+          goto L08DE8
+        end
+        goto L08DE8
+      end
+      if d2 == 3 then
+        if b[$7C0D6] == 1 then
+          if b[$7C145] == 1 then
+            if lmb then
+              call cursor_busy
+              quip_person = 0
+              if hover_mode == 1 then
+                if verb_take == 1 then
+                  call sub_1AAB4
+                  l[$1932A] = $7B50A
+                  call inventory_add
+                  l[$1932E] = $7DF50
+                  call inventory_remove
+                  b[$7C145] = 0
+                  call reset_verbs
+                  goto L08DE8
+                end
+                if verb_look == 1 then
+                  a2 = $8179C  -- "Do licha! To policyjne akta moich przyjaciół. Później je sobie obej..."
+                else
+                  a2 = $81782  -- "Akta"
+                  call quip_if_verb_b
+                end
+                call reset_verbs
+                call clear_text
+                call print
+                goto L08DE8
+              end
+              goto L08DE8
+            end
+            goto L08DE8
+          end
+          goto L08DE8
+        end
+        goto L08DE8
+      end
+      goto L08DE8
+    end
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $8170E  -- "Na zewnątrz"
+      call print
+      call label_mode
+    end
+    call cursor_anim_cd88
+    if lmb then
+    else
+      goto L08DE8
+    end
+    call sub_1BAE2
+    goto L067A8
+  end
+  hotspot_table = $1D1F4
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+::L08FD6::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L08FD6
+    end
+    goto L08FD6
+  end
+  if d2 == 1 then
+  else
+    if d2 == 2 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_look == 1 then
+            a2 = $81754  -- "Szpargały i tyle. Nie ma tu nic godnego uwagi"
+          else
+            a2 = $8171A  -- "Szafka"
+            call quip_if_verb
+          end
+          call clear_text
+          call print
+          call reset_verbs
+          goto L08FD6
+        end
+        goto L08FD6
+      end
+      goto L08FD6
+    end
+    if d2 == 3 then
+      if b[$7C146] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1AB44
+              l[$1932A] = $7B518  -- "   aparat   "
+              call inventory_add
+              l[$1932E] = $7DF54
+              call inventory_remove
+              b[$7C146] = 0
+              call reset_verbs
+              goto L08FD6
+            end
+            if verb_look == 1 then
+              a2 = $817E4  -- "O kurczę! Autentyczny Ptolemus!!! Typ ClicAndPic! Cacko!!!"
+            else
+              a2 = $81787  -- "Aparat fotograficzny"
+              call quip_if_verb_b
+            end
+            call reset_verbs
+            call clear_text
+            call print
+            goto L08FD6
+          end
+          goto L08FD6
+        end
+        goto L08FD6
+      end
+      goto L08FD6
+    end
+    goto L08FD6
+  end
+  if hover_mode == 1 then
+    call clear_text
+    a2 = $8170E  -- "Na zewnątrz"
+    call print
+    call label_mode
+  end
+  call cursor_anim_cd88
+  if lmb then
+  else
+    goto L08FD6
+  end
+  call sub_1BAE2
+  goto L067A8
+end

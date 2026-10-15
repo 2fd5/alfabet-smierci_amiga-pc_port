@@ -1,0 +1,210 @@
+routine loc_24 @ $0D2B2
+::L0D2B2::
+  loc_id = $24
+  call select_music
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  call ensure_disk
+  a0 = $186990
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  if b[$7C156] == 0 then
+    call sub_1AE5C
+  end
+  if b[$7C157] == 0 then
+    call sub_1AEA4
+  end
+  if b[$7C0D9] == 1 then
+    call sub_1AEEC
+  end
+  call sub_1BCEE
+  call cursor_hand
+  hotspot_table = $1D412
+  mouse_min_y = $20
+  mouse_max_y = $253
+  mouse_max_x = $27A
+  call clear_text
+  call draw_verb_bar
+  call reset_verbs
+::L0D366::
+  wait_raster $FF
+  call ui_panel
+  call ui_combine
+  call hit_test
+  if d2 == -1 then
+    call cursor_hand
+    hover_mode = 1
+    if label_shown == 1 then
+      call clear_text
+      goto L0D366
+    end
+    goto L0D366
+  end
+  if d2 == 1 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $83083  -- "Do kościółka"
+      call print
+      call label_mode
+    end
+    call cursor_exit_b
+    if lmb then
+      call sub_1BCFE
+      goto L0BF1A
+    end
+    goto L0D366
+  end
+  if d2 == 2 then
+    if hover_mode == 1 then
+      call clear_text
+      a2 = $83090  -- "Na podwórko"
+      call print
+      call label_mode
+    end
+    call cursor_anim_cd88
+    if lmb then
+      call sub_1BCFE
+      goto L0D706
+    end
+    goto L0D366
+  end
+  if d2 == 3 then
+    if b[$7C16A] == 0 then
+      if b[$7C156] == 1 then
+        if lmb then
+          call cursor_busy
+          quip_person = 0
+          if hover_mode == 1 then
+            if verb_take == 1 then
+              call sub_1AE5C
+              l[$1932A] = $7B714  -- "   Ślepik   "
+              call inventory_add
+              l[$1932E] = $7DF94
+              call inventory_remove
+              b[$7C156] = 0
+              call reset_verbs
+              goto L0D366
+            end
+            if verb_look == 1 then
+              a2 = $830A3  -- "O! Ślepik Zjadliwy."
+            else
+              a2 = $8309C  -- "Ziółko"
+              call quip_if_verb_b
+            end
+            call reset_verbs
+            call clear_text
+            call print
+            goto L0D366
+          end
+          goto L0D366
+        end
+        goto L0D366
+      end
+      goto L0D366
+    end
+    goto L0D366
+  end
+  if d2 == 4 then
+    if b[$7C157] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_take == 1 then
+            if b[$7C0D9] == 1 then
+              call sub_1AEA4
+              l[$1932A] = $7B722  -- "   jabłko   "
+              call inventory_add
+              l[$1932E] = $7DF98
+              call inventory_remove
+              b[$7C157] = 0
+              a2 = $830F2  -- "Ep! Epf! Chyba nie dosięgnę... Chociaż... JEST! MAM!"
+            else
+              a2 = $83127  -- "Ep! Chyba nie dosięgnę, jest za wysoko."
+            end
+          elseif verb_look == 1 then
+            a2 = $830CA  -- "Jabłko. Szczerze mówiąc, niezbyt ładne."
+          else
+            a2 = $830B7  -- "Jabłko na drzewie."
+            call quip_if_verb_b
+          end
+          call reset_verbs
+          call clear_text
+          call print
+          goto L0D366
+        end
+        goto L0D366
+      end
+      goto L0D366
+    end
+    goto L0D366
+  end
+  if d2 == 5 then
+    if b[$7C157] == 1 then
+      if lmb then
+        call cursor_busy
+        quip_person = 0
+        if hover_mode == 1 then
+          if verb_use == 1 then
+            if w[$7C23C] == 1 then
+              if b[$7C11B] == 1 then
+                if b[$7C0D9] ~= 1 then
+                  l[$1932A] = $7B7A6  -- "   stolik   "
+                  call inventory_scroll_up
+                  l[$1932E] = $7DFA0
+                  call inventory_scroll_down
+                  call sub_1AEEC
+                  b[$7C0D9] = 1
+                  goto L0D366
+                end
+                goto L0D366
+              end
+              w[$7C23C] = 0
+              a2 = $8318B  -- "O nie! Jest cały rozeschnięty! Nic z tego."
+              goto L0D68C
+            end
+            goto L0D366
+          end
+          if verb_look == 1 then
+            a2 = $83156  -- "Niezbyt wiekowa jabłoń. Sądząc po jabłku oczywiście."
+          else
+            a2 = $8314F  -- "Jabłoń"
+            call quip_if_verb_b
+          end
+        ::L0D68C::
+          call reset_verbs
+          call clear_text
+          call print
+          goto L0D366
+        end
+        goto L0D366
+      end
+      goto L0D366
+    end
+    goto L0D366
+  end
+  if d2 == 6 then
+    if lmb then
+      call cursor_busy
+      quip_person = 0
+      if hover_mode == 1 then
+        if verb_look == 1 then
+          a2 = $831C0  -- "Nadleśnictwo Dęby. Leśnictwo Tartarki"
+        else
+          a2 = $831B6  -- "Tabliczka"
+          call quip_if_verb_b
+        end
+        call reset_verbs
+        call clear_text
+        call print
+        goto L0D366
+      end
+      goto L0D366
+    end
+    goto L0D366
+  end
+  goto L0D366
+end

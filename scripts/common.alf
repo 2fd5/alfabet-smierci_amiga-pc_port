@@ -1,0 +1,7107 @@
+routine boot @ $03000
+  call music_start
+  l[$19370] = l[$0006C]
+  l[$0006C] = $19350
+  a6 = $DFF000
+  w[$DFF09A] = $C020
+  l[$1B7DE] = $96738
+  l[$1B7D6] = $591EE
+  l[$1B7DA] = 7
+  l[$1B7D2] = $5000
+  w[$591E4] = $8020
+  call sub_1B7A4
+  l[$DFF080] = $591DE
+  call sub_4E6E4
+  call cursor_off
+  call sub_1B7E2
+  b[$1C04E] = 0
+  a0 = $7C270
+  a1 = $7BBD4
+  d7 = $69B
+::L03094::
+  b[a0++] = b[a1++]
+  d7.w -= 1
+  if d7.w ~= -1 then goto L03094 end
+  a0 = $7BBD4
+  a1 = $7C90C
+  d7 = $69B
+::L030AC::
+  b[a1++] = b[a0++]
+  d7.w -= 1
+  if d7.w ~= -1 then goto L030AC end
+  a0 = $7BBD4
+  a1 = $7CFA8
+  d7 = $69B
+::L030C4::
+  b[a1++] = b[a0++]
+  d7.w -= 1
+  if d7.w ~= -1 then goto L030C4 end
+  a0 = $7BBD4
+  a1 = $7D644
+  d7 = $69B
+::L030DC::
+  b[a1++] = b[a0++]
+  d7.w -= 1
+  if d7.w ~= -1 then goto L030DC end
+  call sub_195A6
+  jump loc_04
+end
+
+routine sub_0320C @ $0320C
+  call cursor_off
+  goto L03212
+end
+
+routine part_03212 @ $03212
+::L03212::
+  call clear_text
+  goto L03218
+end
+
+routine part_03218 @ $03218
+::L03218::
+  call sub_1B87E
+  goto L0321E
+end
+
+routine part_0321E @ $0321E
+::L0321E::
+  a0 = $10C49C
+  goto L03224
+end
+
+routine part_03224 @ $03224
+::L03224::
+  a1 = $610FE
+  goto L0322A
+end
+
+routine part_0322A @ $0322A
+::L0322A::
+  call decrunch
+  goto L03230
+end
+
+routine part_03230 @ $03230
+::L03230::
+  call show_frame
+  goto L03236
+end
+
+routine part_03236 @ $03236
+::L03236::
+  call sub_1BFBE
+  goto L0323C
+end
+
+routine part_0323C @ $0323C
+::L0323C::
+  hotspot_table = $1D790
+  goto L03246
+end
+
+routine part_03246 @ $03246
+::L03246::
+  mouse_min_y = $192
+  goto L0324E
+end
+
+routine part_0324E @ $0324E
+::L0324E::
+  mouse_max_y = $1EF
+  goto L03256
+end
+
+routine part_03256 @ $03256
+::L03256::
+  mouse_max_x = $27A
+  goto L0325E
+end
+
+routine part_0325E @ $0325E
+::L0325E::
+  train_rides += 1
+  goto L03266
+end
+
+routine part_03266 @ $03266
+::L03266::
+  a2 = $84442  -- "¹- Proszę pana, pan siada... Jeżeli nie jedzie pan do Jeżówki to po..."
+  goto L0326C
+end
+
+routine part_0326C @ $0326C
+::L0326C::
+  call say
+  goto L03272
+end
+
+routine part_03272 @ $03272
+::L03272::
+  a2 = $84538  -- "²= Niestety nie palę, ale mogę poczęstować pana Mentoskiem... / = N..."
+  goto L03278
+end
+
+routine part_03278 @ $03278
+::L03278::
+  call show
+  goto L0327E
+end
+
+routine sub_035CA @ $035CA
+  b[$7C0C6] = 1
+  verb_talk = 1
+  return
+end
+
+routine sub_07816 @ $07816
+  hotspot_table = $1D790
+  mouse_min_y = $192
+  mouse_max_y = $1EF
+  mouse_max_x = $27A
+  a2 = $88884  -- "²= Dzieńdoberek! Jestem....Ech... Mniejsza z tym! Przyjechałem z ks..."
+  call clear_print
+  call cursor_hand
+::L0784A::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0784A
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0784A
+  end
+  if d2 == 1 then
+    call clear_text
+    a2 = $889B7  -- "¹- Witaj. Kiedy dzwoniłem do księdza to mówił, że ma gościa.   Nazy..."
+    call print
+    call wait_right_click_hand
+    call clear_text
+    a2 = $88A3C  -- "²= Jak się czuje pan Ternawski? Podobno wypadek był poważny. / = Cz..."
+    call print
+    goto L0797C
+  elseif d2 u<= 3 then
+    a2 = $88CC9  -- "¹- Nieźle??? A ile?"
+    call say
+    a2 = $88CDD
+    call say
+    a2 = $88CE8  -- "¹- Jak dużo?"
+    call say
+    a2 = $88CF5  -- "²- Duuuuuuużo!"
+    call say
+    a2 = $88D04  -- "¹- To znaczy?.."
+    call say
+    a2 = $88D14  -- "²- Duuuuuuuuużoooooo!"
+    call say
+    a2 = $88D2A  -- "¹- No to ile?"
+    call say
+    a2 = $88D38  -- "²- Baaardzoooo duuuużooo."
+    call say
+    a2 = $88D52  -- "¹- Eeeee. Cienias jesteś. Mój ostatni klient płacił o dwa "u" więcej."
+    call say
+    a2 = $88D98  -- "²- Tak tylko... żartowałem. Przyjechałem z księdzem. Jak się czuje ..."
+    call say
+    a2 = $88DE4  -- "¹- Domyśliłem się! Ksiądz mówił, że z pana niezły dowcipniś! Jestem..."
+    call say
+    a2 = $88E58  -- "²- No to w porządalu. Obawiałem się, że stanie się coś gorszego..."
+    call clear_print
+  elseif d2 u<= 5 then
+    call clear_text
+    a2 = $88E9B  -- "¹- Co? Co takiego???? Żarty sobie pan stroi? Czy pan wie,gdzie pan ..."
+    call print
+    call wait_right_click_hand
+    call clear_text
+    a2 = $88EE9  -- "²= Gdzie? Do wesołego miasteczka! Jestem pajacyk Wowo! Gdzie tu jes..."
+    call print
+    goto L07A38
+  else
+    goto L0784A
+  end
+::L07AE2::
+  a2 = $892FE  -- "¹- Wie pan..."
+  call say
+  a2 = $8930C  -- "²- Proszę nie mówić mi przez pan. To dla mnie krępujące..."
+  call say
+  a2 = $89347  -- "¹- Wiesz... Najgorszy w tym wszystkim jest ten wypadek na jeziorze."
+  call say
+  a2 = $8938B  -- "²- Tak?"
+  call say
+  a2 = $89393  -- "¹- Personel szpitala został odsunięty od oględzin ciał denatów. Od ..."
+  call say
+  a2 = $89424  -- "²- Coś podobnego!"
+  call say
+  a2 = $89436  -- "¹- Procedura specjalna! Tak się nazywa to coś co umożliwia im te ws..."
+  call say
+  a2 = $8948E  -- "²- No dobra, ale ktoś musiał zrobić sekcję!"
+  call say
+  a2 = $894BA  -- "¹- Tak! Jakiś gość... Podobno z centralnej... Kto ich tam wie!?"
+  call say
+  a2 = $894FA  -- "²- Niesamowite!"
+  call say
+  a2 = $8950A  -- "¹- W tym akurat nie widzę niczego niesamowitego! Niesamowite jest t..."
+  call say
+  a2 = $89567  -- "²- To widział ich pan?"
+  call say
+  a2 = $8957E  -- "¹- Mnie też proszę nie "panować". Jestem Maciek!... Taaak. Przez mo..."
+  call say
+  a2 = $895E4
+  call say
+  a2 = $895F0  -- "¹- Coś przerażającego. Rozumiem, że woda i... rozkład, ale to nie b..."
+  call say
+  a2 = $896DE  -- "²- Smród? To chyba normalne. Za to ta reszta..."
+  call say
+  a2 = $8970E  -- "¹- Smród też! Wiem jak śmierdzi trup. To było coś zupełnie innego!"
+  call say
+  a2 = $89751  -- "²- Uhmmm..."
+  call say
+  a2 = $8975D  -- "¹- Nie wiem dlaczego mówię ci to wszystko. Chyba dlatego, że jeszcz..."
+  call say
+  a2 = $897B4  -- "²= No tak. Czy Ternawski na pewno będzie żył? / = To naprawdę przer..."
+  call clear_print
+  call cursor_hand
+::L07BD8::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L07BD8
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L07BD8
+  end
+  if d2 == 1 then
+    a2 = $8986C  -- "¹- Nigdy nie można być pewnym. Wszystko wskazuje na to, że tak!"
+    call say
+  elseif d2 == 2 then
+    a2 = $898AC  -- "¹- Aaaaach! A któż to może wiedzieć????"
+    call say
+  elseif d2 == 3 then
+    a2 = $898D4  -- "¹- Hmmm. Klasyczna ranka po zastrzyku! Ktoś kto to robił nie zdezyn..."
+    call say
+  else
+    goto L07BD8
+  end
+  a2 = $89975  -- "²- Może wyda ci się to dziwne ale... Czuję jakąś dziwną senność."
+  call say
+  a2 = $899B6  -- "¹- Aha! To pewnie ten nowy środek do podłogi. Też się tu coraz gorz..."
+  call say
+  a2 = $89A81  -- "²- Aaoooooohh. Jaki środek?... Pie...lęgniaaarkaaaa? Wybacz, ale oc..."
+  call say
+  a2 = $89AD9  -- "¹- Przyszła na odział niedawno. Mieszka w dawnym mieszkaniu Wojtka...."
+  call say
+  a2 = $89BE7  -- "²- Aaaaahm... Chrrrrrrm... Uhm. Tylko mała drzemka....mmmmmmm..."
+  call say
+  call sub_1BA52
+  goto L082FC
+::L0797C::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L0797C
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L0797C
+  end
+  if d2 == 1 then
+    a2 = $88AF0  -- "¹- Tak! Potrącił go jakiś niezidentyfikowany samochód. Ale nie jest..."
+    call say
+    a2 = $88B4B  -- "²- Aaaaa... Całe szczęście."
+    call say
+    goto L07AE2
+  end
+  if d2 == 2 then
+    a2 = $88B67  -- "¹- Hm... Każdy zawód jest na swój sposób trudny i łatwy."
+    call say
+    a2 = $88BA0  -- "²- No tak... Głupio pytam..."
+    call say
+    goto L07AE2
+  end
+  if d2 == 3 then
+    a2 = $88BBD  -- "¹- Żyhoniuk? Tak. Miła dziewczyna. Szkoda, że spotykają ją takie tr..."
+    call say
+    a2 = $88C08  -- "²- Nnno tak. To fakt. Co prawda to prawda..."
+    call say
+    goto L07AE2
+  end
+  if d2 == 4 then
+    a2 = $88C35  -- "¹- Kiedyś grałem w Kajka i Kokosza. Teraz nie mam czasu. Cała ta za..."
+    call say
+    a2 = $88C80  -- "²- Aaaa! Kajko i Kokosz! Fajna rzecz! No tak. Nie czas grać gdy... ..."
+    call say
+    goto L07AE2
+  end
+  goto L0797C
+::L07A38::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L07A38
+    end
+  end
+  call hit_test
+  if d2 ~= -1 then
+  else
+    goto L07A38
+  end
+  if d2 u<= 2 then
+    a2 = $88FF0  -- "¹- Zaraz za drzwiami! Żartowniś się znalazł! Wynoś się pan!!!"
+    call say
+    a2 = $8902E  -- "²- Ojej...Przepraszam, nie chciałem urazić. Myślałem, że pan żartuj..."
+    call say
+    a2 = $89076  -- "¹- Myślał!!! On myślał! Hehehe.. a nie wyglądał na myślącego."
+    call say
+    a2 = $890B4  -- "²- Naprawdę mi przykro. Proszę się na mnie nie gniewać.Jestem Tomek..."
+    call say
+    a2 = $8914B  -- "¹- W porząchu. Nie gniewam się. Taka tu teraz nerwówka, że..."
+    call say
+    a2 = $89189  -- "²- No tak... Rozumiem. Te wszystkie nieoczekiwane śmierci... Taaak."
+    call say
+    goto L07AE2
+  end
+  if d2 u<= 5 then
+    a2 = $891CD  -- "¹- No już dobrze. Ja też się za bardzo uniosłem. Przepraszam, powin..."
+    call say
+    a2 = $892B0  -- "²- Och... Ja nie zrobię na pewno... Jeszcze raz przepraszam."
+    call say
+    a2 = $892ED  -- "¹- Nie ma za co."
+    call say
+    goto L07AE2
+  end
+  goto L07A38
+end
+
+routine sub_08570 @ $08570
+  b[$19328] = 1
+  l[$1932A] = $7B5FA  -- "nowy młynek "
+  call inventory_add
+  l[$1932E] = $7DF84
+  call inventory_remove
+  b[$7C152] = 0
+  l[$1932A] = $7B8BA  -- "stary młynek"
+  call inventory_scroll_up
+  l[$1932E] = $7DFAC
+  call inventory_scroll_down
+  b[$19328] = 0
+  call draw_inventory
+  a2 = $80E7E  -- "     "Woda daje życie, woda życie odbiera. /       Woda daje siłę, ..."
+  call say_restore_cursor
+  return
+end
+
+routine sub_085DC @ $085DC
+  b[$19328] = 1
+  l[$1932A] = $7B5EC  -- "bransoletka "
+  call inventory_add
+  l[$1932E] = $7DF80
+  call inventory_remove
+  call draw_inventory
+  b[$7C151] = 0
+  l[$1932A] = $7BB12  -- "fotka Xanadu"
+  call inventory_scroll_up
+  l[$1932E] = $7DFF4
+  call inventory_scroll_down
+  b[$19328] = 0
+  call draw_inventory
+  a2 = $80F21  -- "- Widzę, że odkrywasz powoli możliwości, które w tobie drzemią.  Tw..."
+  call say_restore_cursor
+  return
+end
+
+routine sub_0864E @ $0864E
+  b[$19328] = 1
+  l[$1932A] = $7B63E  -- "szklana kula"
+  call inventory_add
+  l[$1932E] = $7DF88
+  call inventory_remove
+  b[$7C153] = 0
+  l[$1932A] = $7BB1F  -- " fotka pola "
+  call inventory_scroll_up
+  l[$1932E] = $7DFF8
+  call inventory_scroll_down
+  b[$19328] = 0
+  call draw_inventory
+  a2 = $80FC9  -- "- To świadczy o twojej bystrości. Oto szklana kula. Trzeba z nią je..."
+  call say_restore_cursor
+  return
+end
+
+routine sub_091DE @ $091DE
+::L091DE::
+  hotspot_table = $1D20E
+  goto L091E8
+end
+
+routine part_091E8 @ $091E8
+::L091E8::
+  mouse_min_y = $20
+  goto L091F0
+end
+
+routine part_091F0 @ $091F0
+::L091F0::
+  mouse_max_y = $253
+  goto L091F8
+end
+
+routine part_091F8 @ $091F8
+::L091F8::
+  mouse_max_x = $27A
+  goto L09200
+end
+
+routine part_09200 @ $09200
+::L09200::
+  verb_talk = 0
+  goto L09208
+end
+
+routine part_09208 @ $09208
+::L09208::
+  call clear_text
+  goto L0920E
+end
+
+routine part_0920E @ $0920E
+::L0920E::
+  call draw_verb_bar
+  goto L09214
+end
+
+routine sub_0A612 @ $0A612
+  b[$7C131] = 1
+  a2 = $81F6C  -- "¹- Kogo my tu mamy? Chcesz ze mną walczyć? Ty? Pewnie ta stara wied..."
+  call say
+  a2 = $8203B  -- "²- Twoja godzina wybiła ramolu! Nadszedł czas niespodzianek!"
+  call say
+  call clear_text
+  call text_white
+  return
+end
+
+routine sub_0B05C @ $0B05C
+  a0 = $7BBDA
+  a1 = $7BE4A
+  d7 = $1D
+::L0B06E::
+  l[a0++] = 0
+  l[a1++] = 0
+  d7.w -= 1
+  if d7.w ~= -1 then goto L0B06E end
+  return
+end
+
+routine part_0B502 @ $0B502
+::L0B502::
+  a2 = $8C33C  -- "¹- Przygotuj się do długiej podróży. Przedtem jednak musisz użyć akt!"
+  call say
+  goto L0ACD4
+end
+
+routine sub_0B512 @ $0B512
+  a2 = $8C4D7  -- "¹- Dobrze! Teraz posłuchaj tego co ci powiem..."
+  call say
+  a2 = $8C507  -- "     Sen to stan między życiem a śmiercią. /      Światłem i ciemno..."
+  call say
+  a2 = $8C5BD  -- "     a zapadniesz w sen. To konieczne. /      Na twoim tropie są po..."
+  call say
+  a2 = $8C65B  -- "²- O rety!"
+  call say
+  a2 = $8C666  -- "¹- A teraz wypij proszę tę miksturę..."
+  call say
+  b[$7C0F3] = 1
+  return
+end
+
+routine sub_12C4E @ $12C4E
+  b[$19328] = 1
+  l[$1932A] = $7B477  -- "   klocek   "
+  call inventory_scroll_up
+  l[$1932E] = $7DF30
+  call inventory_scroll_down
+  l[$1932A] = $7B4E0  -- "   klocek   "
+  call inventory_scroll_up
+  l[$1932E] = $7DF44
+  call inventory_scroll_down
+  l[$1932A] = $7B4EE  -- "   klocek   "
+  call inventory_scroll_up
+  l[$1932E] = $7DF48
+  call inventory_scroll_down
+  l[$1932A] = $7B9CA  -- "   klocek   "
+  call inventory_scroll_up
+  l[$1932E] = $7DFC8
+  call inventory_scroll_down
+  l[$1932A] = $7B9D8  -- "   klocek   "
+  call inventory_scroll_up
+  l[$1932E] = $7DFCC
+  call inventory_scroll_down
+  l[$1932A] = $7BB2C  -- " 6 klocków  "
+  call inventory_add
+  l[$1932E] = $7DFFC
+  call inventory_remove
+  b[$7C170] = 0
+  b[$19328] = 0
+  b[$7C10E] += 1
+  call draw_inventory
+  return
+end
+
+routine game_over @ $13E92
+  call music_stop
+  music_order = $3D
+  call music_start
+  d5 = 0
+  d5.b = 4
+  call random
+  if d0.w == 1 then
+    call loc_02_2
+    jump sub_142CA
+  end
+  if d0.w == 2 then
+    call loc_02
+    jump sub_142CA
+  end
+  if d0.w == 3 then
+    call loc_08_2
+    jump sub_142CA
+  end
+  call loc_07_2
+  jump sub_142CA
+end
+
+routine game_over_b @ $14006
+::L14006::
+  call music_stop
+  music_order = $3D
+  call music_start
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  d5 = 0
+  d5.b = 4
+  call random
+  if d0.w == 1 then
+    call loc_12_3
+    jump sub_142CA
+  end
+  if d0.w == 2 then
+    call loc_23_2
+    jump sub_142CA
+  end
+  if d0.w == 3 then
+    call loc_22_2
+    jump sub_142CA
+  end
+  call loc_1F_2
+  jump sub_142CA
+end
+
+routine sub_1418C @ $1418C
+  call music_stop
+  music_order = $3D
+  call music_start
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  d5 = 0
+  d5.b = 2
+  call random
+  if d0.w == 1 then
+    call loc_35_2
+    jump sub_142CA
+  end
+  call loc_27_2
+  jump sub_142CA
+end
+
+routine sub_1425A @ $1425A
+::L1425A::
+  call music_stop
+  music_order = $3D
+  call music_start
+  call clear_text
+  call draw_verb_bar
+  call cursor_off
+  call reset_verbs
+  goto L14282
+end
+
+routine sub_142CA @ $142CA
+  if b[$7C12D] == 1 then
+    call sub_1B82E
+    call sub_1B7E2
+    b[$1C04E] = 0
+  end
+  a0 = $7BBD4
+  a1 = $7C270
+  d7 = $69B
+::L142FA::
+  b[a0++] = b[a1++]
+  d7.w -= 1
+  if d7.w ~= -1 then goto L142FA end
+  call sub_0B05C
+  call draw_inventory
+  jump loc_04
+end
+
+routine sub_14312 @ $14312
+  call sub_14360
+  call clear_text
+  a2 = $95DA6  -- " /                   Alfabet Śmierci /              (c) 1995/1996 S..."
+  call print_alt
+  call sub_1C006
+  call wait_right_click_fast
+  call sub_1C016
+  return
+end
+
+routine sub_1433E @ $1433E
+  call cursor_off
+  call reset_verbs
+  a0 = $EBE36
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  return
+end
+
+routine sub_14360 @ $14360
+  call cursor_off
+  call reset_verbs
+  a0 = $EE53C
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  return
+end
+
+routine show_disk_picture @ $14382
+  call cursor_off
+  call reset_verbs
+  a0 = $F2B14
+  a1 = $610FE
+  call decrunch
+  call show_frame
+  return
+end
+
+routine ensure_disk @ $143C0
+  if loc_id == 2 then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == 3 then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == 4 then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == 7 then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == 8 then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == 9 then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $A then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $B then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $C then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $D then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $E then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $F then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $10 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $11 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $12 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $13 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $15 then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $16 then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $17 then
+    if disk_in_drive ~= 4 then
+      disk_in_drive = 4
+      goto L14A4C
+    end
+  elseif loc_id == $18 then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $19 then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $1B then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $1C then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $1D then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $1E then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $1F then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $20 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $21 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $22 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $23 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $24 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $25 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $27 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $28 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $2B then
+    if disk_in_drive ~= 3 then
+      disk_in_drive = 3
+      goto L14A4C
+    end
+  elseif loc_id == $2C then
+    if disk_in_drive ~= 3 then
+      disk_in_drive = 3
+      goto L14A4C
+    end
+  elseif loc_id == $2D then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $2E then
+    if disk_in_drive ~= 3 then
+      disk_in_drive = 3
+      goto L14A4C
+    end
+  elseif loc_id == $2F then
+    if disk_in_drive ~= 3 then
+      disk_in_drive = 3
+      goto L14A4C
+    end
+  elseif loc_id == $30 then
+    if disk_in_drive ~= 3 then
+      disk_in_drive = 3
+      goto L14A4C
+    end
+  elseif loc_id == $31 then
+    if disk_in_drive ~= 5 then
+      disk_in_drive = 5
+      goto L14A4C
+    end
+  elseif loc_id == $32 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $33 then
+    if disk_in_drive ~= 3 then
+      disk_in_drive = 3
+      goto L14A4C
+    end
+  elseif loc_id == $35 then
+    if disk_in_drive ~= 2 then
+      disk_in_drive = 2
+      goto L14A4C
+    end
+  elseif loc_id == $37 then
+    if disk_in_drive ~= 3 then
+      disk_in_drive = 3
+      goto L14A4C
+    end
+  elseif loc_id == $38 then
+    if disk_in_drive ~= 3 then
+      disk_in_drive = 3
+      goto L14A4C
+    end
+  elseif loc_id == $39 then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $3A then
+    if disk_in_drive ~= 1 then
+      disk_in_drive = 1
+      goto L14A4C
+    end
+  elseif loc_id == $3C then
+    if disk_in_drive ~= 3 then
+      disk_in_drive = 3
+      goto L14A4C
+    end
+  elseif disk_in_drive ~= 3 then
+    disk_in_drive = 3
+    goto L14A4C
+  end
+::L14A5E::
+  return
+::L14A4C::
+  call show_disk_picture
+  call sub_1C02A
+  call load_disk
+  call sub_1C03A
+  goto L14A5E
+end
+
+routine sub_14A60 @ $14A60
+  if loc_id == 2 then
+    if b[$15314] ~= 1 then
+      call sub_1BFBE
+    else
+      call sub_1BFCE
+    end
+  elseif loc_id == 3 then
+    if b[$15314] ~= 1 then
+      call sub_1B86E
+    else
+      call sub_1B87E
+    end
+  elseif loc_id == 4 then
+    if b[$15314] ~= 1 then
+      call sub_1B892
+    else
+      call sub_1B8A2
+    end
+  elseif loc_id == 5 then
+    if b[$15314] ~= 1 then
+      call sub_1B8B6
+    else
+      call sub_1B8C6
+    end
+  elseif loc_id == 6 then
+    if b[$15314] ~= 1 then
+      call sub_1B8DA
+    else
+      call sub_1B8EA
+    end
+  elseif loc_id == 7 then
+    if b[$15314] ~= 1 then
+      call sub_1B8FE
+    else
+      call sub_1B90E
+    end
+  elseif loc_id == 8 then
+    if b[$15314] ~= 1 then
+      call sub_1B922
+    else
+      call sub_1B932
+    end
+  elseif loc_id == 9 then
+    if b[$15314] ~= 1 then
+      call sub_1B946
+    else
+      call sub_1B956
+    end
+  elseif loc_id == $A then
+    if b[$15314] ~= 1 then
+      call sub_1B96A
+    else
+    ::L14BD0::
+      call sub_1B97A
+    end
+  elseif loc_id == $B then
+    if b[$15314] ~= 1 then
+      call sub_1B98E
+    else
+      call sub_1B99E
+    end
+  elseif loc_id == $C then
+    if b[$15314] ~= 1 then
+      call sub_1B9B2
+    else
+      call sub_1B9C2
+    end
+  elseif loc_id == $D then
+    if b[$15314] ~= 1 then
+      call sub_1B9D6
+    else
+      call sub_1B9E6
+    end
+  elseif loc_id == $E then
+    if b[$15314] ~= 1 then
+      call sub_1B9FA
+    else
+      call sub_1BA0A
+    end
+  elseif loc_id == $F then
+    if b[$15314] ~= 1 then
+      call sub_1BA1E
+    else
+      call sub_1BA2E
+    end
+  elseif loc_id == $10 then
+    if b[$15314] ~= 1 then
+      call sub_1BA42
+    else
+      call sub_1BA52
+    end
+  elseif loc_id == $11 then
+    if b[$15314] ~= 1 then
+      call sub_1BA66
+    else
+      call sub_1BA76
+    end
+  elseif loc_id == $12 then
+    if b[$15314] ~= 1 then
+      call sub_1BA8A
+    else
+      call sub_1BA9A
+    end
+  elseif loc_id == $13 then
+    if b[$15314] ~= 1 then
+      call sub_1BAAE
+    else
+      call sub_1BABE
+    end
+  elseif loc_id == $15 then
+    if b[$15314] ~= 1 then
+      call sub_1BAD2
+    else
+      call sub_1BAE2
+    end
+  elseif loc_id == $16 then
+    if b[$15314] ~= 1 then
+      call sub_1BAF6
+    else
+      call sub_1BB06
+    end
+  elseif loc_id == $17 then
+    if b[$15314] ~= 1 then
+      call sub_1BB1A
+    else
+      call sub_1BB2A
+    end
+  elseif loc_id == $18 then
+    if b[$15314] ~= 1 then
+      call sub_1BB3E
+    else
+      call sub_1BB4E
+    end
+  elseif loc_id == $19 then
+    if b[$15314] ~= 1 then
+      call sub_1BB62
+    else
+      call sub_1BB72
+    end
+  elseif loc_id == $1B then
+    if b[$15314] ~= 1 then
+      call sub_1BBAA
+    else
+      call sub_1BBBA
+    end
+  elseif loc_id == $1C then
+    if b[$15314] ~= 1 then
+      call sub_1BBCE
+    else
+      call sub_1BBDE
+    end
+  elseif loc_id == $1D then
+    if b[$15314] ~= 1 then
+      call sub_1BBF2
+    else
+      call sub_1BC02
+    end
+  elseif loc_id == $1E then
+    if b[$15314] ~= 1 then
+      call sub_1BC16
+    else
+      call sub_1BC26
+    end
+  elseif loc_id == $1F then
+    if b[$15314] ~= 1 then
+      call sub_1BC5E
+    else
+      call sub_1BC6E
+    end
+  elseif loc_id == $20 then
+    if b[$15314] ~= 1 then
+      call sub_1BC82
+    else
+      call sub_1BC92
+    end
+  elseif loc_id == $21 then
+    if b[$15314] ~= 1 then
+      call sub_1BFE2
+    else
+      call sub_1BFF2
+    end
+  elseif loc_id == $22 then
+    if b[$15314] ~= 1 then
+      call sub_1BCA6
+    else
+      call sub_1BCB6
+    end
+  elseif loc_id == $23 then
+    if b[$15314] ~= 1 then
+      call sub_1BCCA
+    else
+      call sub_1BCDA
+    end
+  elseif loc_id == $24 then
+    if b[$15314] ~= 1 then
+      call sub_1BCEE
+    else
+      call sub_1BCFE
+    end
+  elseif loc_id == $25 then
+    if b[$15314] ~= 1 then
+      call sub_1BD12
+    else
+      call sub_1BD22
+    end
+  elseif loc_id == $27 then
+    if b[$15314] ~= 1 then
+      call sub_1BD36
+    else
+      call sub_1BD46
+    end
+  elseif loc_id == $28 then
+    if b[$15314] ~= 1 then
+      call sub_1BD5A
+    else
+      call sub_1BD6A
+    end
+  elseif loc_id == $2B then
+    if b[$15314] ~= 1 then
+      call sub_1BD7E
+    else
+      call sub_1BD8E
+    end
+  elseif loc_id == $2C then
+    if b[$15314] ~= 1 then
+      call sub_1BDA2
+    else
+      call sub_1BDB2
+    end
+  elseif loc_id == $2D then
+    if b[$15314] ~= 1 then
+      call sub_1BDC6
+    else
+      call sub_1BDD6
+    end
+  elseif loc_id == $2E then
+    if b[$15314] ~= 1 then
+      call sub_1BDEA
+    else
+      call sub_1BDFA
+    end
+  elseif loc_id == $2F then
+    if b[$15314] ~= 1 then
+      call sub_1BE0E
+    else
+      call sub_1BE1E
+    end
+  elseif loc_id == $30 then
+    if b[$15314] ~= 1 then
+      call sub_1BE32
+    else
+      call sub_1BE42
+    end
+  elseif loc_id == $31 then
+    if b[$15314] ~= 1 then
+      call sub_1BE56
+    else
+      call sub_1BE66
+    end
+  elseif loc_id == $32 then
+    if b[$15314] ~= 1 then
+      call sub_1BE7A
+    else
+      call sub_1BE8A
+    end
+  elseif loc_id == $33 then
+    if b[$15314] ~= 1 then
+      call sub_1BE9E
+    else
+      call sub_1BEAE
+    end
+  elseif loc_id == $34 then
+    if b[$15314] ~= 1 then
+      call sub_1BEC2
+    else
+      call sub_1BED2
+    end
+  elseif loc_id == $35 then
+    if b[$15314] ~= 1 then
+      call sub_1BEE6
+    else
+      call sub_1BEF6
+    end
+  elseif loc_id == $37 then
+    if b[$15314] ~= 1 then
+      call sub_1BF0A
+    else
+      call sub_1BF1A
+    end
+  elseif loc_id == $38 then
+    if b[$15314] ~= 1 then
+      call sub_1BF2E
+    else
+      call sub_1BF3E
+    end
+  elseif loc_id == $39 then
+    if b[$15314] ~= 1 then
+      call sub_1B96A
+    else
+      goto L14BD0
+    end
+  elseif loc_id == $3A then
+    if b[$15314] ~= 1 then
+      call sub_1BF52
+    else
+      call sub_1BF62
+    end
+  elseif loc_id == $3C then
+    if b[$15314] ~= 1 then
+      call sub_1BF76
+    else
+      call sub_1BF86
+    end
+  elseif loc_id == $3D then
+    if b[$15314] ~= 1 then
+      call sub_1BF9A
+    else
+      call sub_1BFAA
+    end
+  end
+  return
+end
+
+routine resume_location @ $15318
+  if loc_id == 2 then
+    pop a0, a1
+    jump sub_0320C
+  end
+  if loc_id == 3 then
+    pop a0, a1
+    jump loc_03
+  end
+  if loc_id == 4 then
+    pop a0, a1
+    jump loc_04
+  end
+  if loc_id == 5 then
+    pop a0, a1
+    jump loc_05
+  end
+  if loc_id == 6 then
+    pop a0, a1
+    jump loc_06
+  end
+  if loc_id == 7 then
+    pop a0, a1
+    jump loc_07
+  end
+  if loc_id == 8 then
+    pop a0, a1
+    jump loc_08
+  end
+  if loc_id == 9 then
+    pop a0, a1
+    jump loc_09
+  end
+  if loc_id == $A then
+    pop a0, a1
+    jump loc_0A
+  end
+  if loc_id == $B then
+    pop a0, a1
+    jump loc_0B
+  end
+  if loc_id == $C then
+    pop a0, a1
+    jump loc_0C
+  end
+  if loc_id == $D then
+    pop a0, a1
+    jump loc_0D
+  end
+  if loc_id == $E then
+    pop a0, a1
+    jump loc_0E
+  end
+  if loc_id == $F then
+    pop a0, a1
+    jump loc_0F_2
+  end
+  if loc_id == $10 then
+    pop a0, a1
+    jump loc_10
+  end
+  if loc_id == $11 then
+    pop a0, a1
+    jump loc_11
+  end
+  if loc_id == $12 then
+    pop a0, a1
+    jump loc_12
+  end
+  if loc_id == $13 then
+    pop a0, a1
+    jump loc_13
+  end
+  if loc_id == $15 then
+    pop a0, a1
+    jump loc_15
+  end
+  if loc_id == $16 then
+    pop a0, a1
+    jump loc_16
+  end
+  if loc_id == $17 then
+    pop a0, a1
+    jump loc_17
+  end
+  if loc_id == $18 then
+    pop a0, a1
+    jump loc_18
+  end
+  if loc_id == $19 then
+    pop a0, a1
+    jump loc_19
+  end
+  if loc_id == $1B then
+    pop a0, a1
+    jump loc_1B
+  end
+  if loc_id == $1C then
+    pop a0, a1
+    jump loc_1C
+  end
+  if loc_id == $1D then
+    pop a0, a1
+    jump loc_1D
+  end
+  if loc_id == $1E then
+    pop a0, a1
+    jump loc_1E
+  end
+  if loc_id == $1F then
+    pop a0, a1
+    jump loc_1F
+  end
+  if loc_id == $20 then
+    pop a0, a1
+    jump loc_20
+  end
+  if loc_id == $21 then
+    pop a0, a1
+    jump loc_1E
+  end
+  if loc_id == $22 then
+    pop a0, a1
+    jump loc_22
+  end
+  if loc_id == $23 then
+    pop a0, a1
+    jump loc_23
+  end
+  if loc_id == $24 then
+    pop a0, a1
+    jump loc_24
+  end
+  if loc_id == $25 then
+    pop a0, a1
+    jump loc_25
+  end
+  if loc_id == $27 then
+    pop a0, a1
+    jump loc_27
+  end
+  if loc_id == $28 then
+    pop a0, a1
+    jump loc_28
+  end
+  if loc_id == $2B then
+    pop a0, a1
+    jump loc_2B
+  end
+  if loc_id == $2C then
+    pop a0, a1
+    jump loc_2C
+  end
+  if loc_id == $2D then
+    pop a0, a1
+    jump loc_2D
+  end
+  if loc_id == $2E then
+    pop a0, a1
+    jump loc_2E
+  end
+  if loc_id == $2F then
+    pop a0, a1
+    jump loc_2F
+  end
+  if loc_id == $30 then
+    pop a0, a1
+    jump loc_30
+  end
+  if loc_id == $31 then
+    pop a0, a1
+    jump loc_31
+  end
+  if loc_id == $32 then
+    pop a0, a1
+    jump loc_32
+  end
+  if loc_id == $33 then
+    pop a0, a1
+    jump loc_33
+  end
+  if loc_id == $34 then
+    pop a0, a1
+    jump loc_34
+  end
+  if loc_id == $35 then
+    pop a0, a1
+    jump loc_35
+  end
+  if loc_id == $37 then
+    pop a0, a1
+    jump loc_37
+  end
+  if loc_id == $38 then
+    pop a0, a1
+    jump loc_38
+  end
+  if loc_id == $39 then
+    pop a0, a1
+    jump loc_39
+  end
+  if loc_id == $3A then
+    pop a0, a1
+    jump loc_3A
+  end
+  if loc_id == $3C then
+    pop a0, a1
+    jump loc_3C
+  end
+  pop a0, a1
+  jump loc_3D
+end
+
+routine select_music @ $15732
+  if b[$7C0BC] == 0 then
+    call music_stop
+  elseif loc_id == 2 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = 0
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == 3 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = 0
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == 4 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = 0
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == 5 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    if b[$7C0CE] ~= 2 then
+      d1 = $E
+    else
+      d1 = $18
+    end
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == 6 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $E
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == 7 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $E
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == 8 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $3A
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == 9 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $27
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $A then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    if b[$7C0CE] ~= 2 then
+      d1 = $E
+    else
+      d1 = $31
+    end
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $B then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $34
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $C then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $27
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $D then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $A
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $E then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $4A
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $F then
+  elseif loc_id == $10 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = 0
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $11 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = 0
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $12 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $24
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $13 then
+    d1 = 6
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $15 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $2D
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $16 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $34
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $17 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $24
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $18 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $27
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $19 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    if b[$7C0CE] ~= 2 then
+      d1 = $24
+    else
+      d1 = 6
+    end
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $1B then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $24
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $1C then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $24
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $1D then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = 0
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $1E then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = 0
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $1F then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    if b[$7C0CE] ~= 2 then
+      d1 = 0
+    else
+      d1 = $18
+    end
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $20 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $18
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $21 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $18
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $22 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $18
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $23 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $18
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $24 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $31
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $25 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $31
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $27 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $18
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $28 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $A
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $2B then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $3A
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $2C then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $A
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $2D then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $18
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $2E then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $A
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $2F then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $A
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $30 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $A
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $31 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $2D
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $32 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $24
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $33 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $A
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $34 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $18
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $35 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $27
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $37 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $A
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $38 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $24
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $39 then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $31
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $3A then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $31
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  elseif loc_id == $3C then
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $24
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  else
+    d0 = 0
+    d1 = 0
+    d0 = music_order
+    d1 = $41
+    if d1 ~= d0 then
+      music_order = d1
+      call music_stop
+      call music_start
+    end
+  end
+  return
+end
+
+routine sub_16280 @ $16280
+  if loc_id == 2 then
+    d1 = 0
+    music_order = d1
+    call music_start
+  elseif loc_id == 3 then
+    d1 = 0
+    music_order = d1
+    call music_start
+  elseif loc_id == 4 then
+    d1 = 0
+    music_order = d1
+    call music_start
+  elseif loc_id == 5 then
+    if b[$7C0CE] ~= 2 then
+      d1 = $E
+    else
+      d1 = $18
+    end
+    music_order = d1
+    call music_start
+  elseif loc_id == 6 then
+    d1 = $E
+    music_order = d1
+    call music_start
+  elseif loc_id == 7 then
+    d1 = $E
+    music_order = d1
+    call music_start
+  elseif loc_id == 8 then
+    d1 = $3A
+    music_order = d1
+    call music_start
+  elseif loc_id == 9 then
+    d1 = $27
+    music_order = d1
+    call music_start
+  elseif loc_id == $A then
+    if b[$7C0CE] ~= 2 then
+      d1 = $E
+    else
+      d1 = $31
+    end
+    music_order = d1
+    call music_start
+  elseif loc_id == $B then
+    d1 = $34
+    music_order = d1
+    call music_start
+  elseif loc_id == $C then
+    d1 = $27
+    music_order = d1
+    call music_stop
+    call music_start
+  elseif loc_id == $D then
+    d1 = $A
+    music_order = d1
+    call music_start
+  elseif loc_id == $E then
+    d1 = $4A
+    music_order = d1
+    call music_start
+  elseif loc_id == $F then
+    call music_start
+  elseif loc_id == $10 then
+    d1 = 0
+    music_order = d1
+    call music_start
+  elseif loc_id == $11 then
+    d1 = 0
+    music_order = d1
+    call music_start
+  elseif loc_id == $12 then
+    d1 = $24
+    music_order = d1
+    call music_start
+  elseif loc_id == $13 then
+    d1 = 6
+    music_order = d1
+    call music_start
+  elseif loc_id == $15 then
+    d1 = $2D
+    music_order = d1
+    call music_start
+  elseif loc_id == $16 then
+    d1 = $34
+    music_order = d1
+    call music_start
+  elseif loc_id == $17 then
+    d1 = $24
+    music_order = d1
+    call music_start
+  elseif loc_id == $18 then
+    d1 = $27
+    music_order = d1
+    call music_start
+  elseif loc_id == $19 then
+    if b[$7C0CE] ~= 2 then
+      d1 = $24
+    else
+      d1 = 6
+    end
+    music_order = d1
+    call music_start
+  elseif loc_id == $1B then
+    d1 = $24
+    music_order = d1
+    call music_start
+  elseif loc_id == $1C then
+    d1 = $24
+    music_order = d1
+    call music_start
+  elseif loc_id == $1D then
+    d1 = 0
+    music_order = d1
+    call music_start
+  elseif loc_id == $1E then
+    d1 = 0
+    music_order = d1
+    call music_start
+  elseif loc_id == $1F then
+    if b[$7C0CE] ~= 2 then
+      d1 = 0
+    else
+      d1 = $18
+    end
+    music_order = d1
+    call music_start
+  elseif loc_id == $20 then
+    d1 = $18
+    music_order = d1
+    call music_start
+  elseif loc_id == $21 then
+    d1 = $18
+    music_order = d1
+    call music_start
+  elseif loc_id == $22 then
+    d1 = $18
+    music_order = d1
+    call music_start
+  elseif loc_id == $23 then
+    d1 = $18
+    music_order = d1
+    call music_start
+  elseif loc_id == $24 then
+    d1 = $31
+    music_order = d1
+    call music_start
+  elseif loc_id == $25 then
+    d1 = $31
+    music_order = d1
+    call music_start
+  elseif loc_id == $27 then
+    d1 = $18
+    music_order = d1
+    call music_start
+  elseif loc_id == $28 then
+    d1 = $A
+    music_order = d1
+    call music_start
+  elseif loc_id == $2B then
+    d1 = $3A
+    music_order = d1
+    call music_start
+  elseif loc_id == $2C then
+    d1 = $A
+    music_order = d1
+    call music_start
+  elseif loc_id == $2D then
+    d1 = $18
+    music_order = d1
+    call music_start
+  elseif loc_id == $2E then
+    d1 = $A
+    music_order = d1
+    call music_start
+  elseif loc_id == $2F then
+    d1 = $A
+    music_order = d1
+    call music_start
+  elseif loc_id == $30 then
+    d1 = $A
+    music_order = d1
+    call music_start
+  elseif loc_id == $31 then
+    d1 = $2D
+    music_order = d1
+    call music_start
+  elseif loc_id == $32 then
+    d1 = $24
+    music_order = d1
+    call music_start
+  elseif loc_id == $33 then
+    d1 = $A
+    music_order = d1
+    call music_start
+  elseif loc_id == $34 then
+    d1 = $18
+    music_order = d1
+    call music_start
+  elseif loc_id == $35 then
+    d1 = $27
+    music_order = d1
+    call music_start
+  elseif loc_id == $37 then
+    d1 = $A
+    music_order = d1
+    call music_start
+  elseif loc_id == $38 then
+    d1 = $24
+    music_order = d1
+    call music_start
+  elseif loc_id == $39 then
+    d1 = $31
+    music_order = d1
+    call music_start
+  elseif loc_id == $3A then
+    d1 = $31
+    music_order = d1
+    call music_start
+  elseif loc_id == $3C then
+    d1 = $24
+    music_order = d1
+    call music_start
+  else
+    d1 = $41
+    music_order = d1
+    call music_start
+  end
+  return
+end
+
+routine quip_if_verb @ $16980
+  if verb_talk ~= 1 then
+    if verb_take ~= 1 then
+      if verb_use ~= 1 then
+        if verb_open ~= 1 then
+          return
+        end
+      ::L169F4::
+        d5 = 0
+        d5.b = $14
+        call random
+        if d0.w == 1 then
+          if quip_person ~= 1 then
+            a2 = $7A930  -- "Przepraszam, ale wydaje mi się, że miałeś już dzisiaj lepsze pomysły."
+          else
+            a2 = $7ABDF  -- "Chyba nie jesteś sadystą?"
+          end
+        elseif d0.w == 2 then
+          if quip_person ~= 1 then
+            a2 = $7A976  -- "Musisz być chyba bardzo zdesperowany."
+          else
+            a2 = $7ABF9  -- "Chciałbyś, tego... no..."
+          end
+        elseif d0.w == 3 then
+          if quip_person ~= 1 then
+            a2 = $7A99C  -- "Nie wydaje mi się to zbyt sensowne."
+          else
+            a2 = $7AC12  -- "Co ty! Przecież to nie jest przedmiot..."
+          end
+        elseif d0.w == 4 then
+          if quip_person ~= 1 then
+            a2 = $7A9C0  -- "Pudło!!!"
+          else
+            a2 = $7AC3B  -- "Pomyłka!"
+          end
+        elseif d0.w == 5 then
+          if quip_person ~= 1 then
+            a2 = $7A9C9  -- "Usiądź na chwilę i pomyśl."
+          else
+            a2 = $7AC44  -- "Zwariowałeś!?!"
+          end
+        elseif d0.w == 6 then
+          if quip_person ~= 1 then
+            a2 = $7A9E4  -- "Chyba nie to miałeś na myśli!"
+          else
+            a2 = $7AC53  -- "Ciekawe czy tak samo traktujesz swego szefa?"
+          end
+        elseif d0.w == 7 then
+          if quip_person ~= 1 then
+            a2 = $7AA02  -- "Zaskakujesz mnie..."
+          else
+            a2 = $7AC80  -- "A fe! A fe! Niegrzeczny chłopczyk!"
+          end
+        elseif d0.w == 8 then
+          if quip_person ~= 1 then
+            a2 = $7AA16  -- "A wystarczy pomyśleć..."
+          else
+            a2 = $7ACA3  -- "Nawet o tym nie myśl."
+          end
+        elseif d0.w == 9 then
+          if quip_person ~= 1 then
+            a2 = $7AA2E  -- "Przepraszam, ale to chyba nie to."
+          else
+            a2 = $7ACB9  -- "Ależ to nie jest po krasnoludzku!"
+          end
+        elseif d0.w == $A then
+          if quip_person ~= 1 then
+            a2 = $7AA50  -- "Wydaje mi się, że chodzi tu o co innego."
+          else
+          ::L16B5E::
+            a2 = $7ACDB  -- "Nie rób scen!"
+          end
+        elseif d0.w == $B then
+          if quip_person ~= 1 then
+            a2 = $7AA79
+          else
+            a2 = $7ACE9  -- "Bez chwytów poniżej pasa, dobrze?"
+          end
+        elseif d0.w == $C then
+          if quip_person ~= 1 then
+            a2 = $7AA88  -- "Dlaczego tak?"
+          else
+            a2 = $7AD0B  -- "Łapy precz! To poważna gra a tobie się figli zachciewa!"
+          end
+        elseif d0.w == $D then
+          if quip_person ~= 1 then
+            a2 = $7AA96  -- "Nie ma jak klikać na co popadnie. Zgadłem?"
+          else
+            a2 = $7AD43  -- "Nic z tego! Nie radzę ci tego robić ani z tą osobą ani z innymi."
+          end
+        elseif d0.w == $E then
+          if quip_person ~= 1 then
+            a2 = $7AAC1  -- "Może niepotrzebnie kupowałeś przygodowkę?"
+          else
+            a2 = $7AD84  -- "Uch! Zawsze znajdzie się jakiś niewyżyty! Fuj!"
+          end
+        elseif d0.w == $F then
+          if quip_person ~= 1 then
+            a2 = $7AAEB  -- "Założę się, że tego nie przemyślałeś."
+          else
+            a2 = $7ADB3  -- "No coś podobnego! Można mieć odchyły, ale żeby tak? Dewiant!"
+          end
+        elseif d0.w == $10 then
+          if quip_person ~= 1 then
+            a2 = $7AB11  -- "Tylko na to cię stać? Wstyd!"
+          else
+            a2 = $7ADF0  -- "Czy naprawdę tego chcesz?"
+          end
+        elseif d0.w == $11 then
+          if quip_person ~= 1 then
+            a2 = $7AB2E  -- "Pokombinuj trochę... Tym razem nic z tego."
+          else
+            a2 = $7AE0A  -- "Weź zimny prysznic! Podobno pomaga!"
+          end
+        elseif d0.w == $12 then
+          if quip_person ~= 1 then
+            a2 = $7AB59  -- "Spróbuj inaczej! Rozwiązanie jest tak blisko!"
+          else
+            a2 = $7AE2E  -- "To jest gra przygodowa, lecz nie mieliśmy na myśli takich przygód."
+          end
+        elseif d0.w == $13 then
+          if quip_person ~= 1 then
+            a2 = $7AB87  -- "Nie ma czasu na takie eksperymenty! Zrób coś innego!"
+          else
+            a2 = $7AE71  -- "Pomyśl o etycznym wymiarze tego co chcesz zrobić."
+          end
+        elseif quip_person ~= 1 then
+          a2 = $7ABBC  -- "To był całkowicie chybiony pomysł."
+        else
+          goto L16B5E
+        end
+        return
+      end
+      goto L169F4
+    end
+    goto L169F4
+  end
+  goto L169F4
+end
+
+routine quip_if_verb_b @ $169CA
+  if verb_talk ~= 1 then
+    if verb_take ~= 1 then
+      if verb_use ~= 1 then
+        if verb_open ~= 1 then
+          return
+        end
+        goto L169F4
+      end
+      goto L169F4
+    end
+    goto L169F4
+  end
+  goto L169F4
+end
+
+routine sub_16CBA @ $16CBA
+  call clear_text
+  d5 = 0
+  d5.b = $19
+  call random
+  if d0.w == 1 then
+    a2 = $7AEDB  -- "Nie sądzę, żeby dalsze zabawianie tej osoby rozmową coś dało."
+  elseif d0.w == 2 then
+    a2 = $7AF19  -- "O nie! Koniec gadki! Czas działać!"
+  elseif d0.w == 3 then
+    a2 = $7AF3C  -- "Czy nie zabolały cię już struny głosowe?"
+  elseif d0.w == 4 then
+    a2 = $7AF65  -- "Dalsza rozmowa nic nie da. Spróbuj czegoś innego!"
+  elseif d0.w == 5 then
+    a2 = $7AF97  -- "Chyba nie chce już z tobą rozmawiać."
+  elseif d0.w == 6 then
+    a2 = $7AFBC  -- "Czy ty sobie wyobrażasz, że autorzy całe życie spędzili na układani..."
+  elseif d0.w == 7 then
+    a2 = $7B02E  -- "Znasz przysłowie o mowie i milczeniu? Pasuje do tej sytuacji jak ulał!"
+  elseif d0.w == 8 then
+    a2 = $7B075  -- "Dalsza rozmowa to strata twego cennego czasu! Daruj sobie, co?"
+  elseif d0.w == 9 then
+    a2 = $7B0B4  -- "No już, no już... Pogadasz sobie kiedy indziej..."
+  elseif d0.b == $A then
+    a2 = $7B0E6  -- "Gaduła z ciebie! Co za dużo to niezdrowo. "
+  elseif d0.b == $B then
+    a2 = $7B111  -- "Ty tu blebleble, a czas ucieka!"
+  elseif d0.b == $C then
+    a2 = $7B131  -- "Nie ma co strzępić języka! Może następnym razem..."
+  elseif d0.b == $D then
+    a2 = $7B164  -- "Mógłbyś powtórzyć? Chyba nie dotarło."
+  elseif d0.b == $E then
+    a2 = $7B18A  -- "Ty gadasz, a twój rozmówca ani me, ani be, ani kukuryku!"
+  elseif d0.b == $F then
+    a2 = $7B1C3  -- "Cicho!!! Słyszałeś ten dziwny zgrzyt w stacji dysków?"
+  elseif d0.b == $10 then
+    a2 = $7B1F9  -- "Nie ma sensu gonić spłoszonych saren (cytat)."
+  elseif d0.b == $11 then
+    a2 = $7B227  -- "Ależ zamknij się wreszcie!"
+  elseif d0.b == $12 then
+    a2 = $7B242  -- "Psssst! Jeszcze powiesz coś niestosownego!"
+  elseif d0.b == $13 then
+    a2 = $7B26D  -- "Ciszej! Właśnie zasnęło dziecko naszego grafika!"
+  elseif d0.b == $14 then
+    a2 = $7B29E  -- "Poruszaj ręką z większą gracją, kiedy wciskasz ten gadżet!"
+  elseif d0.b == $15 then
+    a2 = $7B2D9  -- "Nie reaguje! Chyba zostałeś zignorowany!"
+  elseif d0.b == $16 then
+    a2 = $7B302  -- "Znowu odzywasz się nie pytany! To nic nie da!"
+  elseif d0.b == $17 then
+    a2 = $7B330  -- "Wstań, spluń trzy razy przez lewe ramię i spróbuj ponownie"
+  elseif d0.b == $18 then
+    a2 = $7B36B  -- "Przelatujący właśnie samolot, zagłuszył to co powiedziałeś."
+  else
+    a2 = $7B3A7  -- "Dobra, dobra... ploty na poźniej!"
+  end
+  verb_talk = 0
+  call print
+  call draw_verb_bar
+  call reset_verbs
+  return
+end
+
+routine ui_panel @ $16E54
+  call hit_test_ui
+  if d3 == -1 then
+    inv_click_armed = 1
+  ::L16E6A::
+    return
+  end
+  if d3 == 1 then
+    if inv_click_armed == 1 then
+      if lmb then
+        if verb_give ~= 1 then
+          if verb_use ~= 1 then
+            goto L16E6A
+          end
+        ::L16EA0::
+          call sub_19E10
+          call draw_verb_bar
+          d1 = $1CB2
+          a0 = $7BBDA
+          a0 += inv_scroll
+          if l[a0] ~= 0 then
+            a2 = l[a0]
+            call print_at
+          end
+          a0 = $7BBDA
+          l[$1932A] = l[a0]
+          a0 = $7BE4A
+          a0 += inv_scroll
+          l[$1932E] = a0
+          call draw_inventory
+          if verb_use == 1 then
+            call sub_187C6
+          elseif verb_give == 1 then
+            call sub_18266
+          end
+          inv_click_armed = 0
+          goto L16E6A
+        end
+        goto L16EA0
+      end
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == 2 then
+    if inv_click_armed == 1 then
+      if lmb then
+        if verb_give ~= 1 then
+          if verb_use ~= 1 then
+            goto L16E6A
+          end
+        ::L16F4E::
+          call sub_19E58
+          call draw_verb_bar
+          d1 = $1CB2
+          a0 = $7BBDE
+          a0 += inv_scroll
+          if l[a0] ~= 0 then
+            a2 = l[a0]
+            call print_at
+          end
+          a0 = $7BBDE
+          l[$1932A] = l[a0]
+          a0 = $7BE4E
+          a0 += inv_scroll
+          l[$1932E] = a0
+          call draw_inventory
+          if verb_use == 1 then
+            call sub_187C6
+          elseif verb_give == 1 then
+            call sub_18266
+          end
+          inv_click_armed = 0
+          goto L16E6A
+        end
+        goto L16F4E
+      end
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == 3 then
+    if inv_click_armed == 1 then
+      if lmb then
+        if verb_give ~= 1 then
+          if verb_use ~= 1 then
+            goto L16E6A
+          end
+        ::L16FFC::
+          call sub_19EA0
+          call draw_verb_bar
+          d1 = $1CB2
+          a0 = $7BBE2
+          a0 += inv_scroll
+          if l[a0] ~= 0 then
+            a2 = l[a0]
+            call print_at
+          end
+          a0 = $7BBE2
+          l[$1932A] = l[a0]
+          a0 = $7BE52
+          a0 += inv_scroll
+          l[$1932E] = a0
+          call draw_inventory
+          if verb_use == 1 then
+            call sub_187C6
+          elseif verb_give == 1 then
+            call sub_18266
+          end
+          inv_click_armed = 0
+          goto L16E6A
+        end
+        goto L16FFC
+      end
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == 4 then
+    if inv_click_armed == 1 then
+      if lmb then
+        if verb_give ~= 1 then
+          if verb_use ~= 1 then
+            goto L16E6A
+          end
+        ::L170AA::
+          call sub_19EE8
+          call draw_verb_bar
+          d1 = $1CB2
+          a0 = $7BBE6
+          a0 += inv_scroll
+          if l[a0] ~= 0 then
+            a2 = l[a0]
+            call print_at
+          end
+          a0 = $7BBE6
+          l[$1932A] = l[a0]
+          a0 = $7BE56
+          a0 += inv_scroll
+          l[$1932E] = a0
+          call draw_inventory
+          if verb_use == 1 then
+            call sub_187C6
+          elseif verb_give == 1 then
+            call sub_18266
+          end
+          inv_click_armed = 0
+          goto L16E6A
+        end
+        goto L170AA
+      end
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == 5 then
+    if inv_click_armed == 1 then
+      if lmb then
+        if verb_give ~= 1 then
+          if verb_use ~= 1 then
+            goto L16E6A
+          end
+        ::L17158::
+          call sub_19F30
+          call draw_verb_bar
+          d1 = $1CB2
+          a0 = $7BBEA
+          a0 += inv_scroll
+          if l[a0] ~= 0 then
+            a2 = l[a0]
+            call print_at
+          end
+          a0 = $7BBEA
+          l[$1932A] = l[a0]
+          a0 = $7BE5A
+          a0 += inv_scroll
+          l[$1932E] = a0
+          call draw_inventory
+          if verb_use == 1 then
+            call sub_187C6
+          elseif verb_give == 1 then
+            call sub_18266
+          end
+          inv_click_armed = 0
+          goto L16E6A
+        end
+        goto L17158
+      end
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == 6 then
+    if inv_click_armed == 1 then
+      if lmb then
+        if verb_give ~= 1 then
+          if verb_use ~= 1 then
+            goto L16E6A
+          end
+        ::L17206::
+          call sub_19F78
+          call draw_verb_bar
+          d1 = $1CB2
+          a0 = $7BBEE
+          a0 += inv_scroll
+          if l[a0] ~= 0 then
+            a2 = l[a0]
+            call print_at
+          end
+          a0 = $7BBEE
+          l[$1932A] = l[a0]
+          a0 = $7BE5E
+          a0 += inv_scroll
+          l[$1932E] = a0
+          call draw_inventory
+          if verb_use == 1 then
+            call sub_187C6
+          elseif verb_give == 1 then
+            call sub_18266
+          end
+          inv_click_armed = 0
+          goto L16E6A
+        end
+        goto L17206
+      end
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == 8 then
+    if lmb then
+      call sub_19708
+      call sub_19708
+      call sub_19708
+      call sub_19708
+      call sub_196C0
+      call sub_196C0
+      call sub_196C0
+      call sub_196C0
+      if w[$7C0C2] ~= 0 then
+        w[$7C0C2] -= 1
+        inv_scroll -= 4
+        call draw_inventory
+      end
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == 9 then
+    if lmb then
+      call sub_19798
+      call sub_19798
+      call sub_19798
+      call sub_19798
+      call sub_19750
+      call sub_19750
+      call sub_19750
+      call sub_19750
+      a0 = $7BBDA
+      a0 += inv_scroll
+      if l[a0] ~= 0 then
+        d0.w = w[$7C0C4]
+        d1.w = w[$7C0C2]
+        d1.w += 1
+        if d1.w ~= d0.w then
+          w[$7C0C2] += 1
+          inv_scroll += 4
+          call draw_inventory
+        end
+      end
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == $A then
+    if lmb then
+      if panel_mode ~= 1 then
+        call sub_19B88
+        call sub_19B88
+        call sub_19B88
+        call sub_19B88
+        call sub_19B40
+        call sub_19B40
+        call sub_19B40
+        call sub_19B40
+        verb_look = 0
+        verb_talk = 0
+        verb_use = 0
+        verb_open = 0
+        verb_take = 0
+        verb_give = 0
+        call draw_verb_bar
+        d1 = $1CB2
+        a2 = $7E040  -- "  Zapisz"
+        call print_at
+        b[$15314] = 1
+        b[$15316] = 0
+        call sub_14A60
+        call show_disk_picture
+        call sub_1C02A
+        call cursor_hand
+        jump sub_1796C
+      end
+      call sub_19828
+      call sub_19828
+      call sub_19828
+      call sub_19828
+      call sub_197E0
+      call sub_197E0
+      call sub_197E0
+      call sub_197E0
+      call draw_verb_bar
+      d1 = $1CB2
+      a2 = $7E008  -- "  Oglądaj"
+      call print_at
+      verb_look = 1
+      verb_talk = 0
+      verb_use = 0
+      verb_open = 0
+      verb_take = 0
+      verb_give = 0
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == $B then
+    if lmb then
+      if panel_mode ~= 1 then
+        call sub_19C18
+        call sub_19C18
+        call sub_19C18
+        call sub_19C18
+        call sub_19BD0
+        call sub_19BD0
+        call sub_19BD0
+        call sub_19BD0
+        call draw_verb_bar
+        d1 = $1CB2
+        a2 = $7E049  -- "  Wczytaj"
+        call print_at
+        b[$15314] = 1
+        b[$15316] = 0
+        call sub_14A60
+        call show_disk_picture
+        call sub_1C02A
+        call cursor_hand
+        jump sub_17AE2
+      end
+      call sub_198B8
+      call sub_198B8
+      call sub_198B8
+      call sub_198B8
+      call sub_19870
+      call sub_19870
+      call sub_19870
+      call sub_19870
+      call draw_verb_bar
+      d1 = $1CB2
+      a2 = $7E012  -- " Rozmawiaj"
+      call print_at
+      verb_give = 0
+      verb_look = 0
+      verb_talk = 1
+      verb_use = 0
+      verb_open = 0
+      verb_take = 0
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == $C then
+    if lmb then
+      if panel_mode ~= 1 then
+        call sub_19CA8
+        call sub_19CA8
+        call sub_19CA8
+        call sub_19CA8
+        call sub_19C60
+        call sub_19C60
+        call sub_19C60
+        call sub_19C60
+        call draw_verb_bar
+        d1 = $1CB2
+        a2 = $7E053  -- "  Muzyka"
+        call print_at
+        if b[$7C0BA] == 0 then
+          call music_stop
+          b[$7C0BC] = 0
+          b[$7C0BA] = 1
+          goto L16E6A
+        end
+        b[$7C0BA] = 0
+        b[$7C0BC] = 1
+        call sub_16280
+        goto L16E6A
+      end
+      call sub_19948
+      call sub_19948
+      call sub_19948
+      call sub_19948
+      call sub_19900
+      call sub_19900
+      call sub_19900
+      call sub_19900
+      call draw_verb_bar
+      d1 = $1CB2
+      a2 = $7E01D  -- "   Użyj"
+      call print_at
+      verb_give = 0
+      verb_look = 0
+      verb_talk = 0
+      verb_use = 1
+      verb_open = 0
+      verb_take = 0
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == $D then
+    if lmb then
+      if panel_mode ~= 1 then
+        call sub_19D38
+        call sub_19D38
+        call sub_19D38
+        call sub_19D38
+        call sub_19CF0
+        call sub_19CF0
+        call sub_19CF0
+        call sub_19CF0
+        if b[$7C12D] == 1 then
+          call sub_1B82E
+          call sub_1B7E2
+          b[$1C04E] = 0
+        end
+        call draw_verb_bar
+        d1 = $1CB2
+        a2 = $7E05C  -- "  Restart"
+        call print_at
+        a0 = $7BBD4
+        a1 = $7C270
+        d7 = $69B
+      ::L1773A::
+        b[a0++] = b[a1++]
+        d7.w -= 1
+        if d7.w ~= -1 then goto L1773A end
+        call sub_0B05C
+        w[$7C0C2] = 0
+        w[$7C0C4] = 0
+        b[$19328] = 0
+        call draw_inventory
+        jump loc_04
+      end
+      call sub_199D8
+      call sub_199D8
+      call sub_199D8
+      call sub_199D8
+      call sub_19990
+      call sub_19990
+      call sub_19990
+      call sub_19990
+      call draw_verb_bar
+      d1 = $1CB2
+      a2 = $7E025  -- "  Otwórz"
+      call print_at
+      verb_give = 0
+      verb_look = 0
+      verb_talk = 0
+      verb_use = 0
+      verb_open = 1
+      verb_take = 0
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == $E then
+    if lmb then
+      if panel_mode ~= 1 then
+        call sub_19DC8
+        call sub_19DC8
+        call sub_19DC8
+        call sub_19DC8
+        call sub_19D80
+        call sub_19D80
+        call sub_19D80
+        call sub_19D80
+        call draw_verb_bar
+        d1 = $1CB2
+        a2 = $7E066
+        call print_at
+        if inv_click_armed == 1 then
+          b[$15314] = 1
+          b[$15316] = 1
+          call sub_14A60
+          call sub_14312
+          call resume_location
+          goto L16E6A
+        end
+        goto L16E6A
+      end
+      call sub_19A68
+      call sub_19A68
+      call sub_19A68
+      call sub_19A68
+      call sub_19A20
+      call sub_19A20
+      call sub_19A20
+      call sub_19A20
+      call draw_verb_bar
+      d1 = $1CB2
+      a2 = $7E02E  -- "  Weź/Daj"
+      call print_at
+      verb_look = 0
+      verb_talk = 0
+      verb_use = 0
+      verb_open = 0
+      verb_take = 1
+      verb_give = 1
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  if d3 == $F then
+    if lmb then
+      call sub_19AF8
+      call sub_19AF8
+      call sub_19AF8
+      call sub_19AF8
+      call sub_19AB0
+      call sub_19AB0
+      call sub_19AB0
+      call sub_19AB0
+      call draw_verb_bar
+      d1 = $1CB2
+      a2 = $7E038  -- "   Menu"
+      call print_at
+      panel_mode += 1
+      if panel_mode ~= 1 then
+        call sub_19BD0
+        call sub_19B40
+        call sub_19C60
+        call sub_19CF0
+        call sub_19D80
+        panel_mode = 0
+        goto L16E6A
+      end
+      call sub_197E0
+      call sub_19870
+      call sub_19900
+      call sub_19990
+      call sub_19A20
+      goto L16E6A
+    end
+    goto L16E6A
+  end
+  goto L16E6A
+end
+
+routine restore_after_load @ $173F0
+  call select_music
+  call draw_verb_bar
+  call clear_text
+  call draw_inventory
+  call sub_1C03A
+  call resume_location
+  goto L16E6A
+end
+
+routine sub_17502 @ $17502
+  if b[$7C12D] == 1 then
+    call sub_1B7FA
+    call sub_1B816
+    b[$1C04E] = 0
+  end
+  call draw_verb_bar
+  call clear_text
+  call draw_inventory
+  call sub_1C03A
+  b[$17C3E] = 1
+  call resume_location
+  b[$17C3E] = 0
+  goto L16E6A
+end
+
+routine sub_1796C @ $1796C
+  call sub_19E10
+  call sub_19E58
+  call sub_19EA0
+  call sub_19EE8
+  call sub_19F30
+  call sub_19F78
+  d1 = $632
+  a2 = $7FA91  -- " Stan gry 1"
+  call print_at
+  d1 = $9F2
+  a2 = $7FA9D  -- " Stan gry 2"
+  call print_at
+  d1 = $DB2
+  a2 = $7FAA9  -- " Stan gry 3"
+  call print_at
+  d1 = $1172
+  a2 = $7FAB5  -- "  Zrób dysk"
+  call print_at
+  d1 = $1532
+  a2 = $7FAC1  -- "   Wyjdź"
+  call print_at
+::L179D4::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L179D4
+    end
+  end
+  call hit_test_ui
+  if d3 ~= -1 then
+  else
+    goto L179D4
+  end
+  if d3 == 1 then
+    a0 = $7BBD4
+    a1 = $7C90C
+    d7 = $69B
+  ::L17A12::
+    b[a1++] = b[a0++]
+    d7.w -= 1
+    if d7.w ~= -1 then goto L17A12 end
+    if b[$030EE] == 1 then
+      call sub_4EE0A
+      jump restore_after_load
+    end
+    jump sub_4E8D8
+  end
+  if d3 == 2 then
+    a0 = $7BBD4
+    a1 = $7CFA8
+    d7 = $69B
+  ::L17A52::
+    b[a1++] = b[a0++]
+    d7.w -= 1
+    if d7.w ~= -1 then goto L17A52 end
+    if b[$030EE] == 1 then
+      call sub_4EE0A
+      jump restore_after_load
+    end
+    jump sub_4E8D8
+  end
+  if d3 == 3 then
+    a0 = $7BBD4
+    a1 = $7D644
+    d7 = $69B
+  ::L17A92::
+    b[a1++] = b[a0++]
+    d7.w -= 1
+    if d7.w ~= -1 then goto L17A92 end
+    if b[$030EE] == 1 then
+      call sub_4EE0A
+      jump restore_after_load
+    end
+    call sub_4E8D8
+    jump restore_after_load
+  end
+  if d3 == 4 then
+    call sub_4EF1E
+    jump restore_after_load
+  end
+  if d3 == 5 then
+    jump restore_after_load
+  end
+  goto L179D4
+end
+
+routine sub_17AE2 @ $17AE2
+  call sub_19E10
+  call sub_19E58
+  call sub_19EA0
+  call sub_19EE8
+  call sub_19F30
+  call sub_19F78
+  d1 = $632
+  a2 = $7FACA  -- " Stan gry 1"
+  call print_at
+  d1 = $9F2
+  a2 = $7FAD6  -- " Stan gry 2"
+  call print_at
+  d1 = $DB2
+  a2 = $7FAE2  -- " Stan gry 3"
+  call print_at
+  d1 = $1172
+  a2 = $7FAEE  -- "   Wyjdź"
+  call print_at
+::L17B3A::
+  wait_raster $FF
+  if not lmb then
+    if lmb then
+    else
+      goto L17B3A
+    end
+  end
+  call hit_test_ui
+  if d3 ~= -1 then
+  else
+    goto L17B3A
+  end
+  if d3 == 1 then
+    if b[$030EE] == 1 then
+      call sub_4ED24
+      jump sub_17B84
+    end
+    call sub_4E8B4
+    a1 = $7BBD4
+    a0 = $7C90C
+    d7 = $69B
+  ::L17B96::
+    b[a1++] = b[a0++]
+    d7.w -= 1
+    if d7.w ~= -1 then goto L17B96 end
+    jump sub_17502
+  end
+  if d3 == 2 then
+    if b[$030EE] == 1 then
+      call sub_4ED24
+      jump sub_17BCA
+    end
+    call sub_4E8B4
+    a1 = $7BBD4
+    a0 = $7CFA8
+    d7 = $69B
+  ::L17BDC::
+    b[a1++] = b[a0++]
+    d7.w -= 1
+    if d7.w ~= -1 then goto L17BDC end
+    jump sub_17502
+  end
+  if d3 == 3 then
+    if b[$030EE] == 1 then
+      call sub_4ED24
+      jump sub_17C10
+    end
+    call sub_4E8B4
+    a1 = $7BBD4
+    a0 = $7D644
+    d7 = $69B
+  ::L17C22::
+    b[a1++] = b[a0++]
+    d7.w -= 1
+    if d7.w ~= -1 then goto L17C22 end
+    jump sub_17502
+  end
+  if d3 == 4 then
+    jump sub_17502
+  end
+  goto L17B3A
+end
+
+routine sub_17B84 @ $17B84
+  a1 = $7BBD4
+  goto L17B8A
+end
+
+routine part_17B8A @ $17B8A
+::L17B8A::
+  a0 = $7C90C
+  goto L17B90
+end
+
+routine part_17B90 @ $17B90
+::L17B90::
+  d7 = $69B
+  goto L17B96
+end
+
+routine sub_17BCA @ $17BCA
+  a1 = $7BBD4
+  goto L17BD0
+end
+
+routine part_17BD0 @ $17BD0
+::L17BD0::
+  a0 = $7CFA8
+  goto L17BD6
+end
+
+routine part_17BD6 @ $17BD6
+::L17BD6::
+  d7 = $69B
+  goto L17BDC
+end
+
+routine sub_17C10 @ $17C10
+  a1 = $7BBD4
+  goto L17C16
+end
+
+routine part_17C16 @ $17C16
+::L17C16::
+  a0 = $7D644
+  goto L17C1C
+end
+
+routine part_17C1C @ $17C1C
+::L17C1C::
+  d7 = $69B
+  goto L17C22
+end
+
+routine ui_combine @ $17C40
+  call sub_17C7E
+  call sub_17D40
+  call sub_17DA6
+  call sub_17E68
+  call sub_17F2A
+  call sub_17FBA
+  call sub_1804A
+  call sub_180E2
+  call sub_18172
+  call sub_18202
+  return
+end
+
+routine sub_17C7E @ $17C7E
+  if b[$7C0EB] == 0 then
+    b[$1796A] += 1
+    if w[$7C202] == 1 then
+      if w[$7C246] == 1 then
+        l[$1932A] = $7B46A
+        call inventory_scroll_up
+        l[$1932E] = $7DF2C
+        call inventory_scroll_down
+        b[$7C13C] = 0
+        b[$7C0EB] = 1
+        call draw_verb_bar
+        call clear_text
+        a2 = $7B97F  -- "Nabiłeś pistolet."
+        call say
+        goto L18264
+      end
+      if b[$1796A] ~= 2 then
+        w[$7C246] = 0
+        w[$7C202] = 0
+        w[$7C25E] = 0
+        b[$1796A] = 0
+        goto L17D40
+      end
+      goto L18264
+    end
+    if b[$1796A] ~= 1 then
+      w[$7C202] = 0
+      w[$7C25E] = 0
+      b[$1796A] = 0
+      goto L18264
+    end
+    goto L18264
+  end
+  goto L18264
+end
+
+routine sub_17D40 @ $17D40
+::L17D40::
+  if b[$7C10F] == 0 then
+    if w[$7C20A] == 1 then
+      if w[$7C20C] == 1 then
+        l[$1932A] = $7B49F
+        call inventory_scroll_up
+        l[$1932E] = $7DF3C
+        call inventory_scroll_down
+        b[$7C140] = 0
+        b[$7C10F] = 1
+        call draw_verb_bar
+        call clear_text
+        a2 = $7B4B9  -- "Taaak. Nasączyłem gazę. Mocno czuć!!!"
+        call say_restore_cursor
+        goto L18264
+      end
+      goto L18264
+    end
+    goto L18264
+  end
+  goto L18264
+end
+
+routine sub_17DA6 @ $17DA6
+  if b[$7C11A] ~= 1 then
+    if w[$7C21A] == 1 then
+      if w[$7C23C] == 1 then
+        if b[$7C154] == 0 then
+          b[$7C11A] = 1
+          b[$19328] = 1
+          l[$1932A] = $7B6C2  -- "   gwóźdź   "
+          call inventory_scroll_up
+          l[$1932E] = $7DF8C
+          call inventory_scroll_down
+          b[$19328] = 0
+          call draw_inventory
+          b[$7C11B] = 1
+          call draw_verb_bar
+          call clear_text
+          a2 = $7B7E7  -- "Poszło gładko... Stolik jest jak nowy!"
+          call say_restore_cursor
+          w[$7C23C] = 0
+          w[$7C21A] = 0
+          goto L18264
+        end
+        call draw_verb_bar
+        call clear_text
+        a2 = $7B80E  -- "Walenie młotkiem w ten stół nic nie da."
+        call say_restore_cursor
+        call reset_verbs
+        w[$7C23C] = 0
+        w[$7C21A] = 0
+        goto L18264
+      end
+      goto L18264
+    end
+    goto L18264
+  end
+  goto L18264
+end
+
+routine sub_17E68 @ $17E68
+  if b[$7C11A] ~= 1 then
+    if w[$7C232] == 1 then
+      if w[$7C23C] == 1 then
+        if b[$7C148] == 0 then
+          b[$7C11A] = 1
+          b[$19328] = 1
+          l[$1932A] = $7B6C2  -- "   gwóźdź   "
+          call inventory_scroll_up
+          l[$1932E] = $7DF8C
+          call inventory_scroll_down
+          b[$19328] = 0
+          call draw_inventory
+          b[$7C11B] = 1
+          call draw_verb_bar
+          call clear_text
+          a2 = $7B7E7  -- "Poszło gładko... Stolik jest jak nowy!"
+          call say_restore_cursor
+          w[$7C232] = 0
+          w[$7C23C] = 0
+          goto L18264
+        end
+        call draw_verb_bar
+        call clear_text
+        a2 = $7B836  -- "Nie wbiję go przecież ręką!"
+        call say_restore_cursor
+        call reset_verbs
+        w[$7C23C] = 0
+        w[$7C232] = 0
+        goto L18264
+      end
+      goto L18264
+    end
+    goto L18264
+  end
+  goto L18264
+end
+
+routine sub_17F2A @ $17F2A
+  if b[$7C172] ~= 0 then
+    if w[$7C21C] == 1 then
+      if w[$7C242] == 1 then
+        b[$19328] = 1
+        l[$1932A] = $7B542  -- "Ziele Tereni"
+        call inventory_scroll_up
+        l[$1932E] = $7DF60
+        call inventory_scroll_down
+        l[$1932A] = $7BBBC  -- "  proszek   "
+        call inventory_add
+        l[$1932E] = $7E004
+        call inventory_remove
+        b[$7C172] = 0
+        b[$19328] = 0
+        call draw_inventory
+        call draw_verb_bar
+        call clear_text
+        a2 = $7BBC9  -- "zmieliłem!"
+        call say_restore_cursor
+        goto L18264
+      end
+      goto L18264
+    end
+    goto L18264
+  end
+  goto L18264
+end
+
+routine sub_17FBA @ $17FBA
+  if b[$7C172] ~= 0 then
+    if w[$7C21E] == 1 then
+      if w[$7C242] == 1 then
+        b[$19328] = 1
+        l[$1932A] = $7B550  -- "Ziele Jakuba "
+        call inventory_scroll_up
+        l[$1932E] = $7DF64
+        call inventory_scroll_down
+        l[$1932A] = $7BBBC  -- "  proszek   "
+        call inventory_add
+        l[$1932E] = $7E004
+        call inventory_remove
+        b[$7C172] = 0
+        b[$19328] = 0
+        call draw_inventory
+        call draw_verb_bar
+        call clear_text
+        a2 = $7B3DF  -- "Zmieliłem ziółko."
+        call say_restore_cursor
+        goto L18264
+      end
+      goto L18264
+    end
+    goto L18264
+  end
+  goto L18264
+end
+
+routine sub_1804A @ $1804A
+  if b[$7C172] ~= 0 then
+    if w[$7C236] == 1 then
+      if w[$7C242] == 1 then
+        b[$19328] = 1
+        l[$1932A] = $7B714  -- "   Ślepik   "
+        call inventory_scroll_up
+        l[$1932E] = $7DF94
+        call inventory_scroll_down
+        l[$1932A] = $7BBBC  -- "  proszek   "
+        call inventory_add
+        l[$1932E] = $7E004
+        call inventory_remove
+        b[$7C172] = 0
+        b[$7C11D] = 1
+        b[$19328] = 0
+        call draw_inventory
+        call draw_verb_bar
+        call clear_text
+        a2 = $7B3DF  -- "Zmieliłem ziółko."
+        call say_restore_cursor
+        goto L18264
+      end
+      goto L18264
+    end
+    goto L18264
+  end
+  goto L18264
+end
+
+routine sub_180E2 @ $180E2
+  if b[$7C172] ~= 0 then
+    if w[$7C23A] == 1 then
+      if w[$7C242] == 1 then
+        b[$19328] = 1
+        l[$1932A] = $7B798  -- "Ultramalina "
+        call inventory_scroll_up
+        l[$1932E] = $7DF9C
+        call inventory_scroll_down
+        l[$1932A] = $7BBBC  -- "  proszek   "
+        call inventory_add
+        l[$1932E] = $7E004
+        call inventory_remove
+        b[$7C172] = 0
+        b[$19328] = 0
+        call draw_inventory
+        call draw_verb_bar
+        call clear_text
+        a2 = $7B3DF  -- "Zmieliłem ziółko."
+        call say_restore_cursor
+        goto L18264
+      end
+      goto L18264
+    end
+    goto L18264
+  end
+  goto L18264
+end
+
+routine sub_18172 @ $18172
+  if b[$7C172] ~= 0 then
+    if w[$7C258] == 1 then
+      if w[$7C242] == 1 then
+        b[$19328] = 1
+        l[$1932A] = $7BA78  -- "Florus Cudus"
+        call inventory_scroll_up
+        l[$1932E] = $7DFD8
+        call inventory_scroll_down
+        l[$1932A] = $7BBBC  -- "  proszek   "
+        call inventory_add
+        l[$1932E] = $7E004
+        call inventory_remove
+        b[$7C172] = 0
+        b[$19328] = 0
+        call draw_inventory
+        call draw_verb_bar
+        call clear_text
+        a2 = $7B3DF  -- "Zmieliłem ziółko."
+        call say_restore_cursor
+        goto L18264
+      end
+      goto L18264
+    end
+    goto L18264
+  end
+  goto L18264
+end
+
+routine sub_18202 @ $18202
+  if b[$7C129] ~= 1 then
+    if w[$7C25A] == 1 then
+      if w[$7C24E] == 1 then
+        b[$7C129] = 1
+        b[$19328] = 0
+        l[$1932A] = $7B9BC  -- "puszka farby"
+        call inventory_scroll_up
+        l[$1932E] = $7DFC4
+        call inventory_scroll_down
+        call draw_verb_bar
+        call clear_text
+        a2 = $7BA93  -- "Nasączyłeś pędzel farbą."
+        call say_restore_cursor
+      end
+    end
+  end
+::L18264::
+  return
+end
+
+routine sub_18266 @ $18266
+  if l[a0] == 1 then
+    w[$7C174] = 1
+    goto L187C4
+  end
+  if l[a0] == 2 then
+    if loc_id == 7 then
+      w[$7C176] = 1
+    end
+  ::L187C4::
+    return
+  end
+  if l[a0] == 3 then
+    if loc_id == $16 then
+      w[$7C178] = 1
+      goto L187C4
+    end
+    goto L187C4
+  end
+  if l[a0] == 4 then
+    if loc_id == $16 then
+      w[$7C17A] = 1
+      goto L187C4
+    end
+    goto L187C4
+  end
+  if l[a0] == 5 then
+    w[$7C17C] = 1
+    goto L187C4
+  end
+  if l[a0] == 6 then
+    w[$7C17E] = 1
+    goto L187C4
+  end
+  if l[a0] == 7 then
+    w[$7C180] = 1
+    goto L187C4
+  end
+  if l[a0] == 8 then
+    w[$7C182] = 1
+    goto L187C4
+  end
+  if l[a0] == 9 then
+    w[$7C184] = 1
+    goto L187C4
+  end
+  if l[a0] == $A then
+    w[$7C186] = 1
+    goto L187C4
+  end
+  if l[a0] == $B then
+    w[$7C188] = 1
+    goto L187C4
+  end
+  if l[a0] == $C then
+    w[$7C18A] = 1
+    goto L187C4
+  end
+  if l[a0] == $D then
+    w[$7C18C] = 1
+    goto L187C4
+  end
+  if l[a0] == $E then
+    w[$7C18E] = 1
+    goto L187C4
+  end
+  if l[a0] == $F then
+    w[$7C190] = 1
+    goto L187C4
+  end
+  if l[a0] == $10 then
+    w[$7C192] = 1
+    goto L187C4
+  end
+  if l[a0] == $11 then
+    w[$7C194] = 1
+    goto L187C4
+  end
+  if l[a0] == $12 then
+    w[$7C196] = 1
+    goto L187C4
+  end
+  if l[a0] == $13 then
+    w[$7C198] = 1
+    goto L187C4
+  end
+  if l[a0] == $14 then
+    w[$7C19A] = 1
+    goto L187C4
+  end
+  if l[a0] == $15 then
+    w[$7C19C] = 1
+    goto L187C4
+  end
+  if l[a0] == $16 then
+    w[$7C19E] = 1
+    goto L187C4
+  end
+  if l[a0] == $17 then
+    w[$7C1A0] = 1
+    goto L187C4
+  end
+  if l[a0] == $18 then
+    w[$7C1A2] = 1
+    goto L187C4
+  end
+  if l[a0] == $19 then
+    w[$7C1A4] = 1
+    goto L187C4
+  end
+  if l[a0] == $1A then
+    w[$7C1A6] = 1
+    goto L187C4
+  end
+  if l[a0] == $1B then
+    w[$7C1A8] = 1
+    goto L187C4
+  end
+  if l[a0] == $1C then
+    w[$7C1AA] = 1
+    goto L187C4
+  end
+  if l[a0] == $1D then
+    w[$7C1AC] = 1
+    goto L187C4
+  end
+  if l[a0] == $1E then
+    w[$7C1AE] = 1
+    goto L187C4
+  end
+  if l[a0] == $1F then
+    w[$7C1B0] = 1
+    goto L187C4
+  end
+  if l[a0] == $20 then
+    w[$7C1B2] = 1
+    goto L187C4
+  end
+  if l[a0] == $21 then
+    w[$7C1B4] = 1
+    goto L187C4
+  end
+  if l[a0] == $22 then
+    if loc_id == $22 then
+      a2 = $7B6DD  -- "Może lepiej z nim porozmawiać i zaproponować wymianę."
+      call clear_text
+      call print
+      call reset_verbs
+      w[$7C1B6] = 1
+      goto L187C4
+    end
+    goto L187C4
+  end
+  if l[a0] == $23 then
+    w[$7C1B8] = 1
+    goto L187C4
+  end
+  if l[a0] == $24 then
+    if loc_id == $23 then
+      if b[$7C155] == 1 then
+        w[$7C1BA] = 1
+        goto L187C4
+      end
+      goto L187C4
+    end
+    goto L187C4
+  end
+  if l[a0] == $25 then
+    w[$7C1BC] = 1
+    goto L187C4
+  end
+  if l[a0] == $26 then
+    w[$7C1BE] = 1
+    goto L187C4
+  end
+  if l[a0] == $27 then
+    w[$7C1C0] = 1
+    goto L187C4
+  end
+  if l[a0] == $28 then
+    if loc_id == $27 then
+      w[$7C1C2] = 1
+      goto L187C4
+    end
+    goto L187C4
+  end
+  if l[a0] == $29 then
+    if loc_id == $2F then
+      w[$7C1C4] = 1
+      goto L187C4
+    end
+  ::L19178::
+    return
+  end
+  if l[a0] == $2A then
+    w[$7C1C6] = 1
+    goto L187C4
+  end
+  if l[a0] == $2B then
+    w[$7C1C8] = 1
+    goto L187C4
+  end
+  if l[a0] == $2C then
+    w[$7C1CA] = 1
+    goto L187C4
+  end
+  if l[a0] == $2D then
+    w[$7C1CC] = 1
+    goto L187C4
+  end
+  if l[a0] == $2E then
+    w[$7C1CE] = 1
+    goto L187C4
+  end
+  if l[a0] == $2F then
+    w[$7C1D0] = 1
+    goto L187C4
+  end
+  if l[a0] == $30 then
+    w[$7C1D2] = 1
+    goto L187C4
+  end
+  if l[a0] == $31 then
+    w[$7C1D4] = 1
+    goto L187C4
+  end
+  if l[a0] == $32 then
+    w[$7C1D6] = 1
+    goto L187C4
+  end
+  if l[a0] == $33 then
+    if loc_id == $2F then
+      w[$7C1D8] = 1
+      goto L187C4
+    end
+    goto L19178
+  end
+  if l[a0] == $34 then
+    w[$7C1DA] = 1
+    goto L187C4
+  end
+  if l[a0] == $35 then
+    w[$7C1DC] = 1
+    goto L187C4
+  end
+  if l[a0] == $36 then
+    w[$7C1DE] = 1
+    goto L187C4
+  end
+  if l[a0] == $37 then
+    w[$7C1E0] = 1
+    goto L187C4
+  end
+  if l[a0] == $38 then
+    w[$7C1E2] = 1
+    goto L187C4
+  end
+  if l[a0] == $39 then
+    w[$7C1E4] = 1
+    goto L187C4
+  end
+  if l[a0] == $3A then
+    w[$7C1E6] = 1
+    goto L187C4
+  end
+  if l[a0] == $3B then
+    w[$7C1E8] = 1
+    goto L187C4
+  end
+  if l[a0] == $3C then
+    w[$7C1EA] = 1
+    goto L187C4
+  end
+  if l[a0] == $3D then
+    w[$7C1EC] = 1
+    goto L187C4
+  end
+  if l[a0] == $3E then
+    w[$7C1EE] = 1
+    goto L187C4
+  end
+  if l[a0] == $3F then
+    w[$7C1F0] = 1
+    goto L187C4
+  end
+  goto L187C4
+end
+
+routine sub_187C6 @ $187C6
+  if l[a0] == 1 then
+    goto L19178
+  end
+  if l[a0] == 2 then
+    w[$7C1F4] = 1
+    goto L19178
+  end
+  if l[a0] == 3 then
+    w[$7C1F6] = 1
+    goto L19178
+  end
+  if l[a0] == 4 then
+    w[$7C1F8] = 1
+    goto L19178
+  end
+  if l[a0] == 5 then
+    w[$7C1FA] = 1
+    goto L19178
+  end
+  if l[a0] == 6 then
+    if loc_id == $1F then
+      call draw_verb_bar
+      call clear_text
+      d1 = $1CB2
+      a2 = $7B3C9  -- "  użyj na"
+      call print_at
+      w[$7C1FC] = 1
+      goto L19178
+    end
+    goto L19178
+  end
+  if l[a0] == 7 then
+    if loc_id == $D then
+      call draw_verb_bar
+      call clear_text
+      d1 = $1CB2
+      a2 = $7B3C9  -- "  użyj na"
+      call print_at
+      w[$7C1FE] = 1
+      goto L19178
+    end
+    goto L19178
+  end
+  if l[a0] == 8 then
+    if loc_id == $22 then
+      call draw_verb_bar
+      call clear_text
+      d1 = $1CB2
+      a2 = $7B3C9  -- "  użyj na"
+      call print_at
+      w[$7C200] = 1
+      goto L19178
+    end
+    goto L19178
+  end
+  if l[a0] == 9 then
+    w[$7C202] = 1
+    goto L19178
+  end
+  if l[a0] == $A then
+    w[$7C204] = 1
+    goto L19178
+  end
+  if l[a0] == $B then
+    w[$7C206] = 1
+    goto L19178
+  end
+  if l[a0] == $C then
+    if loc_id == $D then
+      call draw_verb_bar
+      call clear_text
+      d1 = $1CB2
+      a2 = $7B3C9  -- "  użyj na"
+      call print_at
+      w[$7C208] = 1
+      goto L19178
+    end
+    goto L19178
+  end
+  if l[a0] == $D then
+    w[$7C20A] = 1
+    goto L19178
+  end
+  if l[a0] == $E then
+    w[$7C20C] = 1
+    if b[$7C10F] == 1 then
+      if loc_id == $13 then
+        call draw_verb_bar
+        call clear_text
+        d1 = $1CB2
+        a2 = $7B3C9  -- "  użyj na"
+        call print_at
+        w[$7C20C] = 2
+        goto L19178
+      end
+      goto L19178
+    end
+    goto L19178
+  end
+  if l[a0] == $F then
+    w[$7C20E] = 1
+    goto L19178
+  end
+  if l[a0] == $10 then
+    w[$7C210] = 1
+    goto L19178
+  end
+  if l[a0] == $11 then
+    w[$7C212] = 1
+    goto L19178
+  end
+  if l[a0] == $12 then
+    if loc_id == $1E then
+      w[$7C214] = 1
+      goto L19178
+    end
+    goto L19178
+  end
+  if l[a0] == $13 then
+    if loc_id == $13 then
+      call draw_verb_bar
+      call clear_text
+      d1 = $1CB2
+      a2 = $7B3C9  -- "  użyj na"
+      call print_at
+      w[$7C216] = 1
+      goto L19178
+    end
+    if loc_id == $33 then
+      call draw_verb_bar
+      call clear_text
+      d1 = $1CB2
+      a2 = $7B3C9  -- "  użyj na"
+      call print_at
+      w[$7C216] = 1
+      goto L19178
+    end
+    goto L19178
+  end
+  if l[a0] == $14 then
+    w[$7C218] = 1
+    goto L19178
+  end
+  if l[a0] == $15 then
+    if loc_id == $1F then
+      a2 = $82637  -- "Nie ma tu nic do wbijania."
+      call clear_text
+      call print
+      label_shown = 0
+      goto L19178
+    end
+    if loc_id == $24 then
+      w[$7C21A] = 1
+      goto L19178
+    end
+    goto L19178
+  end
+  if l[a0] == $16 then
+    w[$7C21C] = 1
+    goto L19178
+  end
+  if l[a0] == $17 then
+    w[$7C21E] = 1
+    goto L19178
+  end
+  if l[a0] == $18 then
+    if loc_id == $19 then
+      call draw_verb_bar
+      call clear_text
+      d1 = $1CB2
+      a2 = $7B3C9  -- "  użyj na"
+      call print_at
+      w[$7C220] = 1
+      goto L19178
+    end
+    goto L19178
+  end
+  if l[a0] == $19 then
+    w[$7C222] = 1
+    goto L19178
+  end
+  if l[a0] == $1A then
+    if loc_id == $33 then
+      call draw_verb_bar
+      call clear_text
+      d1 = $1CB2
+      a2 = $7B3C9  -- "  użyj na"
+      call print_at
+      w[$7C224] = 1
+      goto L19178
+    end
+    w[$7C224] = 1
+    goto L19178
+  end
+  if l[a0] == $1B then
+    if loc_id == 8 then
+      w[$7C226] = 1
+      goto L19178
+    end
+  ::L18BA4::
+    if l[a0] == $1C then
+      if loc_id == $3C then
+        call draw_verb_bar
+        call clear_text
+        d1 = $1CB2
+        a2 = $7B3C9  -- "  użyj na"
+        call print_at
+        w[$7C228] = 1
+        goto L19178
+      end
+      goto L19178
+    end
+    if l[a0] == $1D then
+      if loc_id == $13 then
+        w[$7C22A] = 1
+        goto L19178
+      end
+    ::L18BFA::
+      if l[a0] == $1E then
+        w[$7C22C] = 1
+        goto L19178
+      end
+      if l[a0] == $1F then
+        w[$7C22E] = 1
+        goto L19178
+      end
+      if l[a0] == $20 then
+        w[$7C230] = 1
+        goto L19178
+      end
+      if l[a0] == $21 then
+        w[$7C232] = 1
+        goto L19178
+      end
+      if l[a0] == $22 then
+        w[$7C234] = 1
+        goto L19178
+      end
+      if l[a0] == $23 then
+        w[$7C236] = 1
+        goto L19178
+      end
+      if l[a0] == $24 then
+        w[$7C238] = 1
+        goto L19178
+      end
+      if l[a0] == $25 then
+        w[$7C23A] = 1
+        goto L19178
+      end
+      if l[a0] == $26 then
+        if loc_id == $24 then
+          call draw_verb_bar
+          call clear_text
+          d1 = $1CB2
+          a2 = $7B3C9  -- "  użyj na"
+          call print_at
+        end
+        w[$7C23C] = 1
+        goto L19178
+      end
+      if l[a0] == $27 then
+        w[$7C23E] = 1
+        goto L19178
+      end
+      if l[a0] == $28 then
+        w[$7C240] = 1
+        goto L19178
+      end
+      if l[a0] == $29 then
+        if loc_id == $12 then
+          call draw_verb_bar
+          call clear_text
+          d1 = $1CB2
+          a2 = $7B3C9  -- "  użyj na"
+          call print_at
+        end
+        w[$7C242] = 1
+        goto L19178
+      end
+      if l[a0] == $2A then
+        if loc_id == $D then
+          call draw_verb_bar
+          call clear_text
+          d1 = $1CB2
+          a2 = $7B3C9  -- "  użyj na"
+          call print_at
+          w[$7C244] = 1
+          goto L19178
+        end
+        goto L19178
+      end
+      if l[a0] == $2B then
+        w[$7C246] = 1
+        if b[$7C0EB] == 1 then
+          if loc_id == $20 then
+            call draw_verb_bar
+            call clear_text
+            d1 = $1CB2
+            a2 = $7B3C9  -- "  użyj na"
+            call print_at
+            w[$7C246] = 2
+            goto L19178
+          end
+          goto L19178
+        end
+        goto L19178
+      end
+      if l[a0] == $2C then
+        if loc_id == $33 then
+          w[$7C248] = 1
+          goto L19178
+        end
+        goto L19178
+      end
+      if l[a0] == $2D then
+        if loc_id == $35 then
+          w[$7C24A] = 1
+          goto L19178
+        end
+        goto L19178
+      end
+      if l[a0] == $2E then
+        if b[$7C16D] ~= 0 then
+          if loc_id == $1F then
+            call draw_verb_bar
+            call clear_text
+            d1 = $1CB2
+            a2 = $7B3C9  -- "  użyj na"
+            call print_at
+            w[$7C24C] = 1
+            goto L19178
+          end
+          goto L19178
+        end
+        goto L19178
+      end
+      if l[a0] == $2F then
+        w[$7C24E] = 1
+        goto L19178
+      end
+      if l[a0] == $30 then
+        w[$7C250] = 1
+        goto L19178
+      end
+      if l[a0] == $31 then
+        w[$7C252] = 1
+        goto L19178
+      end
+      if l[a0] == $32 then
+        if loc_id == $33 then
+          call draw_verb_bar
+          call clear_text
+          d1 = $1CB2
+          a2 = $7B3C9  -- "  użyj na"
+          call print_at
+          w[$7C254] = 1
+          goto L19178
+        end
+        goto L19178
+      end
+      if l[a0] == $33 then
+        w[$7C256] = 1
+        goto L19178
+      end
+      if l[a0] == $34 then
+        w[$7C258] = 1
+        goto L19178
+      end
+      if l[a0] == $35 then
+        if loc_id == $21 then
+          if b[$7C129] ~= 0 then
+            call draw_verb_bar
+            call clear_text
+            d1 = $1CB2
+            a2 = $7B3C9  -- "  użyj na"
+            call print_at
+          end
+        end
+        w[$7C25A] = 1
+        goto L19178
+      end
+      if l[a0] == $36 then
+        if loc_id == $22 then
+          call draw_verb_bar
+          call clear_text
+          d1 = $1CB2
+          a2 = $7B3C9  -- "  użyj na"
+          call print_at
+          w[$7C25C] = 1
+          goto L19178
+        end
+        goto L19178
+      end
+      if l[a0] == $37 then
+        b[$15314] = 1
+        b[$15316] = 1
+        call sub_14A60
+        call sub_1433E
+        call clear_text
+        a2 = $82C50  -- ""Jak trujący proszek sporządzić? Radzę / Ślepika równiutko rozdrobn..."
+        call print_alt
+        call sub_1B84A
+        call wait_right_click_fast
+        call sub_1B85A
+        call resume_location
+        b[$15314] = 2
+        b[$15316] = 0
+        call sub_14A60
+        w[$7C25E] = 1
+        goto L19178
+      end
+      if l[a0] == $38 then
+        if loc_id == $22 then
+          call draw_verb_bar
+          call clear_text
+          d1 = $1CB2
+          a2 = $7B3C9  -- "  użyj na"
+          call print_at
+          w[$7C260] = 1
+          goto L19178
+        end
+        if loc_id == $19 then
+          call draw_verb_bar
+          call clear_text
+          d1 = $1CB2
+          a2 = $7B3C9  -- "  użyj na"
+          call print_at
+          w[$7C260] = 1
+          goto L19178
+        end
+        goto L19178
+      end
+      if l[a0] == $39 then
+        w[$7C262] = 1
+        goto L19178
+      end
+      if l[a0] == $3A then
+        w[$7C264] = 1
+        goto L19178
+      end
+      if l[a0] == $3B then
+        if loc_id == $12 then
+          call draw_verb_bar
+          call clear_text
+          d1 = $1CB2
+          a2 = $7B3C9  -- "  użyj na"
+          call print_at
+          w[$7C266] = 1
+          goto L19178
+        end
+        goto L19178
+      end
+      if l[a0] == $3C then
+        if loc_id == $12 then
+          call draw_verb_bar
+          call clear_text
+          d1 = $1CB2
+          a2 = $7B3C9  -- "  użyj na"
+          call print_at
+          w[$7C268] = 1
+          goto L19178
+        end
+        goto L19178
+      end
+      if l[a0] == $3D then
+        if loc_id == $35 then
+          w[$7C26A] = 1
+          goto L19178
+        end
+        a2 = $7BB82  -- "Może lepiej złożę je w towarzystwie Valence?"
+        call clear_text
+        call print
+        call reset_verbs
+        w[$7C26A] = 1
+        goto L19178
+      end
+      if l[a0] == $3E then
+        if loc_id == $35 then
+          call draw_verb_bar
+          call clear_text
+          d1 = $1CB2
+          a2 = $7B3C9  -- "  użyj na"
+          call print_at
+          w[$7C26C] = 1
+          goto L19178
+        end
+        goto L19178
+      end
+      if l[a0] == $3F then
+        if loc_id == $2B then
+          call draw_verb_bar
+          call clear_text
+          d1 = $1CB2
+          a2 = $7B3C9  -- "  użyj na"
+          call print_at
+          w[$7C26E] = 1
+          goto L19178
+        end
+        goto L19178
+      end
+      goto L19178
+    end
+    goto L18BFA
+  end
+  goto L18BA4
+end
+
+routine reset_verbs @ $1917A
+  call draw_verb_bar
+  label_shown = 0
+  hover_mode = 0
+  verb_look = 0
+  verb_take = 0
+  verb_give = 0
+  verb_talk = 0
+  verb_open = 0
+  verb_use = 0
+  return
+end
+
+routine label_mode @ $191C0
+  hover_mode = 0
+  label_shown = 1
+  return
+end
+
+routine draw_inventory @ $191D2
+  call sub_19E10
+  call sub_19E58
+  call sub_19EA0
+  call sub_19EE8
+  call sub_19F30
+  call sub_19F78
+  a1 = $7BBDA
+  a1 += inv_scroll
+  if l[a1] ~= 0 then
+    d1 = $632
+    d7.w = 5
+  ::L19208::
+    d4 = d1
+    a2 = l[a1++]
+    if a2 ~= 0 then
+      call print_at
+      d1 = d4
+      d1 += $3C0
+      d7.w -= 1
+      if d7.w ~= -1 then goto L19208 end
+    end
+  end
+  return
+end
+
+routine inventory_add @ $19226
+  a1 = $7BE46
+  a0 = l[$1932A]
+  d7.w = $9A
+::L19236::
+  a3 = l[a1]
+  a4 = l[a1-$4]
+  l[a1] = a4
+  l[a1-$4] = a3
+  a1 -= 4
+  d7.w -= 1
+  if d7.w ~= -1 then goto L19236 end
+  a1 = $7BBDA
+  l[a1] = a0
+  return
+end
+
+routine inventory_remove @ $19252
+  a1 = $7C0B6
+  a0 = l[$1932E]
+  d7.w = $9A
+::L19262::
+  a3 = l[a1]
+  a4 = l[a1-$4]
+  l[a1] = a4
+  l[a1-$4] = a3
+  a1 -= 4
+  d7.w -= 1
+  if d7.w ~= -1 then goto L19262 end
+  a1 = $7BE4A
+  l[a1] = l[a0]
+  if b[$19328] ~= 1 then
+    call draw_inventory
+  end
+  return
+end
+
+routine inventory_scroll_up @ $1928E
+  a1 = $7BBDA
+  a0 = l[$1932A]
+::L1929A::
+  if a0 == l[a1] then
+    l[a1] = 0
+    w[$7C0C4] -= 1
+  ::L192AC::
+    if l[a1+$4] ~= 0 then
+      l[a1] = l[a1+$4]
+      l[a1+$4] = 0
+      a1 += 4
+      goto L192AC
+    end
+  elseif l[a1] ~= 0 then
+    a1 += 4
+    goto L1929A
+  end
+  return
+end
+
+routine inventory_scroll_down @ $192D4
+  a1 = $7BE4A
+  a0 = l[$1932E]
+  d4 = l[a0]
+::L192E2::
+  d5 = l[a1]
+  if d5 == d4 then
+    l[a1] = 0
+  ::L192EE::
+    if l[a1+$4] ~= 0 then
+      l[a1] = l[a1+$4]
+      l[a1+$4] = 0
+      a1 += 4
+      goto L192EE
+    end
+  elseif l[a1] ~= 0 then
+    d5 = 0
+    a1 += 4
+    goto L192E2
+  end
+  if b[$19328] ~= 1 then
+    call draw_inventory
+  end
+  return
+end
+
+routine clear_disk_band @ $19374
+  a0 = $96C3A
+  d7.w = 6
+::L1937E::
+  if bit(b[$DFF002], 14) == 0 then
+  else
+    goto L1937E
+  end
+  l[$DFF064] = $18
+  l[$DFF044] = -1
+  l[$DFF040] = $1000000
+  l[$DFF054] = a0
+  w[$DFF058] = $F1C
+  a0 += $5000
+  d7.w -= 1
+  if d7.w ~= -1 then goto L1937E end
+  return
+end
+
+routine sub_19422 @ $19422
+  a1 = $96C3A
+::L19428::
+  if bit(b[$DFF002], 14) == 0 then
+  else
+    goto L19428
+  end
+  l[$DFF044] = -1
+  l[$DFF040] = $9F00000
+  l[$DFF064] = $16
+  d7 = 6
+::L19452::
+  if bit(b[$DFF002], 14) == 0 then
+  else
+    goto L19452
+  end
+  l[$DFF050] = a0
+  l[$DFF054] = a1
+  w[$DFF058] = $2A5D
+  a0 = a0 + $264A
+  a1 = a1 + $5000
+  d7.w -= 1
+  if d7.w ~= -1 then goto L19452 end
+  return
+end
+
+routine sub_195A6 @ $195A6
+  push d7, a0, a1
+  a0 = $9A5B8
+  a1 = $71D04
+::L195B6::
+  if bit(b[$DFF002], 14) == 0 then
+  else
+    goto L195B6
+  end
+  l[$DFF044] = -1
+  l[$DFF040] = $9F00000
+  l[$DFF064] = 0
+  d7 = 7
+::L195E0::
+  if bit(b[$DFF002], 14) == 0 then
+  else
+    goto L195E0
+  end
+  l[$DFF050] = a0
+  l[$DFF054] = a1
+  w[$DFF058] = $E28
+  a0 = a0 + $5000
+  a1 = a1 + $1180
+  d7.w -= 1
+  if d7.w ~= -1 then goto L195E0 end
+  pop d7, a0, a1
+  return
+end
+
+routine sub_196C0 @ $196C0
+  l[$196A8] = $F841A
+  l[$196AC] = $98758
+  l[$196B0] = $48
+  w[$196B4] = $404
+  w[$196BE] = 7
+  l[$196B6] = $80
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19708 @ $19708
+  l[$196A8] = $F881A
+  l[$196AC] = $98758
+  l[$196B0] = $48
+  w[$196B4] = $404
+  w[$196BE] = 7
+  l[$196B6] = $80
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19750 @ $19750
+  l[$196A8] = $F8C1A
+  l[$196AC] = $98760
+  l[$196B0] = $48
+  w[$196B4] = $404
+  w[$196BE] = 7
+  l[$196B6] = $80
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19798 @ $19798
+  l[$196A8] = $F901A
+  l[$196AC] = $98760
+  l[$196B0] = $48
+  w[$196B4] = $404
+  w[$196BE] = 7
+  l[$196B6] = $80
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_197E0 @ $197E0
+  l[$196A8] = $F941A
+  l[$196AC] = $98CF8
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19828 @ $19828
+  l[$196A8] = $F9A1A
+  l[$196AC] = $98CF8
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19870 @ $19870
+  l[$196A8] = $FA01A
+  l[$196AC] = $98D00
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_198B8 @ $198B8
+  l[$196A8] = $FA61A
+  l[$196AC] = $98D00
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19900 @ $19900
+  l[$196A8] = $FAC1A
+  l[$196AC] = $994C8
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19948 @ $19948
+  l[$196A8] = $FB21A
+  l[$196AC] = $994C8
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19990 @ $19990
+  l[$196A8] = $FB81A
+  l[$196AC] = $994D0
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_199D8 @ $199D8
+  l[$196A8] = $FBE1A
+  l[$196AC] = $994D0
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19A20 @ $19A20
+  l[$196A8] = $FC41A
+  l[$196AC] = $99C98
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19A68 @ $19A68
+  l[$196A8] = $FCA1A
+  l[$196AC] = $99C98
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19AB0 @ $19AB0
+  l[$196A8] = $FD01A
+  l[$196AC] = $99CA0
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19AF8 @ $19AF8
+  l[$196A8] = $FD61A
+  l[$196AC] = $99CA0
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19B40 @ $19B40
+  l[$196A8] = $FDC1A
+  l[$196AC] = $98CF8
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19B88 @ $19B88
+  l[$196A8] = $FE21A
+  l[$196AC] = $98CF8
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19BD0 @ $19BD0
+  l[$196A8] = $FE81A
+  l[$196AC] = $98D00
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19C18 @ $19C18
+  l[$196A8] = $FEE1A
+  l[$196AC] = $98D00
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19C60 @ $19C60
+  l[$196A8] = $FF41A
+  l[$196AC] = $994C8
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19CA8 @ $19CA8
+  l[$196A8] = $FFA1A
+  l[$196AC] = $994C8
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19CF0 @ $19CF0
+  l[$196A8] = $10001A
+  l[$196AC] = $994D0
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19D38 @ $19D38
+  l[$196A8] = $10061A
+  l[$196AC] = $994D0
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19D80 @ $19D80
+  l[$196A8] = $100C1A
+  l[$196AC] = $99C98
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19DC8 @ $19DC8
+  l[$196A8] = $10121A
+  l[$196AC] = $99C98
+  l[$196B0] = $48
+  w[$196B4] = $604
+  w[$196BE] = 7
+  l[$196B6] = $C0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19E10 @ $19E10
+  l[$196A8] = $F649A
+  l[$196AC] = $96D18
+  l[$196B0] = $40
+  w[$196B4] = $248
+  w[$196BE] = 7
+  l[$196B6] = $90
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19E58 @ $19E58
+  l[$196A8] = $F691A
+  l[$196AC] = $970D8
+  l[$196B0] = $40
+  w[$196B4] = $248
+  w[$196BE] = 7
+  l[$196B6] = $90
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19EA0 @ $19EA0
+  l[$196A8] = $F6D9A
+  l[$196AC] = $97498
+  l[$196B0] = $40
+  w[$196B4] = $248
+  w[$196BE] = 7
+  l[$196B6] = $90
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19EE8 @ $19EE8
+  l[$196A8] = $F721A
+  l[$196AC] = $97858
+  l[$196B0] = $40
+  w[$196B4] = $248
+  w[$196BE] = 7
+  l[$196B6] = $90
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19F30 @ $19F30
+  l[$196A8] = $F769A
+  l[$196AC] = $97C18
+  l[$196B0] = $40
+  w[$196B4] = $248
+  w[$196BE] = 7
+  l[$196B6] = $90
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_19F78 @ $19F78
+  l[$196A8] = $F7B1A
+  l[$196AC] = $97FD8
+  l[$196B0] = $40
+  w[$196B4] = $248
+  w[$196BE] = 7
+  l[$196B6] = $90
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine draw_verb_bar @ $19FC0
+  l[$196A8] = $F7F9A
+  l[$196AC] = $98398
+  l[$196B0] = $40
+  w[$196B4] = $248
+  w[$196BE] = 7
+  l[$196B6] = $90
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A008 @ $1A008
+  l[$196A8] = $BE738
+  l[$196AC] = $98AA2
+  l[$196B0] = $4C
+  w[$196B4] = $142
+  w[$196BE] = 6
+  l[$196B6] = $14
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A050 @ $1A050
+  l[$196A8] = $BE7C4
+  l[$196AC] = $980AE
+  l[$196B0] = $4E
+  w[$196B4] = $1C1
+  w[$196BE] = 6
+  l[$196B6] = $E
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A098 @ $1A098
+  l[$196A8] = $BE826
+  l[$196AC] = $9846A
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A0E0 @ $1A0E0
+  l[$196A8] = $BE8EA
+  l[$196AC] = $9845E
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A128 @ $1A128
+  l[$196A8] = $BE9AE
+  l[$196AC] = $988C2
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A170 @ $1A170
+  l[$196A8] = $BEA72
+  l[$196AC] = $98C86
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A1B8 @ $1A1B8
+  l[$196A8] = $BEB36
+  l[$196AC] = $99726
+  l[$196B0] = $4E
+  w[$196B4] = $1C1
+  w[$196BE] = 6
+  l[$196B6] = $E
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A200 @ $1A200
+  l[$196A8] = $BEB98
+  l[$196AC] = $998B4
+  l[$196B0] = $4E
+  w[$196B4] = $1C1
+  w[$196BE] = 6
+  l[$196B6] = $E
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A248 @ $1A248
+  l[$196A8] = $BEBFA
+  l[$196AC] = $99BDE
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A290 @ $1A290
+  l[$196A8] = $BECBE
+  l[$196AC] = $992C6
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A2D8 @ $1A2D8
+  l[$196A8] = $BED82
+  l[$196AC] = $99136
+  l[$196B0] = $4C
+  w[$196B4] = $2C2
+  w[$196BE] = 6
+  l[$196B6] = $2C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A320 @ $1A320
+  l[$196A8] = $BEEB6
+  l[$196AC] = $9862E
+  l[$196B0] = $4C
+  w[$196B4] = $242
+  w[$196BE] = 6
+  l[$196B6] = $24
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A368 @ $1A368
+  l[$196A8] = $BEFB2
+  l[$196AC] = $979BE
+  l[$196B0] = $4E
+  w[$196B4] = $581
+  w[$196BE] = 6
+  l[$196B6] = $2C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A3B0 @ $1A3B0
+  l[$196A8] = $BF0E6
+  l[$196AC] = $984BC
+  l[$196B0] = $44
+  w[$196B4] = $506
+  w[$196BE] = 6
+  l[$196B6] = $F0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A3F8 @ $1A3F8
+  l[$196A8] = $BF776
+  l[$196AC] = $984BC
+  l[$196B0] = $44
+  w[$196B4] = $506
+  w[$196BE] = 6
+  l[$196B6] = $F0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A440 @ $1A440
+  l[$196A8] = $BFE06
+  l[$196AC] = $9832A
+  l[$196B0] = $4A
+  w[$196B4] = $203
+  w[$196BE] = 6
+  l[$196B6] = $30
+  l[$196BA] = $5000
+  call blit
+  l[$196A8] = $BFF56
+  l[$196AC] = $981F6
+  l[$196B0] = $4A
+  w[$196B4] = $203
+  w[$196BE] = 6
+  l[$196B6] = $30
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A4CE @ $1A4CE
+  l[$196A8] = $C00A6
+  l[$196AC] = $9832A
+  l[$196B0] = $4A
+  w[$196B4] = $203
+  w[$196BE] = 6
+  l[$196B6] = $30
+  l[$196BA] = $5000
+  call blit
+  l[$196A8] = $C01F6
+  l[$196AC] = $981F6
+  l[$196B0] = $4A
+  w[$196B4] = $203
+  w[$196BE] = 6
+  l[$196B6] = $30
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A55C @ $1A55C
+  l[$196A8] = $C0346
+  l[$196AC] = $99D26
+  l[$196B0] = $4A
+  w[$196B4] = $343
+  w[$196BE] = 6
+  l[$196B6] = $4E
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A5A4 @ $1A5A4
+  l[$196A8] = $C0568
+  l[$196AC] = $99902
+  l[$196B0] = $4A
+  w[$196B4] = $4C3
+  w[$196BE] = 6
+  l[$196B6] = $72
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A5EC @ $1A5EC
+  l[$196A8] = $C0886
+  l[$196AC] = $99902
+  l[$196B0] = $4A
+  w[$196B4] = $4C3
+  w[$196BE] = 6
+  l[$196B6] = $72
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A634 @ $1A634
+  l[$196A8] = $C0BA4
+  l[$196AC] = $98AF8
+  l[$196B0] = $4C
+  w[$196B4] = $282
+  w[$196BE] = 6
+  l[$196B6] = $28
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A67C @ $1A67C
+  l[$196A8] = $C0CBC
+  l[$196AC] = $999F4
+  l[$196B0] = $4C
+  w[$196B4] = $302
+  w[$196BE] = 6
+  l[$196B6] = $30
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A6C4 @ $1A6C4
+  l[$196A8] = $C0E0C
+  l[$196AC] = $99D0C
+  l[$196B0] = $4C
+  w[$196B4] = $202
+  w[$196BE] = 6
+  l[$196B6] = $20
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A70C @ $1A70C
+  l[$196A8] = $C0EEC
+  l[$196AC] = $99D0C
+  l[$196B0] = $4C
+  w[$196B4] = $202
+  w[$196BE] = 6
+  l[$196B6] = $20
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A754 @ $1A754
+  l[$196A8] = $C0FCC
+  l[$196AC] = $98ABA
+  l[$196B0] = $48
+  w[$196B4] = $504
+  w[$196BE] = 6
+  l[$196B6] = $A0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A79C @ $1A79C
+  l[$196A8] = $C142C
+  l[$196AC] = $987D4
+  l[$196B0] = $4E
+  w[$196B4] = $8C1
+  w[$196BE] = 6
+  l[$196B6] = $46
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A7E4 @ $1A7E4
+  l[$196A8] = $C1616
+  l[$196AC] = $9830C
+  l[$196B0] = $4C
+  w[$196B4] = $482
+  w[$196BE] = 6
+  l[$196B6] = $48
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A82C @ $1A82C
+  l[$196A8] = $C180E
+  l[$196AC] = $99458
+  l[$196B0] = $4A
+  w[$196B4] = $243
+  w[$196BE] = 6
+  l[$196B6] = $36
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A874 @ $1A874
+  l[$196A8] = $C1988
+  l[$196AC] = $99CAC
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A8BC @ $1A8BC
+  l[$196A8] = $C1A4C
+  l[$196AC] = $99CAC
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A904 @ $1A904
+  l[$196A8] = $C1B10
+  l[$196AC] = $98D72
+  l[$196B0] = $4C
+  w[$196B4] = $142
+  w[$196BE] = 6
+  l[$196B6] = $14
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A94C @ $1A94C
+  l[$196A8] = $C1B9C
+  l[$196AC] = $98D72
+  l[$196B0] = $4C
+  w[$196B4] = $142
+  w[$196BE] = 6
+  l[$196B6] = $14
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A994 @ $1A994
+  l[$196A8] = $C1C28
+  l[$196AC] = $980F4
+  l[$196B0] = $4C
+  w[$196B4] = $82
+  w[$196BE] = 6
+  l[$196B6] = 8
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1A9DC @ $1A9DC
+  l[$196A8] = $C1C60
+  l[$196AC] = $99506
+  l[$196B0] = $4A
+  w[$196B4] = $343
+  w[$196BE] = 6
+  l[$196B6] = $4E
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AA24 @ $1AA24
+  l[$196A8] = $C1E82
+  l[$196AC] = $98DCA
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AA6C @ $1AA6C
+  l[$196A8] = $C1F46
+  l[$196AC] = $99406
+  l[$196B0] = $48
+  w[$196B4] = $204
+  w[$196BE] = 6
+  l[$196B6] = $40
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AAB4 @ $1AAB4
+  l[$196A8] = $C2106
+  l[$196AC] = $99406
+  l[$196B0] = $48
+  w[$196B4] = $204
+  w[$196BE] = 6
+  l[$196B6] = $40
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AAFC @ $1AAFC
+  l[$196A8] = $C22C6
+  l[$196AC] = $98004
+  l[$196B0] = $48
+  w[$196B4] = $204
+  w[$196BE] = 6
+  l[$196B6] = $40
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AB44 @ $1AB44
+  l[$196A8] = $C2486
+  l[$196AC] = $98004
+  l[$196B0] = $48
+  w[$196B4] = $204
+  w[$196BE] = 6
+  l[$196B6] = $40
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AB8C @ $1AB8C
+  l[$196A8] = $C2646
+  l[$196AC] = $98E08
+  l[$196B0] = $4C
+  w[$196B4] = $202
+  w[$196BE] = 6
+  l[$196B6] = $20
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1ABD4 @ $1ABD4
+  l[$196A8] = $C2726
+  l[$196AC] = $99674
+  l[$196B0] = $4C
+  w[$196B4] = $202
+  w[$196BE] = 6
+  l[$196B6] = $20
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AC1C @ $1AC1C
+  l[$196A8] = $C2806
+  l[$196AC] = $992C2
+  l[$196B0] = $4C
+  w[$196B4] = $302
+  w[$196BE] = 6
+  l[$196B6] = $30
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AC64 @ $1AC64
+  l[$196A8] = $C2956
+  l[$196AC] = $9862C
+  l[$196B0] = $4A
+  w[$196B4] = $4C3
+  w[$196BE] = 6
+  l[$196B6] = $72
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1ACAC @ $1ACAC
+  l[$196A8] = $C2C74
+  l[$196AC] = $98500
+  l[$196B0] = $4C
+  w[$196B4] = $302
+  w[$196BE] = 6
+  l[$196B6] = $30
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1ACF4 @ $1ACF4
+  l[$196A8] = $C2DC4
+  l[$196AC] = $987C4
+  l[$196B0] = $4A
+  w[$196B4] = $243
+  w[$196BE] = 6
+  l[$196B6] = $36
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AD3C @ $1AD3C
+  l[$196A8] = $C2F3E
+  l[$196AC] = $99D14
+  l[$196B0] = $40
+  w[$196B4] = $348
+  w[$196BE] = 6
+  l[$196B6] = $D0
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AD84 @ $1AD84
+  l[$196A8] = $C34EE
+  l[$196AC] = $999E4
+  l[$196B0] = $44
+  w[$196B4] = $546
+  w[$196BE] = 6
+  l[$196B6] = $FC
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AE14 @ $1AE14
+  l[$196A8] = $C42B6
+  l[$196AC] = $9984C
+  l[$196B0] = $4C
+  w[$196B4] = $102
+  w[$196BE] = 6
+  l[$196B6] = $10
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AE5C @ $1AE5C
+  l[$196A8] = $C4326
+  l[$196AC] = $99D2C
+  l[$196B0] = $4A
+  w[$196B4] = $2C3
+  w[$196BE] = 6
+  l[$196B6] = $42
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AEA4 @ $1AEA4
+  l[$196A8] = $C44F4
+  l[$196AC] = $9868C
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AEEC @ $1AEEC
+  l[$196A8] = $C45B8
+  l[$196AC] = $98EAA
+  l[$196B0] = $4A
+  w[$196B4] = $383
+  w[$196BE] = 6
+  l[$196B6] = $54
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AF34 @ $1AF34
+  l[$196A8] = $C4804
+  l[$196AC] = $99BD8
+  l[$196B0] = $4C
+  w[$196B4] = $282
+  w[$196BE] = 6
+  l[$196B6] = $28
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AF7C @ $1AF7C
+  l[$196A8] = $C491C
+  l[$196AC] = $98BAA
+  l[$196B0] = $46
+  w[$196B4] = $AC5
+  w[$196BE] = 6
+  l[$196B6] = $1AE
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1AFC4 @ $1AFC4
+  l[$196A8] = $C54DE
+  l[$196AC] = $96EDC
+  l[$196B0] = $4C
+  w[$196B4] = $582
+  w[$196BE] = 6
+  l[$196B6] = $58
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B00C @ $1B00C
+  l[$196A8] = $C5746
+  l[$196AC] = $993C2
+  l[$196B0] = $4C
+  w[$196B4] = $C2
+  w[$196BE] = 6
+  l[$196B6] = $C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B054 @ $1B054
+  l[$196A8] = $C579A
+  l[$196AC] = $9993C
+  l[$196B0] = $4A
+  w[$196B4] = $483
+  w[$196BE] = 6
+  l[$196B6] = $6C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B09C @ $1B09C
+  l[$196A8] = $C5A8E
+  l[$196AC] = $99534
+  l[$196B0] = $4A
+  w[$196B4] = $483
+  w[$196BE] = 6
+  l[$196B6] = $6C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B0E4 @ $1B0E4
+  l[$196A8] = $C5D82
+  l[$196AC] = $988D6
+  l[$196B0] = $48
+  w[$196B4] = $1084
+  w[$196BE] = 6
+  l[$196B6] = $210
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B12C @ $1B12C
+  l[$196A8] = $C6BF2
+  l[$196AC] = $9913C
+  l[$196B0] = $4C
+  w[$196B4] = $2C2
+  w[$196BE] = 6
+  l[$196B6] = $2C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B174 @ $1B174
+  l[$196A8] = $C6D26
+  l[$196AC] = $99E46
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B1BC @ $1B1BC
+  l[$196A8] = $C6DEA
+  l[$196AC] = $99E46
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B204 @ $1B204
+  l[$196A8] = $C6EAE
+  l[$196AC] = $979BC
+  l[$196B0] = $4E
+  w[$196B4] = $2C1
+  w[$196BE] = 6
+  l[$196B6] = $16
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B24C @ $1B24C
+  l[$196A8] = $C6F48
+  l[$196AC] = $979BC
+  l[$196B0] = $4E
+  w[$196B4] = $2C1
+  w[$196BE] = 6
+  l[$196B6] = $16
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B294 @ $1B294
+  l[$196A8] = $C6FE2
+  l[$196AC] = $99B94
+  l[$196B0] = $4A
+  w[$196B4] = $403
+  w[$196BE] = 6
+  l[$196B6] = $60
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B2DC @ $1B2DC
+  l[$196A8] = $C7282
+  l[$196AC] = $98EAE
+  l[$196B0] = $44
+  w[$196B4] = $EC6
+  w[$196BE] = 6
+  l[$196B6] = $2C4
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B324 @ $1B324
+  l[$196A8] = $C85DE
+  l[$196AC] = $98EAE
+  l[$196B0] = $44
+  w[$196B4] = $EC6
+  w[$196BE] = 6
+  l[$196B6] = $2C4
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B36C @ $1B36C
+  l[$196A8] = $C993A
+  l[$196AC] = $980B4
+  l[$196B0] = $46
+  w[$196B4] = $A85
+  w[$196BE] = 6
+  l[$196B6] = $1A4
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B3B4 @ $1B3B4
+  l[$196A8] = $CA4B6
+  l[$196AC] = $980B4
+  l[$196B0] = $46
+  w[$196B4] = $A85
+  w[$196BE] = 6
+  l[$196B6] = $1A4
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B3FC @ $1B3FC
+  l[$196A8] = $CB032
+  l[$196AC] = $989C4
+  l[$196B0] = $46
+  w[$196B4] = $305
+  w[$196BE] = 6
+  l[$196B6] = $78
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B444 @ $1B444
+  l[$196A8] = $CB37A
+  l[$196AC] = $97B98
+  l[$196B0] = $4E
+  w[$196B4] = $281
+  w[$196BE] = 6
+  l[$196B6] = $14
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B4D4 @ $1B4D4
+  l[$196A8] = $CB52C
+  l[$196AC] = $99A5A
+  l[$196B0] = $4A
+  w[$196B4] = $1C3
+  w[$196BE] = 6
+  l[$196B6] = $2A
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B564 @ $1B564
+  l[$196A8] = $CB716
+  l[$196AC] = $97C5C
+  l[$196B0] = $4C
+  w[$196B4] = $1C2
+  w[$196BE] = 6
+  l[$196B6] = $1C
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B5AC @ $1B5AC
+  l[$196A8] = $CB7DA
+  l[$196AC] = $96C5E
+  l[$196B0] = $44
+  w[$196B4] = $1C86
+  w[$196BE] = 6
+  l[$196B6] = $558
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B5F4 @ $1B5F4
+  l[$196A8] = $CDD42
+  l[$196AC] = $984C4
+  l[$196B0] = $4A
+  w[$196B4] = $3C3
+  w[$196BE] = 6
+  l[$196B6] = $5A
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B63C @ $1B63C
+  l[$196A8] = $CDFB8
+  l[$196AC] = $98D30
+  l[$196B0] = $4C
+  w[$196B4] = $202
+  w[$196BE] = 6
+  l[$196B6] = $20
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B684 @ $1B684
+  l[$196A8] = $CE098
+  l[$196AC] = $98D30
+  l[$196B0] = $4C
+  w[$196B4] = $202
+  w[$196BE] = 6
+  l[$196B6] = $20
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B6CC @ $1B6CC
+  l[$196A8] = $CE178
+  l[$196AC] = $98D34
+  l[$196B0] = $4C
+  w[$196B4] = $202
+  w[$196BE] = 6
+  l[$196B6] = $20
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B714 @ $1B714
+  l[$196A8] = $CE258
+  l[$196AC] = $98D34
+  l[$196B0] = $4C
+  w[$196B4] = $202
+  w[$196BE] = 6
+  l[$196B6] = $20
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B75C @ $1B75C
+  l[$196A8] = $CE338
+  l[$196AC] = $9764C
+  l[$196B0] = $40
+  w[$196B4] = $15C8
+  w[$196BE] = 6
+  l[$196B6] = $570
+  l[$196BA] = $5000
+  call blit
+  return
+end
+
+routine sub_1B7A4 @ $1B7A4
+  a0 = l[$1B7D6]
+  d0 = l[$1B7DE]
+  d7 = l[$1B7DA]
+::L1B7B6::
+  w[a0+$6] = d0.w
+  swap d0
+  w[a0+$2] = d0.w
+  swap d0
+  a0 = a0 + $8
+  d0 += l[$1B7D2]
+  d7.w -= 1
+  if d7.w ~= -1 then goto L1B7B6 end
+  return
+end
+
+routine sub_1B7E2 @ $1B7E2
+  b[$1C04E] = 1
+  a0 = $59AFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B7FA @ $1B7FA
+  b[$1C04E] = 1
+  call cursor_off
+  a0 = $59AFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B816 @ $1B816
+  b[$1C04E] = 1
+  a0 = $59CFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B82E @ $1B82E
+  b[$1C04E] = 1
+  call cursor_off
+  a0 = $59CFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B84A @ $1B84A
+  a0 = $59EFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B85A @ $1B85A
+  call cursor_off
+  a0 = $59EFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B86E @ $1B86E
+  a0 = $5A0FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B87E @ $1B87E
+  call cursor_off
+  a0 = $5A0FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B892 @ $1B892
+  a0 = $5A2FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B8A2 @ $1B8A2
+  call cursor_off
+  a0 = $5A2FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B8B6 @ $1B8B6
+  a0 = $5A4FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B8C6 @ $1B8C6
+  call cursor_off
+  a0 = $5A4FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B8DA @ $1B8DA
+  a0 = $5A6FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B8EA @ $1B8EA
+  call cursor_off
+  a0 = $5A6FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B8FE @ $1B8FE
+  a0 = $5A8FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B90E @ $1B90E
+  call cursor_off
+  a0 = $5A8FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B922 @ $1B922
+  a0 = $5AAFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B932 @ $1B932
+  call cursor_off
+  a0 = $5AAFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B946 @ $1B946
+  a0 = $5ACFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B956 @ $1B956
+  call cursor_off
+  a0 = $5ACFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B96A @ $1B96A
+  a0 = $5AEFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B97A @ $1B97A
+  call cursor_off
+  a0 = $5AEFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B98E @ $1B98E
+  a0 = $5B0FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B99E @ $1B99E
+  call cursor_off
+  a0 = $5B0FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B9B2 @ $1B9B2
+  a0 = $5B2FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B9C2 @ $1B9C2
+  call cursor_off
+  a0 = $5B2FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B9D6 @ $1B9D6
+  a0 = $5B4FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1B9E6 @ $1B9E6
+  call cursor_off
+  a0 = $5B4FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1B9FA @ $1B9FA
+  a0 = $5B6FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BA0A @ $1BA0A
+  call cursor_off
+  a0 = $5B6FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BA1E @ $1BA1E
+  a0 = $5B8FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BA2E @ $1BA2E
+  call cursor_off
+  a0 = $5B8FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BA42 @ $1BA42
+  a0 = $5BAFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BA52 @ $1BA52
+  call cursor_off
+  a0 = $5BAFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BA66 @ $1BA66
+  a0 = $5BCFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BA76 @ $1BA76
+  call cursor_off
+  a0 = $5BCFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BA8A @ $1BA8A
+  a0 = $5BEFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BA9A @ $1BA9A
+  call cursor_off
+  a0 = $5BEFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BAAE @ $1BAAE
+  a0 = $5C0FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BABE @ $1BABE
+  call cursor_off
+  a0 = $5C0FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BAD2 @ $1BAD2
+  a0 = $5C2FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BAE2 @ $1BAE2
+  call cursor_off
+  a0 = $5C2FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BAF6 @ $1BAF6
+  a0 = $5C4FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BB06 @ $1BB06
+  call cursor_off
+  a0 = $5C4FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BB1A @ $1BB1A
+  a0 = $5C6FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BB2A @ $1BB2A
+  call cursor_off
+  a0 = $5C6FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BB3E @ $1BB3E
+  a0 = $5C8FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BB4E @ $1BB4E
+  call cursor_off
+  a0 = $5C8FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BB62 @ $1BB62
+  a0 = $5CAFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BB72 @ $1BB72
+  call cursor_off
+  a0 = $5CAFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BB86 @ $1BB86
+  a0 = $5CCFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BB96 @ $1BB96
+  call cursor_off
+  a0 = $5CCFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BBAA @ $1BBAA
+  a0 = $5CEFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BBBA @ $1BBBA
+  call cursor_off
+  a0 = $5CEFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BBCE @ $1BBCE
+  a0 = $5D0FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BBDE @ $1BBDE
+  call cursor_off
+  a0 = $5D0FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BBF2 @ $1BBF2
+  a0 = $5D2FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BC02 @ $1BC02
+  call cursor_off
+  a0 = $5D2FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BC16 @ $1BC16
+  a0 = $5D4FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BC26 @ $1BC26
+  call cursor_off
+  a0 = $5D4FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BC5E @ $1BC5E
+  a0 = $5D8FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BC6E @ $1BC6E
+  call cursor_off
+  a0 = $5D8FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BC82 @ $1BC82
+  a0 = $5DAFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BC92 @ $1BC92
+  call cursor_off
+  a0 = $5DAFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BCA6 @ $1BCA6
+  a0 = $5DCFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BCB6 @ $1BCB6
+  call cursor_off
+  a0 = $5DCFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BCCA @ $1BCCA
+  a0 = $5DEFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BCDA @ $1BCDA
+  call cursor_off
+  a0 = $5DEFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BCEE @ $1BCEE
+  a0 = $5E0FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BCFE @ $1BCFE
+  call cursor_off
+  a0 = $5E0FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BD12 @ $1BD12
+  a0 = $5E2FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BD22 @ $1BD22
+  call cursor_off
+  a0 = $5E2FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BD36 @ $1BD36
+  a0 = $5E4FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BD46 @ $1BD46
+  call cursor_off
+  a0 = $5E4FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BD5A @ $1BD5A
+  a0 = $5E6FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BD6A @ $1BD6A
+  call cursor_off
+  a0 = $5E6FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BD7E @ $1BD7E
+  a0 = $5E8FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BD8E @ $1BD8E
+  call cursor_off
+  a0 = $5E8FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BDA2 @ $1BDA2
+  a0 = $5EAFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BDB2 @ $1BDB2
+  call cursor_off
+  a0 = $5EAFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BDC6 @ $1BDC6
+  a0 = $5ECFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BDD6 @ $1BDD6
+  call cursor_off
+  a0 = $5ECFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BDEA @ $1BDEA
+  a0 = $5EEFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BDFA @ $1BDFA
+  call cursor_off
+  a0 = $5EEFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BE0E @ $1BE0E
+  a0 = $5F0FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BE1E @ $1BE1E
+  call cursor_off
+  a0 = $5F0FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BE32 @ $1BE32
+  a0 = $5F2FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BE42 @ $1BE42
+  call cursor_off
+  a0 = $5F2FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BE56 @ $1BE56
+  a0 = $5F4FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BE66 @ $1BE66
+  call cursor_off
+  a0 = $5F4FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BE7A @ $1BE7A
+  a0 = $5F6FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BE8A @ $1BE8A
+  call cursor_off
+  a0 = $5F6FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BE9E @ $1BE9E
+  a0 = $5F8FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BEAE @ $1BEAE
+  call cursor_off
+  a0 = $5F8FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BEC2 @ $1BEC2
+  a0 = $5FAFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BED2 @ $1BED2
+  call cursor_off
+  a0 = $5FAFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BEE6 @ $1BEE6
+  a0 = $5FCFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BEF6 @ $1BEF6
+  call cursor_off
+  a0 = $5FCFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BF0A @ $1BF0A
+  a0 = $5FEFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BF1A @ $1BF1A
+  call cursor_off
+  a0 = $5FEFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BF2E @ $1BF2E
+  a0 = $600FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BF3E @ $1BF3E
+  call cursor_off
+  a0 = $600FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BF52 @ $1BF52
+  a0 = $602FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BF62 @ $1BF62
+  call cursor_off
+  a0 = $602FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BF76 @ $1BF76
+  a0 = $604FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BF86 @ $1BF86
+  call cursor_off
+  a0 = $604FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BF9A @ $1BF9A
+  a0 = $606FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BFAA @ $1BFAA
+  call cursor_off
+  a0 = $606FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BFBE @ $1BFBE
+  a0 = $608FA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BFCE @ $1BFCE
+  call cursor_off
+  a0 = $608FA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1BFE2 @ $1BFE2
+  a0 = $60AFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1BFF2 @ $1BFF2
+  call cursor_off
+  a0 = $60AFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1C006 @ $1C006
+  a0 = $60CFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1C016 @ $1C016
+  call cursor_off
+  a0 = $60CFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine sub_1C02A @ $1C02A
+  a0 = $60EFA
+  call set_palette
+  call fade_in
+  return
+end
+
+routine sub_1C03A @ $1C03A
+  call cursor_off
+  a0 = $60EFA
+  call set_palette
+  call fade_out
+  return
+end
+
+routine say @ $1C67E
+  call clear_text
+  call print
+  call wait_right_click
+  return
+end
+
+routine clear_print @ $1C68C
+  call clear_text
+  call print
+  return
+end
+
+routine say_restore_cursor @ $1C696
+  call clear_text
+  call print
+  call wait_right_click
+  call cursor_hand
+  return
+end
+
+routine show @ $1C6A8
+  call clear_text
+  call print
+  call cursor_hand
+  return
+end
+
+routine text_white @ $1C6B6
+  a0 = $59AEC
+  w[a0] = $FFF
+  w[a0+$8] = $FFF
+  return
+end
+
+routine sub_1C8F6 @ $1C8F6
+  d6.w = $32
+::L1C8FA::
+  wait_raster $E0
+  d6.w -= 1
+  if d6.w ~= -1 then goto L1C8FA end
+  return
+end
+
+routine sub_4E6E4 @ $4E6E4
+::L4E6E4::
+  d0 = 0
+  d1 = 0
+  d2 = 0
+  d3 = 0
+  d0.b = vhpos
+  d1.b = b[$DFF007]
+  d2.b = b[$DFF008]
+  d3.b = b[$DFF026]
+  ext d0.w
+  ext d3.w
+  mulu d0, d3.w
+  d0.b += d2.b
+  ext d0
+  ext d1.w
+  d1.w += 2
+  divu d0, d1.w
+  if d0.w ~= 0 then
+  else
+    goto L4E6E4
+  end
+  w[$4E82C] = d0.w
+  return
+end
+
+routine sub_4E8B4 @ $4E8B4
+  d6 = 0
+  d3 = 0
+  d6 = $4EA16
+  d3 = $1600
+  call native_4E92A
+  call native_4E98E
+  call native_4E962
+  return
+end
+
+routine sub_4E8D8 @ $4E8D8
+  d6 = 0
+  d3 = 0
+  d6 = $4EA16
+  d3 = $1600
+  call native_4E92A
+  call native_4E9AE
+  call native_4E962
+  jump restore_after_load
+end
+
+routine sub_4ED24 @ $4ED24
+  call clear_disk_band
+  a2 = $7FB33  -- " /  /       Włóż Dysk Stanu Gry"
+  call print_alt
+  w[$4F80E] = 0
+  l[$5787A] = 0
+::L4ED42::
+  w[$4F810] = 0
+  l[$4F81E] = $5787A
+  w[$4F822] = 0
+  w[$4F824] = 1
+  w[$4F826] = 0
+  w[$4F814] = 0
+  w[$4F812] = $4489
+  call native_4F232
+  if w[$4F818] == 0 then
+  else
+    goto L4ED42
+  end
+  if l[$5787A] ~= $5354414E then
+    goto L4ED42
+  end
+  call clear_disk_band
+  a2 = $7FB81
+  call print_alt
+  w[$4F810] = 0
+  l[$4F81E] = $7C90C
+  w[$4F822] = 1
+  w[$4F824] = 1
+  w[$4F826] = 0
+  w[$4F814] = 0
+  w[$4F812] = $4489
+  call native_4F232
+  if w[$4F818] ~= 0 then
+    call clear_disk_band
+    a2 = $7FBBB
+    call print_alt
+  ::L4EDFE::
+    if lmb then
+    else
+      goto L4EDFE
+    end
+  end
+  return
+end
+
+routine sub_4EE0A @ $4EE0A
+  call clear_disk_band
+  a2 = $7FB33  -- " /  /       Włóż Dysk Stanu Gry"
+  call print_alt
+  w[$4F80E] = 0
+  l[$5787A] = 0
+::L4EE28::
+  w[$4F810] = 0
+  l[$4F81E] = $5787A
+  w[$4F822] = 0
+  w[$4F824] = 1
+  w[$4F826] = 0
+  w[$4F814] = 0
+  w[$4F812] = $4489
+  call native_4F232
+  if w[$4F818] == 0 then
+  else
+    goto L4EE28
+  end
+  if l[$5787A] ~= $5354414E then
+    goto L4EE28
+  end
+::L4EE7C::
+  call clear_disk_band
+  a2 = $7FB9E
+  call print_alt
+  w[$4F810] = 0
+  l[$4F81E] = $7C90C
+  w[$4F822] = 1
+  w[$4F824] = 1
+  w[$4F826] = 0
+  w[$4F814] = 0
+  w[$4F812] = $4489
+  call native_4F2B8
+  if w[$4F818] ~= 0 then
+    call clear_disk_band
+    a2 = $7FBBB
+    call print_alt
+  ::L4EEE4::
+    if lmb then
+    else
+      goto L4EEE4
+    end
+  end
+  call native_4F026
+  if bit(ciaa_pra, 3) == 0 then
+    call clear_disk_band
+    a2 = $7FC1E  -- " /  /  Odbezpiecz dysk i naciśnij prawy klawisz myszki!"
+    call print_alt
+    call wait_right_click_fast
+    goto L4EE7C
+  end
+  call native_4F044
+  return
+end
+
+routine sub_4EF1E @ $4EF1E
+  call clear_disk_band
+  a2 = $7FBD4  -- " /  /       Włóż sformatowany i odbezpieczony /               dysk ..."
+  call print_alt
+  w[$4F80E] = 0
+  l[$5787A] = $5354414E
+::L4EF40::
+  w[$4F810] = 0
+  l[$4F81E] = $5787A
+  w[$4F822] = 0
+  w[$4F824] = 1
+  w[$4F826] = 0
+  w[$4F814] = 0
+  w[$4F812] = $4489
+  call native_4F2B8
+  if w[$4F818] == 0 then
+  else
+    goto L4EF40
+  end
+  call native_4F026
+  if bit(ciaa_pra, 3) == 0 then
+    call clear_disk_band
+    a2 = $7FC1E  -- " /  /  Odbezpiecz dysk i naciśnij prawy klawisz myszki!"
+    call print_alt
+    call wait_right_click_fast
+    goto L4EF40
+  end
+  call clear_disk_band
+  a2 = $7FB68
+  call print_alt
+  w[$4F810] = 0
+  l[$4F81E] = $7C90C
+  w[$4F822] = 1
+  w[$4F824] = 1
+  w[$4F826] = 0
+  w[$4F814] = 0
+  w[$4F812] = $4489
+  call native_4F2B8
+  if w[$4F818] ~= 0 then
+    call clear_disk_band
+    a2 = $7FBBB
+    call print_alt
+  ::L4F016::
+    if lmb then
+    else
+      goto L4F016
+    end
+  end
+  call native_4F044
+  return
+end
