@@ -83,6 +83,8 @@ Na macOS z Homebrew:
 
 Na Linuxie gra znajduje się w `build/native/AlfabetSmierci/AlfabetSmierci`, a dane gry obok niej. Na macOS CMake tworzy `build/native/AlfabetSmierci.app`; dane trafiają do `Contents/Resources/data`. Te buildy wymagają systemowych bibliotek SDL3 i libopenmpt. Zapisy natywne trafiają do katalogu danych użytkownika, a obrazy dyskietek są tylko do odczytu. Testy wybierają natywny build automatycznie; `ALF_EXE=/ścieżka/do/programu` pozwala wskazać go ręcznie. GitHub Actions buduje Linuxowy pakiet i macOS-owy build deweloperski. Linux został zbudowany i sprawdzony lokalnie; macOS nie był sprawdzany lokalnie.
 
+Instrukcja dokończenia samodzielnej paczki macOS i testów na Macu: [`docs/MACOS_CODEX.md`](docs/MACOS_CODEX.md).
+
 ### Prawa
 
 Gra Alfabet Śmierci: (C) 1995/1996 Arte / Seven Stars Multimedia; programowanie Maciej 'Maniak' Frontkiewicz, grafika Ryszard 'Justus' Bagiński, muzyka i scenariusz Michał 'Dixan05' Prochownik. Gra jest dziś abandonware; obrazy dyskietek są dołączone w niezmienionej postaci. Kod portu (silnik, narzędzia, dokumentacja): licencja MIT, patrz [`LICENSE`](LICENSE). Biblioteki i ich licencje: [`CREDITS.md`](CREDITS.md) i `AlfabetSmierci/THIRD_PARTY_LICENSES.txt`.
@@ -132,6 +134,8 @@ For native developer builds, use system CMake, SDL3 and libopenmpt. On Ubuntu 26
     cmake --build build/native --parallel
 
 Linux output is `build/native/AlfabetSmierci/AlfabetSmierci`. macOS output is `build/native/AlfabetSmierci.app`, with game data in its Resources directory. These developer builds require SDL3 and libopenmpt shared libraries from the system. Native saves use the per-user application data directory. Automation scripts discover this native build or accept an explicit path through `ALF_EXE`. Linux has been built and exercised locally; macOS has not been tested on a local Mac. GitHub Actions publishes the Linux package and a macOS development archive.
+
+The macOS packaging and verification handoff is in [`docs/MACOS_CODEX.md`](docs/MACOS_CODEX.md) (Polish).
 
 ### Rights
 

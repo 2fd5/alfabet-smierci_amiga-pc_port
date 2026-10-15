@@ -41,6 +41,10 @@ This list is kept up to date from day one. "Ships" means the item is part of the
 | Windows PowerShell | Microsoft | Windows component | Driving WinUAE over IPC and window captures (`tools/uaeipc.ps1`, `tools/winshot.ps1`, `tools/uaepark.ps1`) | no |
 | CMake | Kitware and contributors | BSD-3-Clause | Native Linux and macOS builds | no |
 | pkg-config (pkgconf) | pkgconf project contributors | ISC | Locating system SDL3 and libopenmpt for native builds | no |
+| Docker / Moby | Docker and Moby contributors | Apache-2.0 (engine and CLI) | Isolated Ubuntu 22.04 Linux package builds | no |
+| appimagetool 1.9.1 | Simon Peter and the AppImage Team | MIT (tool source; dependencies keep their licences) | Creating the Linux AppImage | no |
+| AppImage type-2 runtime 20251108 | Simon Peter and the AppImage contributors | MIT; bundled musl, libfuse, squashfuse, zstd and zlib have their own licences | Starting or extracting the single-file Linux package | yes (AppImage only; notices included) |
+| Codex and GPT-6 Luna | OpenAI | commercial | Linux/macOS build support, Linux packaging and verification | no |
 | Claude Opus 5.5 | Anthropic | commercial | AI model that did the reverse engineering, the lifter, the engine and the docs with Pete | no |
 | Claude Code | Anthropic | commercial | The agentic coding tool the port was built in | no |
 

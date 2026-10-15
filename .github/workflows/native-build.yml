@@ -13,12 +13,17 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build portable Linux tarball
         run: sh tools/build_linux_package.sh
-      - name: Install AppImage packaging utilities
-        run: sudo apt-get update && sudo apt-get install -y squashfs-tools zstd
       - name: Build Linux AppImage
         run: sh tools/make_linux_appimage.sh
-      - name: Select packaged executable
-        run: echo "ALF_EXE=$(find "$GITHUB_WORKSPACE/dist/linux" -mindepth 2 -maxdepth 2 -name AlfabetSmierci -type f | head -n 1)" >> "$GITHUB_ENV"
+      - name: Extract and verify final tarball
+        run: |
+          mkdir -p "work/package test"
+          cd dist/linux
+          sha256sum -c ./*.sha256
+          tar -xzf ./*.tar.gz -C "../../work/package test"
+          cd "../../work/package test"/AlfabetSmierci-*-linux-x86_64
+          sha256sum -c SHA256SUMS
+          echo "ALF_EXE=$PWD/AlfabetSmierci" >> "$GITHUB_ENV"
       - name: Linux location smoke test
         env:
           SDL_VIDEODRIVER: dummy
@@ -26,10 +31,23 @@ jobs:
         run: python3 tools/test_locations.py loc_04 loc_05
       - name: Linux save/load test
         run: python3 tools/test_linux_saves.py
+      - name: Full packaged playthrough
+        env:
+          SDL_VIDEODRIVER: dummy
+          SDL_AUDIODRIVER: dummy
+        run: python3 tools/playthrough.py
+      - name: AppImage save/load test without FUSE
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: '1'
+        run: |
+          export ALF_EXE="$(find "$GITHUB_WORKSPACE/dist/linux" -maxdepth 1 -name '*.AppImage' -type f)"
+          test -x "$ALF_EXE"
+          python3 tools/test_linux_saves.py
       - name: Upload Linux package
         uses: actions/upload-artifact@v4
         with:
           name: alfabet-smierci-linux-x86_64
+          if-no-files-found: error
           path: |
             dist/linux/*.tar.gz
             dist/linux/*.sha256
