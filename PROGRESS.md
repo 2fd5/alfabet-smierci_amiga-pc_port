@@ -1,13 +1,13 @@
 # PROGRESS: Alfabet Śmierci port
 
-Stan na: 2026-10-14 (handoff przed resetem kontekstu).
+Stan na: 2026-10-15.
 
 ## Natywne buildy Linux/macOS (2026-10-15)
 
 - Dodano osobny build CMake dla C11 + SDL3 + libopenmpt. Build Windows przez `build.sh` pozostaje bez zmian; natywne pliki powstają wyłącznie w ignorowanym `build/native/`.
 - Linux: wykonywalny `build/native/AlfabetSmierci/AlfabetSmierci`, dane obok niego. macOS: `build/native/AlfabetSmierci.app`, dane w `Contents/Resources/data`. Zapisy Linux/macOS są w katalogu preferencji użytkownika SDL, zapis Windows nadal trafia obok programu.
-- Narzędzia testowe automatycznie wybierają natywny build, jeśli istnieje; `ALF_EXE` pozwala wskazać inny plik. CI buduje Ubuntu 26.04 i macOS, uruchamia smoke test loc_04/loc_05 na Linuxie oraz udostępnia archiwum builda. Archiwa CI są deweloperskie, wymagają systemowych SDL3 i libopenmpt. AppImage, DMG i podpisywanie zostają na później.
-- Sprawdzone lokalnie na Linuxie: CMake configure/build z SDL3 3.4.16 i libopenmpt 0.8.9; intro autoplay doszło do loc_04; `tools/test_locations.py loc_04 loc_05` zakończył się `ok` z pulpitem i sterownikami dummy; pełny playthrough zaliczył wszystkie 263 kroki do loc_3D i klawiszem wrócił do tytułu. macOS nie jest zweryfikowany lokalnie.
+- Narzędzia testowe automatycznie wybierają natywny build, jeśli istnieje; `ALF_EXE` pozwala wskazać inny plik. Systemowy build deweloperski korzysta z SDL3/libopenmpt z systemu. Osobny Linuxowy tar.gz statycznie łączy SDL3 i libopenmpt, buduje się w przypiętym obrazie Ubuntu 22.04 i pozostawia dynamiczne sterowniki SDL do obsługi przez system (X11/Wayland, ALSA/PulseAudio). `tools/make_linux_appimage.sh` opakowuje tar w AppImage. CI buduje Linuxowy tar i AppImage, uruchamia smoke/save testy i udostępnia oba pliki; osobny job buduje macOS-owe archiwum deweloperskie.
+- Sprawdzone lokalnie na Linuxie: systemowy CMake build z SDL3 3.4.16/libopenmpt 0.8.9; pakiet dystrybucyjny skompilowany w Ubuntu 22.04 (glibc 2.35), rozpakowany w ścieżce ze spacjami i zweryfikowany przez SHA256SUMS. Pakiet wymaga maksymalnie GLIBC_2.34 i dynamicznie linkuje tylko libc/libm. Intro zrzuciło ekrany i ślad w `intro.alf`; testy `loc_04`/`loc_05`, trzy sloty dyskietki zapisu oraz szybki zapis/odczyt przeszły. Pakiet przeszedł wszystkie 263 kroki pełnego playthrough, osiągnął loc_3D i wrócił do tytułu. Testy graficzno-audio na Wayland/PulseAudio i X11/PulseAudio również przeszły; macOS nie jest zweryfikowany lokalnie.
 - Build natywny odszukuje zasoby względem własnej lokalizacji SDL, a nie bieżącego katalogu. Dodatkowa kontrola z katalogu `/tmp` zapisała szybki zapis `stan.sav` w katalogu użytkownika SDL.
 
 ## Gdzie jesteśmy
@@ -141,6 +141,13 @@ Natywny build Linux/macOS (systemowe CMake, SDL3 i libopenmpt, wynik w `build/na
     cmake --build build/native --parallel
 
 Na macOS Homebrew: `brew install cmake pkgconf sdl3 libopenmpt`. Na Ubuntu 26.04: `sudo apt install build-essential cmake pkg-config libsdl3-dev libopenmpt-dev`.
+
+Pakiet Linux x86-64 (Ubuntu 22.04 baseline; Docker, wynik `dist/linux/`):
+
+    sh tools/build_linux_package.sh
+    sh tools/make_linux_appimage.sh
+
+Pierwsza komenda tworzy tar.gz i sumę SHA256; druga buduje pojedynczy plik AppImage z gotowego tar.gz. Po rozpakowaniu tar uruchom `uruchom.sh`. AppImage bez FUSE uruchom przez `./AlfabetSmierci-1.0-linux-x86_64.AppImage --appimage-extract-and-run`. SDL3 i libopenmpt są statyczne, lecz host nadal musi dostarczyć biblioteki graficzne i audio wymagane przez X11/Wayland oraz ALSA/PulseAudio.
 
 Jednorazowo (toolchain i biblioteki, wszystko lokalnie w `tools/toolchain` i `deps`, nic systemowo):
 

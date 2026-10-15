@@ -6,52 +6,53 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    timeout-minutes: 20
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-26.04, macos-latest]
-    runs-on: ${{ matrix.os }}
+  linux-package:
+    timeout-minutes: 90
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Install Linux dependencies
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake pkg-config libsdl3-dev libopenmpt-dev
-      - name: Install macOS dependencies
-        if: runner.os == 'macOS'
-        run: brew install cmake pkgconf sdl3 libopenmpt
-      - name: Configure
-        run: cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
-      - name: Build
-        run: cmake --build build/native --parallel
-      - name: Linux smoke test
-        if: runner.os == 'Linux'
+      - name: Build portable Linux tarball
+        run: sh tools/build_linux_package.sh
+      - name: Install AppImage packaging utilities
+        run: sudo apt-get update && sudo apt-get install -y squashfs-tools zstd
+      - name: Build Linux AppImage
+        run: sh tools/make_linux_appimage.sh
+      - name: Select packaged executable
+        run: echo "ALF_EXE=$(find "$GITHUB_WORKSPACE/dist/linux" -mindepth 2 -maxdepth 2 -name AlfabetSmierci -type f | head -n 1)" >> "$GITHUB_ENV"
+      - name: Linux location smoke test
         env:
           SDL_VIDEODRIVER: dummy
           SDL_AUDIODRIVER: dummy
         run: python3 tools/test_locations.py loc_04 loc_05
-      - name: Archive Linux build
-        if: runner.os == 'Linux'
+      - name: Linux save/load test
+        run: python3 tools/test_linux_saves.py
+      - name: Upload Linux package
+        uses: actions/upload-artifact@v4
+        with:
+          name: alfabet-smierci-linux-x86_64
+          path: |
+            dist/linux/*.tar.gz
+            dist/linux/*.sha256
+            dist/linux/*.AppImage
+            dist/linux/*.AppImage.sha256
+
+  macos-build:
+    timeout-minutes: 30
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: brew install cmake pkgconf sdl3 libopenmpt
+      - name: Configure and build
         run: |
-          mkdir -p work
-          tar -czf work/alfabet-smierci-linux.tar.gz -C build/native AlfabetSmierci
-      - name: Archive macOS app
-        if: runner.os == 'macOS'
+          cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
+          cmake --build build/native --parallel
+      - name: Archive macOS development app
         run: |
           mkdir -p work
           tar -czf work/alfabet-smierci-macos.tar.gz -C build/native AlfabetSmierci.app
-      - name: Upload Linux build
-        if: runner.os == 'Linux'
+      - name: Upload macOS development app
         uses: actions/upload-artifact@v4
         with:
-          name: alfabet-smierci-linux
-          path: work/alfabet-smierci-linux.tar.gz
-      - name: Upload macOS app
-        if: runner.os == 'macOS'
-        uses: actions/upload-artifact@v4
-        with:
-          name: alfabet-smierci-macos
+          name: alfabet-smierci-macos-development
           path: work/alfabet-smierci-macos.tar.gz
