@@ -10,7 +10,7 @@ Port by Pete Roman, for Seven Stars Multimedia and Maciej 'Maniak' Frontkiewicz,
 
 ## Polski
 
-Polska przygodówka point-and-click z 1996 roku (Arte / Seven Stars Multimedia, Amiga AGA), przeniesiona na Windows. Port uruchamia **oryginalne dyskietki gry**: zdjęcia, palety, muzyka, teksty i logika są te same co na Amidze 1200. Nowy jest tylko silnik, który je czyta.
+Polska przygodówka point-and-click z 1996 roku (Arte / Seven Stars Multimedia, Amiga AGA), przeniesiona na komputery PC. Port uruchamia **oryginalne dyskietki gry**: zdjęcia, palety, muzyka, teksty i logika są te same co na Amidze 1200. Nowy jest tylko silnik, który je czyta.
 
 ### Jak zagrać
 
@@ -57,6 +57,22 @@ Budowanie (Windows, Git Bash; wszystko lokalnie, nic systemowo):
 
 Testy: `py tools/test_locations.py`, `py tools/playthrough.py` (szczegóły w `PROGRESS.md`).
 
+#### Linux i macOS
+
+Natywny build korzysta z CMake, C11, SDL3 i libopenmpt zainstalowanych w systemie. Na Ubuntu 26.04:
+
+    sudo apt install build-essential cmake pkg-config libsdl3-dev libopenmpt-dev
+    cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
+    cmake --build build/native --parallel
+
+Na macOS z Homebrew:
+
+    brew install cmake pkgconf sdl3 libopenmpt
+    cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
+    cmake --build build/native --parallel
+
+Na Linuxie gra znajduje się w `build/native/AlfabetSmierci/AlfabetSmierci`, a dane gry obok niej. Na macOS CMake tworzy `build/native/AlfabetSmierci.app`; dane trafiają do `Contents/Resources/data`. Do uruchomienia potrzebne są systemowe biblioteki SDL3 i libopenmpt, nie są dołączane do pliku wykonywalnego. Zapisy natywnych buildów trafiają do katalogu danych użytkownika systemu, a obrazy dyskietek są tylko odczytywane z katalogu zasobów. Testy wybierają natywny build automatycznie; `ALF_EXE=/ścieżka/do/programu` pozwala wskazać go ręcznie. GitHub Actions buduje Linux i macOS, a buildy są udostępniane jako archiwa deweloperskie. Linux został zbudowany i sprawdzony lokalnie; macOS nie był sprawdzany na lokalnym komputerze. Budowanie AppImage, DMG i podpisywanie aplikacji pozostają osobnym krokiem.
+
 ### Prawa
 
 Gra Alfabet Śmierci: (C) 1995/1996 Arte / Seven Stars Multimedia; programowanie Maciej 'Maniak' Frontkiewicz, grafika Ryszard 'Justus' Bagiński, muzyka i scenariusz Michał 'Dixan05' Prochownik. Gra jest dziś abandonware; obrazy dyskietek są dołączone w niezmienionej postaci. Kod portu (silnik, narzędzia, dokumentacja): licencja MIT, patrz [`LICENSE`](LICENSE). Biblioteki i ich licencje: [`CREDITS.md`](CREDITS.md) i `AlfabetSmierci/THIRD_PARTY_LICENSES.txt`.
@@ -65,7 +81,7 @@ Gra Alfabet Śmierci: (C) 1995/1996 Arte / Seven Stars Multimedia; programowanie
 
 ## English
 
-A Polish point-and-click adventure from 1996 (Arte / Seven Stars Multimedia, Amiga AGA), brought to Windows. The port runs the **original game disks**: the photographs, palettes, music, texts and game logic are the same as on the Amiga 1200. Only the engine that reads them is new. The game itself is in Polish.
+A Polish point-and-click adventure from 1996 (Arte / Seven Stars Multimedia, Amiga AGA), brought to PC. The port runs the **original game disks**: the photographs, palettes, music, texts and game logic are the same as on the Amiga 1200. Only the engine that reads them is new. The game itself is in Polish.
 
 ### How to play
 
@@ -93,6 +109,13 @@ Engine in C11 with SDL3 and libopenmpt, built with a portable MinGW-w64 toolchai
     sh tools/fetch_deps.sh
     tools/toolchain/w64devkit/bin/sh tools/build_deps.sh
     tools/toolchain/w64devkit/bin/sh build.sh
+
+Native Linux and macOS builds use the system CMake, SDL3 and libopenmpt packages. On Ubuntu 26.04 install `build-essential cmake pkg-config libsdl3-dev libopenmpt-dev`; on macOS install `cmake pkgconf sdl3 libopenmpt` with Homebrew. Then run:
+
+    cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
+    cmake --build build/native --parallel
+
+Linux output is `build/native/AlfabetSmierci/AlfabetSmierci`. macOS output is `build/native/AlfabetSmierci.app`, with game data in its Resources directory. Both require SDL3 and libopenmpt shared libraries from the system. Native saves use the per-user application data directory. Automation scripts discover this native build or accept an explicit path through `ALF_EXE`. Linux has been built and exercised locally; macOS has not been tested on a local Mac. GitHub Actions builds both platforms and publishes downloadable development archives. AppImage, DMG and signing are future packaging work.
 
 ### Rights
 

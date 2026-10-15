@@ -7,6 +7,7 @@
  * (lines doubled), times the largest integer that fits.
  */
 #include "amiga.h"
+#include "app_paths.h"
 #include "audio.h"
 #include "natives.h"
 #include "panels.h"
@@ -348,6 +349,10 @@ int main(int argc, char **argv)
     (void)argc; (void)argv;
     if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK)) {
         fprintf(stderr, "SDL_Init: %s\n", SDL_GetError());
+        return 1;
+    }
+    if (!app_paths_init()) {
+        SDL_Quit();
         return 1;
     }
     char data[1024], scripts[1024];

@@ -2,6 +2,14 @@
 
 Stan na: 2026-10-14 (handoff przed resetem kontekstu).
 
+## Natywne buildy Linux/macOS (2026-10-15)
+
+- Dodano osobny build CMake dla C11 + SDL3 + libopenmpt. Build Windows przez `build.sh` pozostaje bez zmian; natywne pliki powstają wyłącznie w ignorowanym `build/native/`.
+- Linux: wykonywalny `build/native/AlfabetSmierci/AlfabetSmierci`, dane obok niego. macOS: `build/native/AlfabetSmierci.app`, dane w `Contents/Resources/data`. Zapisy Linux/macOS są w katalogu preferencji użytkownika SDL, zapis Windows nadal trafia obok programu.
+- Narzędzia testowe automatycznie wybierają natywny build, jeśli istnieje; `ALF_EXE` pozwala wskazać inny plik. CI buduje Ubuntu 26.04 i macOS, uruchamia smoke test loc_04/loc_05 na Linuxie oraz udostępnia archiwum builda. Archiwa CI są deweloperskie, wymagają systemowych SDL3 i libopenmpt. AppImage, DMG i podpisywanie zostają na później.
+- Sprawdzone lokalnie na Linuxie: CMake configure/build z SDL3 3.4.16 i libopenmpt 0.8.9; intro autoplay doszło do loc_04; `tools/test_locations.py loc_04 loc_05` zakończył się `ok` z pulpitem i sterownikami dummy; pełny playthrough zaliczył wszystkie 263 kroki do loc_3D i klawiszem wrócił do tytułu. macOS nie jest zweryfikowany lokalnie.
+- Build natywny odszukuje zasoby względem własnej lokalizacji SDL, a nie bieżącego katalogu. Dodatkowa kontrola z katalogu `/tmp` zapisała szybki zapis `stan.sav` w katalogu użytkownika SDL.
+
 ## Gdzie jesteśmy
 
 - **Faza 1** (rekonesans, RECON.md): zrobiona.
@@ -126,6 +134,13 @@ Brak. Odpowiedzi z 2026-10-14 (koniec gry wraca do tytułu, exe 8.9 MB OK, jeden
 ## Komendy
 
 Wszystko z katalogu repo (`C:\Users\proma\hoyn-games\alfabet-port`), Git Bash.
+
+Natywny build Linux/macOS (systemowe CMake, SDL3 i libopenmpt, wynik w `build/native/`):
+
+    cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
+    cmake --build build/native --parallel
+
+Na macOS Homebrew: `brew install cmake pkgconf sdl3 libopenmpt`. Na Ubuntu 26.04: `sudo apt install build-essential cmake pkg-config libsdl3-dev libopenmpt-dev`.
 
 Jednorazowo (toolchain i biblioteki, wszystko lokalnie w `tools/toolchain` i `deps`, nic systemowo):
 

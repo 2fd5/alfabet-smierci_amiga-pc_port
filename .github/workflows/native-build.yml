@@ -1,0 +1,57 @@
+name: Native builds
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-26.04, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake pkg-config libsdl3-dev libopenmpt-dev
+      - name: Install macOS dependencies
+        if: runner.os == 'macOS'
+        run: brew install cmake pkgconf sdl3 libopenmpt
+      - name: Configure
+        run: cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build/native --parallel
+      - name: Linux smoke test
+        if: runner.os == 'Linux'
+        env:
+          SDL_VIDEODRIVER: dummy
+          SDL_AUDIODRIVER: dummy
+        run: python3 tools/test_locations.py loc_04 loc_05
+      - name: Archive Linux build
+        if: runner.os == 'Linux'
+        run: |
+          mkdir -p work
+          tar -czf work/alfabet-smierci-linux.tar.gz -C build/native AlfabetSmierci
+      - name: Archive macOS app
+        if: runner.os == 'macOS'
+        run: |
+          mkdir -p work
+          tar -czf work/alfabet-smierci-macos.tar.gz -C build/native AlfabetSmierci.app
+      - name: Upload Linux build
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: alfabet-smierci-linux
+          path: work/alfabet-smierci-linux.tar.gz
+      - name: Upload macOS app
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: alfabet-smierci-macos
+          path: work/alfabet-smierci-macos.tar.gz
