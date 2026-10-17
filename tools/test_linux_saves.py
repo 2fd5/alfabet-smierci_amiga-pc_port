@@ -1,9 +1,9 @@
-"""Exercise all original save slots and quick save/load in an isolated Linux user directory.
+"""Exercise all original save slots and quick save/load in an isolated user directory.
 
     ALF_EXE=/path/to/packaged/AlfabetSmierci python3 tools/test_linux_saves.py
 
 Uses the real menu and disk I/O, with a changed train-rides counter as the state marker.
-Game disks and existing player saves are never modified. Logs remain in work/linux-saves/.
+Game disks and existing player saves are never modified. Logs remain in work/native-saves/.
 """
 import os
 import pathlib
@@ -16,9 +16,9 @@ from engine_path import ROOT, executable
 
 
 def main():
-    if not sys.platform.startswith("linux"):
-        raise SystemExit("This test isolates SDL saves with XDG_DATA_HOME and requires Linux.")
-    out = ROOT / "work" / "linux-saves"
+    if not (sys.platform.startswith("linux") or sys.platform == "darwin"):
+        raise SystemExit("This test supports Linux and macOS native builds.")
+    out = ROOT / "work" / "native-saves"
     out.mkdir(parents=True, exist_ok=True)
     events = []
     frame = 300
@@ -55,9 +55,15 @@ def main():
         auto = temporary / "events.txt"
         auto.write_text("\n".join(events) + "\n", encoding="utf-8")
         env = {k: v for k, v in os.environ.items() if not k.startswith("ALF_")}
-        env.update(XDG_DATA_HOME=str(temporary / "userdata"), SDL_VIDEODRIVER="dummy",
-                   SDL_AUDIODRIVER="dummy", ALF_SKIP_INTRO="1", ALF_FAST="1",
-                   ALF_WINDOWED="1", ALF_AUTOPLAY=str(auto))
+        if sys.platform == "darwin":
+            home = temporary / "home"
+            home.mkdir()
+            env.update(HOME=str(home), CFFIXED_USER_HOME=str(home))
+        else:
+            env.update(XDG_DATA_HOME=str(temporary / "userdata"))
+        env.update(SDL_VIDEODRIVER="dummy", SDL_AUDIODRIVER="dummy",
+                   ALF_SKIP_INTRO="1", ALF_FAST="1", ALF_WINDOWED="1",
+                   ALF_AUTOPLAY=str(auto))
         result = subprocess.run([str(executable())], cwd=temporary, env=env,
                                 capture_output=True, text=True, timeout=120)
         (out / "engine.log").write_text(result.stdout + result.stderr, encoding="utf-8")
@@ -66,8 +72,8 @@ def main():
         observed = [int(n) for n in re.findall(r"^peek 7C0CF (\d+)$", result.stdout, re.M)]
         if observed != [1, 2, 3, 3]:
             raise RuntimeError(f"save/load restored {observed}, expected [1, 2, 3, 3]")
-        saves = list((temporary / "userdata").rglob("stan_gry.adf"))
-        quick = list((temporary / "userdata").rglob("stan.sav"))
+        saves = list(temporary.rglob("stan_gry.adf"))
+        quick = list(temporary.rglob("stan.sav"))
         if len(saves) != 1 or len(quick) != 1:
             raise RuntimeError("expected both save files in the isolated user directory")
         disk = saves[0].read_bytes()

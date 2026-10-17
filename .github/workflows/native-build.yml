@@ -54,23 +54,41 @@ jobs:
             dist/linux/*.AppImage
             dist/linux/*.AppImage.sha256
 
-  macos-build:
-    timeout-minutes: 30
+  macos-package:
+    timeout-minutes: 60
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
         run: brew install cmake pkgconf sdl3 libopenmpt
-      - name: Configure and build
+      - name: Build self-contained macOS package
+        run: python3 tools/package_macos.py
+      - name: Extract and verify final macOS package
         run: |
-          cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
-          cmake --build build/native --parallel
-      - name: Archive macOS development app
-        run: |
-          mkdir -p work
-          tar -czf work/alfabet-smierci-macos.tar.gz -C build/native AlfabetSmierci.app
-      - name: Upload macOS development app
+          cd dist/macos
+          shasum -a 256 -c ./*.zip.sha256
+          cd ../..
+          mkdir -p "work/package test"
+          ditto -x -k dist/macos/*.zip "work/package test"
+          codesign --verify --deep --strict --verbose=2 "work/package test/AlfabetSmierci.app"
+          echo "ALF_EXE=$GITHUB_WORKSPACE/work/package test/AlfabetSmierci.app/Contents/MacOS/AlfabetSmierci" >> "$GITHUB_ENV"
+      - name: macOS location smoke test
+        env:
+          SDL_VIDEODRIVER: dummy
+          SDL_AUDIODRIVER: dummy
+        run: python3 tools/test_locations.py loc_04 loc_05
+      - name: macOS save/load test
+        run: python3 tools/test_linux_saves.py
+      - name: Full packaged playthrough
+        env:
+          SDL_VIDEODRIVER: dummy
+          SDL_AUDIODRIVER: dummy
+        run: python3 tools/playthrough.py
+      - name: Upload macOS package
         uses: actions/upload-artifact@v4
         with:
-          name: alfabet-smierci-macos-development
-          path: work/alfabet-smierci-macos.tar.gz
+          name: alfabet-smierci-macos
+          if-no-files-found: error
+          path: |
+            dist/macos/*.zip
+            dist/macos/*.zip.sha256

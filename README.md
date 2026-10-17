@@ -67,6 +67,22 @@ Wynikiem jest archiwum `dist/linux/AlfabetSmierci-1.0-linux-x86_64.tar.gz`; uruc
 
 **Sterowanie:** lewy przycisk myszy wybiera i przechodzi, prawy przycisk lub spacja przewijają kwestie; FIRE działa spacją, środkowym przyciskiem lub padem. F11 albo Alt+Enter przełącza pełny ekran, Tab otwiera panele.
 
+#### macOS (samodzielna aplikacja)
+
+Na macOS z Homebrew przygotujesz wersjonowane archiwum `.app` z dołączonymi
+bibliotekami, podpisem ad hoc i sumą SHA-256:
+
+    brew install cmake pkgconf sdl3 libopenmpt
+    python3 tools/package_macos.py
+
+Wyniki trafiają do `dist/macos/`. Skrypt buduje aplikację, kopiuje pełny zestaw
+niestandardowych bibliotek do `Contents/Frameworks`, zmienia ich odwołania na
+ścieżki względne, podpisuje kod od środka na zewnątrz i sprawdza podpis oraz
+zależności. Paczka zbudowana i sprawdzona lokalnie ma architekturę arm64 i wymaga
+macOS 26.0, ponieważ taki minimalny system mają użyte binaria Homebrew. Nie jest to
+Universal 2. Podpis ad hoc nie jest podpisem Developer ID, a paczka nie jest
+notaryzowana przez Apple.
+
 #### Linux i macOS (build deweloperski)
 
 Natywny build deweloperski korzysta z CMake, C11, SDL3 i libopenmpt zainstalowanych w systemie. Na Ubuntu 26.04:
@@ -81,9 +97,7 @@ Na macOS z Homebrew:
     cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
     cmake --build build/native --parallel
 
-Na Linuxie gra znajduje się w `build/native/AlfabetSmierci/AlfabetSmierci`, a dane gry obok niej. Na macOS CMake tworzy `build/native/AlfabetSmierci.app`; dane trafiają do `Contents/Resources/data`. Te buildy wymagają systemowych bibliotek SDL3 i libopenmpt. Zapisy natywne trafiają do katalogu danych użytkownika, a obrazy dyskietek są tylko do odczytu. Testy wybierają natywny build automatycznie; `ALF_EXE=/ścieżka/do/programu` pozwala wskazać go ręcznie. GitHub Actions buduje Linuxowy pakiet i macOS-owy build deweloperski. Linux został zbudowany i sprawdzony lokalnie; macOS nie był sprawdzany lokalnie.
-
-Instrukcja dokończenia samodzielnej paczki macOS i testów na Macu: [`docs/MACOS_CODEX.md`](docs/MACOS_CODEX.md).
+Na Linuxie gra znajduje się w `build/native/AlfabetSmierci/AlfabetSmierci`, a dane gry obok niej. Na macOS CMake tworzy `build/native/AlfabetSmierci.app`; dane trafiają do `Contents/Resources/data`. Te buildy wymagają systemowych bibliotek SDL3 i libopenmpt. Zapisy natywne trafiają do katalogu danych użytkownika, a obrazy dyskietek są tylko do odczytu. Testy wybierają natywny build automatycznie; `ALF_EXE=/ścieżka/do/programu` pozwala wskazać go ręcznie. GitHub Actions buduje gotowe paczki Linux i macOS.
 
 ### Prawa
 
@@ -128,14 +142,20 @@ For a ready-to-run Linux x86-64 package, build inside Docker (no host packages a
 
 This creates `dist/linux/AlfabetSmierci-1.0-linux-x86_64.tar.gz`; extract it and run `uruchom.sh`. For a single-file AppImage, first build the tar package and then run `sh tools/make_linux_appimage.sh`. If FUSE is unavailable, use `chmod +x AlfabetSmierci-1.0-linux-x86_64.AppImage` and `./AlfabetSmierci-1.0-linux-x86_64.AppImage --appimage-extract-and-run`. Packages target x86-64 and are built on Ubuntu 22.04 (glibc 2.35; the game binary requires up to GLIBC 2.34). SDL3 and libopenmpt are statically linked; the host still needs SDL's X11/Wayland display and ALSA/PulseAudio backend libraries. Saves go to the SDL/XDG per-user directory; bundled game data is read-only. Third-party licenses and SHA-256 manifests are included.
 
+For a self-contained macOS application, install `cmake pkgconf sdl3 libopenmpt`
+with Homebrew and run `python3 tools/package_macos.py`. The script copies the full
+non-system library closure into the app, rewrites Mach-O paths, signs all nested code
+and the app ad hoc, verifies them, and writes a versioned zip plus SHA-256 manifest to
+`dist/macos/`. The locally verified package is arm64 and requires macOS 26.0 because
+that is the deployment target of the installed Homebrew bottles. It is not Universal
+2, Developer ID signed, or notarized.
+
 For native developer builds, use system CMake, SDL3 and libopenmpt. On Ubuntu 26.04 install `build-essential cmake pkg-config libsdl3-dev libopenmpt-dev`; on macOS install `cmake pkgconf sdl3 libopenmpt` with Homebrew. Then run:
 
     cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
     cmake --build build/native --parallel
 
-Linux output is `build/native/AlfabetSmierci/AlfabetSmierci`. macOS output is `build/native/AlfabetSmierci.app`, with game data in its Resources directory. These developer builds require SDL3 and libopenmpt shared libraries from the system. Native saves use the per-user application data directory. Automation scripts discover this native build or accept an explicit path through `ALF_EXE`. Linux has been built and exercised locally; macOS has not been tested on a local Mac. GitHub Actions publishes the Linux package and a macOS development archive.
-
-The macOS packaging and verification handoff is in [`docs/MACOS_CODEX.md`](docs/MACOS_CODEX.md) (Polish).
+Linux output is `build/native/AlfabetSmierci/AlfabetSmierci`. macOS output is `build/native/AlfabetSmierci.app`, with game data in its Resources directory. These developer builds require SDL3 and libopenmpt shared libraries from the system. Native saves use the per-user application data directory. Automation scripts discover this native build or accept an explicit path through `ALF_EXE`. GitHub Actions publishes the self-contained Linux and macOS packages.
 
 ### Rights
 

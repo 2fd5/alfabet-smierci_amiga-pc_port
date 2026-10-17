@@ -1,5 +1,10 @@
 # Instrukcja dla Codexa na macOS
 
+Status 2026-10-17: wykonane lokalnie na Apple Silicon. Powtarzalny skrypt
+`tools/package_macos.py` tworzy samodzielną, podpisaną ad hoc paczkę i archiwum z
+sumą SHA-256. Wyniki i ograniczenia są zapisane w `PROGRESS.md`; dalsza część tego
+pliku pozostaje instrukcją odtworzenia i kontroli wydania.
+
 Cel: zbudować i sprawdzić Alfabet Śmierci na Macu, a następnie przygotować samodzielną paczkę `.app` i archiwum lub DMG. Linux ma osobny proces pakowania. Nie zmieniaj logiki gry ani oryginalnych obrazów dyskietek.
 
 ## Polecenie do wklejenia do Codexa
