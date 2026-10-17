@@ -1,6 +1,6 @@
 # PROGRESS: Alfabet Śmierci port
 
-Stan na: 2026-10-15.
+Stan na: 2026-10-17.
 
 ## Natywne buildy Linux/macOS (2026-10-15)
 
@@ -11,6 +11,45 @@ Stan na: 2026-10-15.
 - AppImage powstaje przez przypięte SHA-256 appimagetool 1.9.1 i runtime 20251108. Uruchomienie przez FUSE oraz `--appimage-extract-and-run` przeszło test dojścia do loc_04 i szybkiego zapisu/odczytu bez modyfikacji paczki. Pomiar wersji TAR na Wayland/PulseAudio: 49.88 kl./s i 48008 próbek/s, logi w `work/desktop-package-test/`. Odsłuch muzyki i ocena sterowania przez gracza pozostają kontrolą ręczną.
 - Instrukcja przekazania prac Codexowi na Macu: `docs/MACOS_CODEX.md`. Mac lub runner macOS służy do natywnego builda i domknięcia paczki `.app`; samo archiwum deweloperskie z CI nadal wymaga bibliotek Homebrew.
 - Build natywny odszukuje zasoby względem własnej lokalizacji SDL, a nie bieżącego katalogu. Dodatkowa kontrola z katalogu `/tmp` zapisała szybki zapis `stan.sav` w katalogu użytkownika SDL.
+
+## Samodzielna paczka macOS (2026-10-17)
+
+- Sprawdzone lokalnie na Apple Silicon: macOS 26.6.2, arm64, Apple Clang 21.0.0,
+  CMake 4.2.1, SDL3 3.4.18 i libopenmpt 0.8.9. Skrypt
+  `python3 tools/package_macos.py` buduje aplikację, kopiuje pełne drzewo bibliotek
+  niesystemowych do `Contents/Frameworks`, zmienia ścieżki Mach-O na relatywne,
+  dołącza dokumentację i licencje, podpisuje kod od środka na zewnątrz i tworzy zip
+  oraz sumę SHA-256.
+- Finalny artefakt:
+  `dist/macos/AlfabetSmierci-1.0-macos-arm64.zip`, SHA-256
+  `b0700843ec2383858cb1a2e704cf3ca09d708c2ecdf724a806a38ba6397a8026`,
+  źródłowy commit `04a4a45c816e69dbeec0db05c8f4aa8b6b3597fe`.
+- Aplikacja i wszystkie dołączone biblioteki są arm64. Minimalny system to macOS
+  26.0, ponieważ taki cel mają zainstalowane binaria Homebrew. Nie jest to Universal
+  2, build Intel ani paczka sprawdzona na starszym macOS.
+- Dołączone biblioteki dynamiczne: SDL3, libopenmpt, mpg123, libogg, libvorbis i
+  libvorbisfile. `otool -L` głównej binarki i każdej biblioteki nie zawiera ścieżek
+  Homebrew, repozytorium, builda ani katalogu użytkownika. Nie wykonano osobnego testu
+  na czystym Macu bez Homebrew, ale kompletność paczki potwierdza rekurencyjna analiza
+  zależności i uruchomienie kopii z rozpakowanego archiwum.
+- Podpis ad hoc przechodzi
+  `codesign --verify --deep --strict --verbose=2`. Na tym Macu nie ma tożsamości
+  Apple Developer ID ani profilu `notarytool`, dlatego paczka nie jest podpisana
+  publicznym certyfikatem i nie jest notaryzowana ani staplowana.
+- Dokładna kopia z zipa została rozpakowana do ścieżki ze spacjami. Przeszła
+  `loc_04`, `loc_05`, trzy sloty oryginalnego menu, szybki zapis i odczyt, pełne
+  przejście 263 kroków do `loc_3D` oraz powrót do tytułu. Osobny test bez
+  `ALF_SKIP_INTRO`, uruchomiony z `/private/tmp`, doszedł do `loc_04` w klatce 5500.
+  Zapisy testowe były odizolowane przez tymczasowy katalog użytkownika macOS.
+- Start dwuklikiem z Findera przeszedł. Znaleziony podczas kontroli błąd Retina
+  powodował mały obraz z dużą czarną ramką w pełnym ekranie. Commit `04a4a45`
+  włącza bufor high-DPI, liczy układ z rzeczywistego rozmiaru renderera i koryguje
+  rozmiar kursora. Sprawdzone wizualnie: pełny ekran wykorzystuje prawie cały ekran,
+  F11 przechodzi do poprawnie wypełnionego okna i wraca do pełnego ekranu bez
+  pomniejszenia.
+- Testy dummy nie potwierdzają odsłuchu muzyki. Ręcznie pozostaje ocena brzmienia,
+  kursora i wygody sterowania przez gracza; nie deklarować ich jako sprawdzonych
+  automatem.
 
 ## Gdzie jesteśmy
 
