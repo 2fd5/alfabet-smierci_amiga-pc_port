@@ -40,10 +40,14 @@ if(APPLE)
     set_target_properties(alfabet_smierci PROPERTIES
         OUTPUT_NAME "AlfabetSmierci"
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/cmake/MacOSXBundleInfo.plist.in"
         MACOSX_BUNDLE_BUNDLE_NAME "Alfabet Smierci"
         MACOSX_BUNDLE_GUI_IDENTIFIER "org.peteroman.alfabetsmierci"
+        MACOSX_BUNDLE_INFO_STRING "Alfabet Śmierci, port ${PROJECT_VERSION}"
+        MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_VERSION}"
         MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}"
-        MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}")
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
+        MACOSX_BUNDLE_COPYRIGHT "(C) 1995/1996 Arte / Seven Stars Multimedia; port (C) 2026 Piotr 'Pete' Romańczyk")
     set(_resource_dir "$<TARGET_BUNDLE_DIR:alfabet_smierci>/Contents/Resources")
 else()
     add_executable(alfabet_smierci ${ENGINE_SOURCES})
